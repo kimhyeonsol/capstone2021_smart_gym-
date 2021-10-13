@@ -60,7 +60,7 @@ public class DBEquipmentRepository implements EquipmentRepository{
     }
 
     @Override
-    public List<Equipment> readEquipment(String equipmentCategory) { //구현중
+    public List<Equipment> readEquipment(String equipmentCategory) {
         if(equipmentCategory.equals("유산소")){
             return em.createQuery("select e from Equipment e where e.equipmentCategory like '%유산소%'", Equipment.class)
                     .getResultList();

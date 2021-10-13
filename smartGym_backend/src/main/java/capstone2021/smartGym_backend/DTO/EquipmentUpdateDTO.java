@@ -1,29 +1,10 @@
-package capstone2021.smartGym_backend.domain;
+package capstone2021.smartGym_backend.DTO;
 
-import com.sun.istack.NotNull;
-
-import javax.persistence.*;
-
-@Entity //DB 테이블
-public class Equipment {
-    @Id //식별자
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //자동으로 올라가게 설정
+public class EquipmentUpdateDTO {
     private Long equipmentID;
-
-    @Column(length = 200) //크기
-    @NotNull //널 허용 X
     private String equipmentName;
-
-    @Column(length = 200)
-    @NotNull
     private String equipmentCategory;
-
-    @Column(length = 5000)
-    @NotNull
     private String equipmentImage;
-
-    @Column(length = 8)
-    @NotNull
     private int equipmentAvailable;
 
     public Long getEquipmentID() {

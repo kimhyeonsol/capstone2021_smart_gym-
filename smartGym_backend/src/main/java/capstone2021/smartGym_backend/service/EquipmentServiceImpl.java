@@ -1,11 +1,14 @@
 package capstone2021.smartGym_backend.service;
 
 
+import capstone2021.smartGym_backend.DTO.*;
 import capstone2021.smartGym_backend.domain.Equipment;
 import capstone2021.smartGym_backend.repository.EquipmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -18,23 +21,53 @@ public class EquipmentServiceImpl implements EquipmentService{
     }
 
     @Override
-    public Equipment create(Equipment equipment) {
-        equipmentRepository.saveEquipment(equipment);
+    public boolean create(EquipmentCreateDTO equipmentCreateDTO) {
+        Equipment equipment = new Equipment();
+        equipment.setEquipmentName(equipmentCreateDTO.getEquipmentName());
+        equipment.setEquipmentCategory(equipmentCreateDTO.getEquipmentCategory());
+        equipment.setEquipmentImage(equipmentCreateDTO.getEquipmentImage());
+        equipment.setEquipmentAvailable(equipmentCreateDTO.getEquipmentAvailable());
 
-        return equipment;
+        return equipmentRepository.createEquipment(equipment);
     }
 
     @Override
-    public Equipment update(Equipment equipment) {
-        equipmentRepository.updateEquipment(equipment);
+    public boolean update(EquipmentUpdateDTO equipmentUpdateDTO) {
+        Equipment equipment = new Equipment();
+        equipment.setEquipmentID(equipmentUpdateDTO.getEquipmentID());
+        equipment.setEquipmentName(equipmentUpdateDTO.getEquipmentName());
+        equipment.setEquipmentCategory(equipmentUpdateDTO.getEquipmentCategory());
+        equipment.setEquipmentImage(equipmentUpdateDTO.getEquipmentImage());
+        equipment.setEquipmentAvailable(equipmentUpdateDTO.getEquipmentAvailable());
 
-        return equipment;
+        return equipmentRepository.updateEquipment(equipment);
     }
 
     @Override
-    public Equipment delete(Equipment equipment) {
-        equipmentRepository.deleteEquipment(equipment);
+    public boolean delete(EquipmentDeleteDetailedReadDTO equipmentDeleteDetailedReadDTO) {
+        Equipment equipment = new Equipment();
+        equipment.setEquipmentID(equipmentDeleteDetailedReadDTO.getEquipmentID());
 
-        return equipment;
+        return equipmentRepository.deleteEquipment(equipment);
+    }
+
+    @Override
+    public List<Equipment> readAll() {
+        return equipmentRepository.readAllEquipment();
+    }
+
+    @Override
+    public List<Equipment> read(EquipmentReadDTO equipmentReadDTO){
+        String equipmentCategory = equipmentReadDTO.getEquipmentCategory();
+
+        return equipmentRepository.readEquipment(equipmentCategory);
+    }
+
+    @Override
+    public Equipment detailedRead(EquipmentDeleteDetailedReadDTO equipmentdetailedReadDTO) {
+        Equipment equipment = new Equipment();
+        equipment.setEquipmentID(equipmentdetailedReadDTO.getEquipmentID());
+
+        return equipmentRepository.detailedReadEquipment(equipment);
     }
 }

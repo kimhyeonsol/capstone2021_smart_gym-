@@ -8,61 +8,61 @@ import javax.persistence.*;
 public class Equipment {
     @Id //식별자
     @GeneratedValue(strategy = GenerationType.IDENTITY) //자동으로 올라가게 설정
-    private Long equipmentID;
+    private Long equipment_id;
 
     @Column(length = 200) //크기
     @NotNull //널 허용 X
-    private String equipmentName;
+    private String equipment_name;
 
     @Column(length = 200)
     @NotNull
-    private String equipmentCategory;
+    private String equipment_category;
 
     @Column(length = 5000)
     @NotNull
-    private String equipmentImage;
+    private String equipment_image;
 
     @Column(length = 8)
     @NotNull
-    private int equipmentAvailable;
+    private int equipment_available;
 
-    public Long getEquipmentID() {
-        return equipmentID;
+    public Long getEquipment_id() {
+        return equipment_id;
     }
 
-    public void setEquipmentID(Long equipmentID) {
-        this.equipmentID = equipmentID;
+    public void setEquipment_id(Long equipment_id) {
+        this.equipment_id = equipment_id;
     }
 
-    public String getEquipmentName() {
-        return equipmentName;
+    public String getEquipment_name() {
+        return equipment_name;
     }
 
-    public void setEquipmentName(String equipmentName) {
-        this.equipmentName = equipmentName;
+    public void setEquipment_name(String equipment_name) {
+        this.equipment_name = equipment_name;
     }
 
-    public String getEquipmentCategory() {
-        return equipmentCategory;
+    public String getEquipment_category() {
+        return equipment_category;
     }
 
-    public void setEquipmentCategory(String equipmentCategory) {
-        this.equipmentCategory = equipmentCategory;
+    public void setEquipment_category(String equipment_category) {
+        this.equipment_category = equipment_category;
     }
 
-    public String getEquipmentImage() {
-        return equipmentImage;
+    public String getEquipment_image() {
+        return equipment_image;
     }
 
-    public void setEquipmentImage(String equipmentImage) {
-        this.equipmentImage = equipmentImage;
+    public void setEquipment_image(String equipment_image) {
+        this.equipment_image = equipment_image;
     }
 
-    public int getEquipmentAvailable() {
-        return equipmentAvailable;
+    public int getEquipment_available() {
+        return equipment_available;
     }
 
-    public void setEquipmentAvailable(int equipmentAvailable) {
-        this.equipmentAvailable = equipmentAvailable;
+    public void setEquipment_available(int equipment_available) {
+        this.equipment_available = equipment_available;
     }
 }

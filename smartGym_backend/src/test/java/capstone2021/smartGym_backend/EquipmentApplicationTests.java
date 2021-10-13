@@ -1,8 +1,6 @@
 package capstone2021.smartGym_backend;
 
-import capstone2021.smartGym_backend.DTO.EquipmentCreateDTO;
-import capstone2021.smartGym_backend.DTO.EquipmentDeleteDetailedReadDTO;
-import capstone2021.smartGym_backend.DTO.EquipmentUpdateDTO;
+import capstone2021.smartGym_backend.domain.Equipment;
 import capstone2021.smartGym_backend.repository.EquipmentRepository;
 import capstone2021.smartGym_backend.service.EquipmentService;
 import org.junit.jupiter.api.Test;
@@ -22,32 +20,35 @@ public class EquipmentApplicationTests extends SmartGymBackendApplicationTests{
     @Test
     @Commit
     void create테스트() {
-        EquipmentCreateDTO equipmentCreateDTO = new EquipmentCreateDTO();
-        equipmentCreateDTO.setEquipmentName("equipment1");
-        equipmentCreateDTO.setEquipmentCategory("어깨, 하체");
-        equipmentCreateDTO.setEquipmentImage(" ");
-        equipmentCreateDTO.setEquipmentAvailable(2);
-        equipmentService.create(equipmentCreateDTO);
+        Equipment equipment = new Equipment();
+        equipment.setEquipment_name("legmachine_22");
+        equipment.setEquipment_category("leg");
+        equipment.setEquipment_image(" ");
+        equipment.setEquipment_available(2);
+        equipmentService.create(equipment);
     }
 
     @Test
     @Commit
     void update테스트() {
-        EquipmentUpdateDTO equipmentUpdateDTO = new EquipmentUpdateDTO();
-        equipmentUpdateDTO.setEquipmentID((long)1); //id 값 일치시켜야 업데이트 됨
-        equipmentUpdateDTO.setEquipmentName("equipment1");
-        equipmentUpdateDTO.setEquipmentCategory("이두, 삼두");
-        equipmentUpdateDTO.setEquipmentImage(" ");
-        equipmentUpdateDTO.setEquipmentAvailable(2);
-        equipmentService.update(equipmentUpdateDTO);
+        Equipment equipment = new Equipment();
+        equipment.setEquipment_id((long)3); //id 값 일치시켜야 업데이트 됨
+        equipment.setEquipment_name("legmachine_3");
+        equipment.setEquipment_category("leg");
+        equipment.setEquipment_image(" ");
+        equipment.setEquipment_available(2);
+        equipmentService.update(equipment);
     }
 
     @Test
     @Commit
     void delete테스트() {
-        EquipmentDeleteDetailedReadDTO equipmentDeleteDetailedReadDTO = new EquipmentDeleteDetailedReadDTO();
-        equipmentDeleteDetailedReadDTO.setEquipmentID((long)1); //id 값만 일치하면 잘 삭제됨
-
-        equipmentService.delete(equipmentDeleteDetailedReadDTO);
+        Equipment equipment = new Equipment();
+        equipment.setEquipment_id((long)4); //id 값만 일치하면 잘 삭제됨
+        equipment.setEquipment_name("legmachine_1");
+        equipment.setEquipment_category("leg");
+        equipment.setEquipment_image(" ");
+        equipment.setEquipment_available(2);
+        equipmentService.delete(equipment);
     }
 }

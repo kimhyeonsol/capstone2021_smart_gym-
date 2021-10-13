@@ -1,11 +1,14 @@
 package capstone2021.smartGym_backend.repository;
 
 import capstone2021.smartGym_backend.domain.Equipment;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 public interface EquipmentRepository{
-    Equipment saveEquipment(Equipment equipment);
-    Equipment updateEquipment(Equipment equipment);
-    Equipment deleteEquipment(Equipment equipment);
+    boolean createEquipment(Equipment equipment);
+    boolean updateEquipment(Equipment equipment);
+    boolean deleteEquipment(Equipment equipment);
+    List<Equipment> readAllEquipment();
+    List<Equipment> readEquipment(String equipmentCategory);
+    Equipment detailedReadEquipment(Equipment equipment);
 }

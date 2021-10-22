@@ -22,12 +22,47 @@ public class EquipmentApplicationTests extends SmartGymBackendApplicationTests{
     @Test
     @Commit
     void create테스트() {
-        EquipmentCreateDTO equipmentCreateDTO = new EquipmentCreateDTO();
-        equipmentCreateDTO.setEquipmentName("equipment1");
-        equipmentCreateDTO.setEquipmentCategory("어깨, 하체");
-        equipmentCreateDTO.setEquipmentImage(" ");
-        equipmentCreateDTO.setEquipmentAvailable(2);
-        equipmentService.create(equipmentCreateDTO);
+        EquipmentCreateDTO equipmentCreateDTO1 = new EquipmentCreateDTO();
+        equipmentCreateDTO1.setEquipmentName("equipment1");
+        equipmentCreateDTO1.setEquipmentCategory("011000000100");
+        equipmentCreateDTO1.setEquipmentImage(" ");
+        equipmentCreateDTO1.setEquipmentAvailable(2);
+        equipmentService.create(equipmentCreateDTO1);
+
+        EquipmentCreateDTO equipmentCreateDTO2 = new EquipmentCreateDTO();
+        equipmentCreateDTO1.setEquipmentName("equipment2");
+        equipmentCreateDTO1.setEquipmentCategory("100000000000");
+        equipmentCreateDTO1.setEquipmentImage(" ");
+        equipmentCreateDTO1.setEquipmentAvailable(2);
+        equipmentService.create(equipmentCreateDTO1);
+
+        EquipmentCreateDTO equipmentCreateDTO3 = new EquipmentCreateDTO();
+        equipmentCreateDTO1.setEquipmentName("equipment3");
+        equipmentCreateDTO1.setEquipmentCategory("000000010001");
+        equipmentCreateDTO1.setEquipmentImage(" ");
+        equipmentCreateDTO1.setEquipmentAvailable(2);
+        equipmentService.create(equipmentCreateDTO1);
+
+        EquipmentCreateDTO equipmentCreateDTO4 = new EquipmentCreateDTO();
+        equipmentCreateDTO1.setEquipmentName("equipment4");
+        equipmentCreateDTO1.setEquipmentCategory("000000100000");
+        equipmentCreateDTO1.setEquipmentImage(" ");
+        equipmentCreateDTO1.setEquipmentAvailable(2);
+        equipmentService.create(equipmentCreateDTO1);
+
+        EquipmentCreateDTO equipmentCreateDTO5 = new EquipmentCreateDTO();
+        equipmentCreateDTO1.setEquipmentName("equipment5");
+        equipmentCreateDTO1.setEquipmentCategory("010000000100");
+        equipmentCreateDTO1.setEquipmentImage(" ");
+        equipmentCreateDTO1.setEquipmentAvailable(2);
+        equipmentService.create(equipmentCreateDTO1);
+
+        EquipmentCreateDTO equipmentCreateDTO6 = new EquipmentCreateDTO();
+        equipmentCreateDTO1.setEquipmentName("equipment6");
+        equipmentCreateDTO1.setEquipmentCategory("001000101000");
+        equipmentCreateDTO1.setEquipmentImage(" ");
+        equipmentCreateDTO1.setEquipmentAvailable(2);
+        equipmentService.create(equipmentCreateDTO1);
     }
 
     @Test
@@ -36,7 +71,7 @@ public class EquipmentApplicationTests extends SmartGymBackendApplicationTests{
         EquipmentUpdateDTO equipmentUpdateDTO = new EquipmentUpdateDTO();
         equipmentUpdateDTO.setEquipmentID((long)1); //id 값 일치시켜야 업데이트 됨
         equipmentUpdateDTO.setEquipmentName("equipment1");
-        equipmentUpdateDTO.setEquipmentCategory("이두, 삼두");
+        equipmentUpdateDTO.setEquipmentCategory("001000000100");
         equipmentUpdateDTO.setEquipmentImage(" ");
         equipmentUpdateDTO.setEquipmentAvailable(2);
         equipmentService.update(equipmentUpdateDTO);

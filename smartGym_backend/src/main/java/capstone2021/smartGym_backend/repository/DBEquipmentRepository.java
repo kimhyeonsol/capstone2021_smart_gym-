@@ -61,58 +61,63 @@ public class DBEquipmentRepository implements EquipmentRepository{
 
     @Override
     public List<Equipment> readEquipment(String equipmentCategory) {
-        if(equipmentCategory.equals("유산소")){
-            return em.createQuery("select e from Equipment e where e.equipmentCategory like '%유산소%'", Equipment.class)
+        if(equipmentCategory.equals("100000000000")){
+            return em.createQuery("select e from Equipment e where e.equipmentCategory like '1%'", Equipment.class)
                     .getResultList();
         }
 
-        else if(equipmentCategory.equals("가슴")){
-            return em.createQuery("select e from Equipment e where e.equipmentCategory like '%가슴%'", Equipment.class)
+        else if(equipmentCategory.equals("010000000000")){
+            return em.createQuery("select e from Equipment e where e.equipmentCategory like '_1%'", Equipment.class)
                     .getResultList();
         }
 
-        else if(equipmentCategory.equals("등")){
-            return em.createQuery("select e from Equipment e where e.equipmentCategory like '%등%'", Equipment.class)
+        else if(equipmentCategory.equals("001000000000")){
+            return em.createQuery("select e from Equipment e where e.equipmentCategory like '__1%'", Equipment.class)
                     .getResultList();
         }
 
-        else if(equipmentCategory.equals("어깨")){
-            return em.createQuery("select e from Equipment e where e.equipmentCategory like '%어깨%'", Equipment.class)
+        else if(equipmentCategory.equals("000100000000")){
+            return em.createQuery("select e from Equipment e where e.equipmentCategory like '___1%'", Equipment.class)
                     .getResultList();
         }
 
-        else if(equipmentCategory.equals("삼두")){
-            return em.createQuery("select e from Equipment e where e.equipmentCategory like '%삼두%'", Equipment.class)
+        else if(equipmentCategory.equals("000010000000")){
+            return em.createQuery("select e from Equipment e where e.equipmentCategory like '____1%'", Equipment.class)
                     .getResultList();
         }
 
-        else if(equipmentCategory.equals("이두")){
-            return em.createQuery("select e from Equipment e where e.equipmentCategory like '%이두%'", Equipment.class)
+        else if(equipmentCategory.equals("000001000000")){
+            return em.createQuery("select e from Equipment e where e.equipmentCategory like '_____1%'", Equipment.class)
                     .getResultList();
         }
 
-        else if(equipmentCategory.equals("하체")){
-            return em.createQuery("select e from Equipment e where e.equipmentCategory like '%하체%'", Equipment.class)
+        else if(equipmentCategory.equals("000000100000")){
+            return em.createQuery("select e from Equipment e where e.equipmentCategory like '______1%'", Equipment.class)
                     .getResultList();
         }
 
-        else if(equipmentCategory.equals("목")){
-            return em.createQuery("select e from Equipment e where e.equipmentCategory like '%목%'", Equipment.class)
+        else if(equipmentCategory.equals("000000010000")) {
+            return em.createQuery("select e from Equipment e where e.equipmentCategory like '_______1%'", Equipment.class)
                     .getResultList();
         }
 
-        else if(equipmentCategory.equals("승모근")){
-            return em.createQuery("select e from Equipment e where e.equipmentCategory like '%승모근%'", Equipment.class)
+        else if(equipmentCategory.equals("000000001000")){
+            return em.createQuery("select e from Equipment e where e.equipmentCategory like '________1%'", Equipment.class)
                     .getResultList();
         }
 
-        else if(equipmentCategory.equals("복부")){
-            return em.createQuery("select e from Equipment e where e.equipmentCategory like '%복부%'", Equipment.class)
+        else if(equipmentCategory.equals("000000000100")){
+            return em.createQuery("select e from Equipment e where e.equipmentCategory like '_________1%'", Equipment.class)
                     .getResultList();
         }
 
-        else if(equipmentCategory.equals("허리")){
-            return em.createQuery("select e from Equipment e where e.equipmentCategory like '%허리%'", Equipment.class)
+        else if(equipmentCategory.equals("000000000010")){
+            return em.createQuery("select e from Equipment e where e.equipmentCategory like '__________1%'", Equipment.class)
+                    .getResultList();
+        }
+
+        else if(equipmentCategory.equals("000000000001")){
+            return em.createQuery("select e from Equipment e where e.equipmentCategory like '___________1%'", Equipment.class)
                     .getResultList();
         }
 

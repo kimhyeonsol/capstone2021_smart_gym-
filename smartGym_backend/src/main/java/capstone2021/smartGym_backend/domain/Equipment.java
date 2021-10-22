@@ -8,21 +8,22 @@ import javax.persistence.*;
 public class Equipment {
     @Id //식별자
     @GeneratedValue(strategy = GenerationType.IDENTITY) //자동으로 올라가게 설정
+    @Column(name="equipment_id") //크기
     private Long equipmentID;
 
-    @Column(length = 200) //크기
+    @Column(name="equipment_name", length = 200) //크기
     @NotNull //널 허용 X
     private String equipmentName;
 
-    @Column(length = 200)
+    @Column(name="equipment_category", length = 200)
     @NotNull
     private String equipmentCategory;
 
-    @Column(length = 5000)
+    @Column(name="equipment_image", length = 5000)
     @NotNull
     private String equipmentImage;
 
-    @Column(length = 8)
+    @Column(name="equipment_available", length = 11)
     @NotNull
     private int equipmentAvailable;
 

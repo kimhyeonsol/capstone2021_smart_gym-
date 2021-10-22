@@ -13,12 +13,12 @@ public class Reservation {
     @ManyToOne
     @JoinColumn(name="user_id") //크기
     @NotNull //널 허용 X
-    private String userID;
+    private AllowedUser userID;
 
-    @ManyToOne
+
     @Column(name="equipment_id") //크기
     @NotNull //널 허용 X
-    private String equipmentId;
+    private Equipment equipmentID;
 
     @Column(name="start_time", length = 200) //크기
     @NotNull //널 허용 X

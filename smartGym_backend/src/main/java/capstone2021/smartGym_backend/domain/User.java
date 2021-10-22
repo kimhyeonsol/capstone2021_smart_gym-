@@ -2,10 +2,10 @@ package capstone2021.smartGym_backend.domain;
 
 import com.sun.istack.NotNull;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 
 public class User {
     @Id //식별자

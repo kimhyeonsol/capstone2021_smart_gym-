@@ -5,13 +5,12 @@ import com.sun.istack.NotNull;
 import javax.persistence.*;
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name="DTYPE")
 public class User {
     @Id //식별자
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //자동으로 올라가게 설정
     @Column(name="user_id") //크기
-    private Long userID;
+    private String userID;
 
     @Column(name="user_pw", length = 200) //크기
     @NotNull //널 허용 X
@@ -32,5 +31,4 @@ public class User {
     @Column(name="user_email", length = 200) //크기
     @NotNull //널 허용 X
     private String userEmail;
-
 }

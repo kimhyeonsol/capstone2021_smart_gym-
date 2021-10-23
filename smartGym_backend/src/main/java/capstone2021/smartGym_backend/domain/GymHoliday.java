@@ -8,10 +8,10 @@ import javax.persistence.*;
 public class GymHoliday {
     @Id //식별자
     @GeneratedValue(strategy = GenerationType.IDENTITY) //자동으로 올라가게 설정
-    @Column(name="gymHoliday_id") //크기
+    @Column(name="gym_holiday_id") //크기
     private Long gymHolidayID;
 
-    @Column(name="gymHoliday_date", length = 20) //크기
+    @Column(name="gym_holiday_date", length = 20) //크기
     @NotNull //널 허용 X
     private String gymHolidayDate;
 }

@@ -17,6 +17,11 @@ public class ESL {
     private Equipment equipmentID;
 
     @OneToOne
+    @JoinColumn(name="reservation_id") //크기
+    @NotNull //널 허용 X
+    private Reservation reservationID;
+
+    @OneToOne
     @JoinColumn(name="gymInfo_id") //크기
     @NotNull //널 허용 X
     private GymInfo gymInfoID;

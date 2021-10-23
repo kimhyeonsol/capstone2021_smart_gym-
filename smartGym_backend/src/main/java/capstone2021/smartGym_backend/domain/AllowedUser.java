@@ -18,4 +18,7 @@ public class AllowedUser extends User{
     @Column(name="allowed_user_approval_date", length = 8) //크기
     @NotNull //널 허용 X
     private LocalDateTime allowedUserApprovalDate;
+
+
+
 }

@@ -3,6 +3,7 @@ package capstone2021.smartGym_backend.service;
 
 import capstone2021.smartGym_backend.DTO.*;
 import capstone2021.smartGym_backend.domain.Equipment;
+import capstone2021.smartGym_backend.domain.EquipmentCategory;
 import capstone2021.smartGym_backend.repository.EquipmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,11 +25,12 @@ public class EquipmentServiceImpl implements EquipmentService{
     public boolean create(EquipmentCreateDTO equipmentCreateDTO) {
         Equipment equipment = new Equipment();
         equipment.setEquipmentName(equipmentCreateDTO.getEquipmentName());
-        equipment.setEquipmentCategory(equipmentCreateDTO.getEquipmentCategory());
+        equipment.setEquipmentNameNth(equipmentCreateDTO.getEquipmentNameNth());
+        equipment.setEquipmentCategoryList(equipmentCreateDTO.getEquipmentCategoryList());
         equipment.setEquipmentImage(equipmentCreateDTO.getEquipmentImage());
         equipment.setEquipmentAvailable(equipmentCreateDTO.getEquipmentAvailable());
 
-        return equipmentRepository.createEquipment(equipment);
+        return equipmentRepository.create(equipment);
     }
 
     @Override
@@ -36,11 +38,12 @@ public class EquipmentServiceImpl implements EquipmentService{
         Equipment equipment = new Equipment();
         equipment.setEquipmentID(equipmentUpdateDTO.getEquipmentID());
         equipment.setEquipmentName(equipmentUpdateDTO.getEquipmentName());
-        equipment.setEquipmentCategory(equipmentUpdateDTO.getEquipmentCategory());
+        equipment.setEquipmentNameNth(equipmentUpdateDTO.getEquipmentNameNth());
+        equipment.setEquipmentCategoryList(equipmentUpdateDTO.getEquipmentCategoryList());
         equipment.setEquipmentImage(equipmentUpdateDTO.getEquipmentImage());
         equipment.setEquipmentAvailable(equipmentUpdateDTO.getEquipmentAvailable());
 
-        return equipmentRepository.updateEquipment(equipment);
+        return equipmentRepository.update(equipment);
     }
 
     @Override
@@ -48,26 +51,26 @@ public class EquipmentServiceImpl implements EquipmentService{
         Equipment equipment = new Equipment();
         equipment.setEquipmentID(equipmentDeleteDetailedReadDTO.getEquipmentID());
 
-        return equipmentRepository.deleteEquipment(equipment);
+        return equipmentRepository.delete(equipment);
     }
 
     @Override
     public List<Equipment> readAll() {
-        return equipmentRepository.readAllEquipment();
+        return equipmentRepository.readAll();
     }
 
     @Override
-    public List<Equipment> read(EquipmentReadDTO equipmentReadDTO){
-        String equipmentCategory = equipmentReadDTO.getEquipmentCategory();
+    public List<Equipment> readByCategory(EquipmentReadByCategoryDTO equipmentReadByCategoryDTO){
+        String equipmentCategorySelect = equipmentReadByCategoryDTO.getEquipmentCategorySelect();
 
-        return equipmentRepository.readEquipment(equipmentCategory);
+        return equipmentRepository.readByCategory(equipmentCategorySelect);
     }
 
     @Override
-    public Equipment detailedRead(EquipmentDeleteDetailedReadDTO equipmentdetailedReadDTO) {
+    public List<EquipmentCategory> detailedRead(EquipmentDeleteDetailedReadDTO equipmentdetailedReadDTO) {
         Equipment equipment = new Equipment();
         equipment.setEquipmentID(equipmentdetailedReadDTO.getEquipmentID());
 
-        return equipmentRepository.detailedReadEquipment(equipment);
+        return equipmentRepository.detailedRead(equipment);
     }
 }

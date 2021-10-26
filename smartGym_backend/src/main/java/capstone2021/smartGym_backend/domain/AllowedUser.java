@@ -4,13 +4,10 @@ import com.sun.istack.NotNull;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import java.time.LocalDateTime;
 
 @Entity
 public class AllowedUser extends User{
-
-
     @Column(name="allowed_user_reservation_authority", length = 8) //크기
     @NotNull //널 허용 X
     private String allowedUserReservationAuthority;

@@ -2,6 +2,7 @@ package capstone2021.smartGym_backend.controller;
 
 import capstone2021.smartGym_backend.DTO.*;
 import capstone2021.smartGym_backend.domain.Equipment;
+import capstone2021.smartGym_backend.domain.EquipmentCategory;
 import capstone2021.smartGym_backend.service.EquipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -47,16 +48,16 @@ public class EquipmentController {
     }
 
     @CrossOrigin("*")
-    @PostMapping("/equipment/read") //운동기구 카테고리별 조회
+    @PostMapping("/equipment/readByCategory") //운동기구 카테고리별 조회
     @ResponseBody
-    public List<Equipment> equipmentRead(@RequestBody final EquipmentReadDTO equipmentReadDTO){
-        return equipmentService.read(equipmentReadDTO);
+    public List<Equipment> equipmentReadByCategory(@RequestBody final EquipmentReadByCategoryDTO equipmentReadByCategoryDTO){
+        return equipmentService.readByCategory(equipmentReadByCategoryDTO);
     }
 
     @CrossOrigin("*")
     @PostMapping("/equipment/detailedRead") //운동기구 상세조회
     @ResponseBody
-    public Equipment equipmentDetailedRead(@RequestBody final EquipmentDeleteDetailedReadDTO equipmentdetailedReadDTO){
+    public List<EquipmentCategory> equipmentDetailedRead(@RequestBody final EquipmentDeleteDetailedReadDTO equipmentdetailedReadDTO){
         return equipmentService.detailedRead(equipmentdetailedReadDTO);
     }
 }

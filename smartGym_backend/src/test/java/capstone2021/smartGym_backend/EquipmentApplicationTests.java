@@ -22,28 +22,31 @@ public class EquipmentApplicationTests extends SmartGymBackendApplicationTests{
     @Test
     @Commit
     void create테스트() {
-        EquipmentCreateDTO equipmentCreateDTO1 = new EquipmentCreateDTO();
-        equipmentCreateDTO1.setEquipmentName("equipment1");
-        equipmentCreateDTO1.setEquipmentCategory("011000000100");
+        /*EquipmentCreateDTO equipmentCreateDTO1 = new EquipmentCreateDTO();
+        equipmentCreateDTO1.setEquipmentName("equipment");
+        equipmentCreateDTO1.setEquipmentNameNth("1");
+        equipmentCreateDTO1.setEquipmentCategoryList("가슴, 유산소");
         equipmentCreateDTO1.setEquipmentImage(" ");
         equipmentCreateDTO1.setEquipmentAvailable(2);
-        equipmentService.create(equipmentCreateDTO1);
+        equipmentService.create(equipmentCreateDTO1);*/
 
-        EquipmentCreateDTO equipmentCreateDTO2 = new EquipmentCreateDTO();
-        equipmentCreateDTO1.setEquipmentName("equipment2");
-        equipmentCreateDTO1.setEquipmentCategory("100000000000");
-        equipmentCreateDTO1.setEquipmentImage(" ");
-        equipmentCreateDTO1.setEquipmentAvailable(2);
-        equipmentService.create(equipmentCreateDTO1);
+        /*EquipmentCreateDTO equipmentCreateDTO2 = new EquipmentCreateDTO();
+        equipmentCreateDTO2.setEquipmentName("equipment");
+        equipmentCreateDTO2.setEquipmentNameNth("2");
+        equipmentCreateDTO2.setEquipmentCategoryList("가슴, 유산소");
+        equipmentCreateDTO2.setEquipmentImage(" ");
+        equipmentCreateDTO2.setEquipmentAvailable(2);
+        equipmentService.create(equipmentCreateDTO2);*/
 
-        EquipmentCreateDTO equipmentCreateDTO3 = new EquipmentCreateDTO();
-        equipmentCreateDTO1.setEquipmentName("equipment3");
-        equipmentCreateDTO1.setEquipmentCategory("000000010001");
-        equipmentCreateDTO1.setEquipmentImage(" ");
-        equipmentCreateDTO1.setEquipmentAvailable(2);
-        equipmentService.create(equipmentCreateDTO1);
+        /*EquipmentCreateDTO equipmentCreateDTO3 = new EquipmentCreateDTO();
+        equipmentCreateDTO3.setEquipmentName("레그프레스");
+        equipmentCreateDTO3.setEquipmentNameNth("1");
+        equipmentCreateDTO3.setEquipmentCategoryList("하체");
+        equipmentCreateDTO3.setEquipmentImage(" ");
+        equipmentCreateDTO3.setEquipmentAvailable(2);
+        equipmentService.create(equipmentCreateDTO3);*/
 
-        EquipmentCreateDTO equipmentCreateDTO4 = new EquipmentCreateDTO();
+        /*EquipmentCreateDTO equipmentCreateDTO4 = new EquipmentCreateDTO();
         equipmentCreateDTO1.setEquipmentName("equipment4");
         equipmentCreateDTO1.setEquipmentCategory("000000100000");
         equipmentCreateDTO1.setEquipmentImage(" ");
@@ -62,16 +65,17 @@ public class EquipmentApplicationTests extends SmartGymBackendApplicationTests{
         equipmentCreateDTO1.setEquipmentCategory("001000101000");
         equipmentCreateDTO1.setEquipmentImage(" ");
         equipmentCreateDTO1.setEquipmentAvailable(2);
-        equipmentService.create(equipmentCreateDTO1);
+        equipmentService.create(equipmentCreateDTO1);*/
     }
 
     @Test
     @Commit
     void update테스트() {
         EquipmentUpdateDTO equipmentUpdateDTO = new EquipmentUpdateDTO();
-        equipmentUpdateDTO.setEquipmentID((long)1); //id 값 일치시켜야 업데이트 됨
-        equipmentUpdateDTO.setEquipmentName("equipment1");
-        equipmentUpdateDTO.setEquipmentCategory("001000000100");
+        equipmentUpdateDTO.setEquipmentID((long)2); //id 값 일치시켜야 업데이트 됨
+        equipmentUpdateDTO.setEquipmentName("equipment");
+        equipmentUpdateDTO.setEquipmentNameNth("2");
+        equipmentUpdateDTO.setEquipmentCategoryList("가슴, 유산소");
         equipmentUpdateDTO.setEquipmentImage(" ");
         equipmentUpdateDTO.setEquipmentAvailable(2);
         equipmentService.update(equipmentUpdateDTO);
@@ -81,7 +85,7 @@ public class EquipmentApplicationTests extends SmartGymBackendApplicationTests{
     @Commit
     void delete테스트() {
         EquipmentDeleteDetailedReadDTO equipmentDeleteDetailedReadDTO = new EquipmentDeleteDetailedReadDTO();
-        equipmentDeleteDetailedReadDTO.setEquipmentID((long)1); //id 값만 일치하면 잘 삭제됨
+        equipmentDeleteDetailedReadDTO.setEquipmentID((long)4); //id 값만 일치하면 잘 삭제됨
 
         equipmentService.delete(equipmentDeleteDetailedReadDTO);
     }

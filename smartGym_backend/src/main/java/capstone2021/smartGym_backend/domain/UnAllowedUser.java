@@ -9,8 +9,6 @@ import java.time.LocalDateTime;
 
 @Entity
 public class UnAllowedUser extends User{
-
-
     @Column(name="un_allowed_user_approval_authority", length = 8) //크기
     @NotNull //널 허용 X
     private String unAllowedUserApprovalAuthority;

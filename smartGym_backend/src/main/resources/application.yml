@@ -6,7 +6,6 @@ spring:
     password: root
     data:
       classpath: data.sql
-    initialization-mode: always
 
   jpa:
     show-sql: true

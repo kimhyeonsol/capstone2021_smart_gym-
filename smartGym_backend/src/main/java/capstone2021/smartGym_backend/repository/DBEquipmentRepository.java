@@ -1,10 +1,8 @@
 package capstone2021.smartGym_backend.repository;
 
-import capstone2021.smartGym_backend.DTO.EquipmentDetailedReadResponseDTO;
 import capstone2021.smartGym_backend.domain.Equipment;
 import capstone2021.smartGym_backend.domain.EquipmentCategory;
 import capstone2021.smartGym_backend.domain.Reservation;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
@@ -186,7 +184,6 @@ public class DBEquipmentRepository implements EquipmentRepository{
     public List<Equipment> readAll() {
         return em.createQuery("SELECT e FROM Equipment e", Equipment.class)
                 .getResultList();
-
     }
 
     @Override

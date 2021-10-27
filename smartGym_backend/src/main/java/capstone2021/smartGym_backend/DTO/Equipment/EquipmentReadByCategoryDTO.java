@@ -1,4 +1,4 @@
-package capstone2021.smartGym_backend.DTO;
+package capstone2021.smartGym_backend.DTO.Equipment;
 
 public class EquipmentReadByCategoryDTO {
     private String equipmentCategorySelect;

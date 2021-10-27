@@ -1,38 +1,10 @@
-package capstone2021.smartGym_backend.domain;
+package capstone2021.smartGym_backend.DTO.GymInfo;
 
-import com.sun.istack.NotNull;
-
-import javax.persistence.*;
-
-@Entity
-public class GymInfo {
-    @Id //식별자
-    @Column(name="gym_info_id", length = 11, columnDefinition = "int(11) default 1") //기본값 1
-    private int gymInfoID = 1;
-
-    @Column(name="gym_info_name", length = 200)
-    @NotNull //널 허용 X
+public class GymInfoDTO {
     private String gymInfoName;
-
-    @Column(name="gym_info_address", length = 4000)
-    @NotNull //널 허용 X
     private String gymInfoAddress;
-
-    @Column(name="gym_info_phone_number", length = 20)
-    @NotNull //널 허용 X
     private String gymInfoPhoneNumber;
-
-    @Column(name="gym_info_equipment_layout", length = 5000)
-    @NotNull //널 허용 X
     private String gymInfoEquipmentLayout;
-
-    public int getGymInfoID() {
-        return gymInfoID;
-    }
-
-    public void setGymInfoID(int gymInfoID) {
-        this.gymInfoID = gymInfoID;
-    }
 
     public String getGymInfoName() {
         return gymInfoName;

@@ -1,11 +1,20 @@
-package capstone2021.smartGym_backend.DTO;
+package capstone2021.smartGym_backend.DTO.Equipment;
 
-public class EquipmentCreateDTO {
+public class EquipmentUpdateDTO {
+    private Long equipmentID;
     private String equipmentName;
     private String equipmentNameNth;
     private String equipmentCategoryList;
     private String equipmentImage;
     private int equipmentAvailable;
+
+    public Long getEquipmentID() {
+        return equipmentID;
+    }
+
+    public void setEquipmentID(Long equipmentID) {
+        this.equipmentID = equipmentID;
+    }
 
     public String getEquipmentName() {
         return equipmentName;

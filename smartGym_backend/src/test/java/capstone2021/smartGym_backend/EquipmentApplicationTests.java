@@ -1,8 +1,7 @@
 package capstone2021.smartGym_backend;
 
-import capstone2021.smartGym_backend.DTO.EquipmentCreateDTO;
-import capstone2021.smartGym_backend.DTO.EquipmentDeleteDetailedReadDTO;
-import capstone2021.smartGym_backend.DTO.EquipmentUpdateDTO;
+import capstone2021.smartGym_backend.DTO.Equipment.EquipmentDeleteDetailedReadDTO;
+import capstone2021.smartGym_backend.DTO.Equipment.EquipmentUpdateDTO;
 import capstone2021.smartGym_backend.repository.EquipmentRepository;
 import capstone2021.smartGym_backend.service.EquipmentService;
 import org.junit.jupiter.api.Test;

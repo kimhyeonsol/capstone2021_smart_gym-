@@ -8,6 +8,7 @@ class SmartGymBackendApplicationTests {
 
 	@Test
 	void contextLoads() {
+
 	}
 
 }

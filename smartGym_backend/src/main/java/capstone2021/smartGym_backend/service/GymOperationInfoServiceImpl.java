@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -42,7 +43,7 @@ public class GymOperationInfoServiceImpl implements GymOperationInfoService{
     }
 
     @Override
-    public GymOperationInfo read() {
+    public GymOperationInfoDTO read() {
         return gymOperationInfoRepository.read();
     }
 
@@ -50,7 +51,7 @@ public class GymOperationInfoServiceImpl implements GymOperationInfoService{
     public boolean createHoliday(GymHolidayCreateDTO gymHolidayCreateDTO) {
         GymHoliday gymHoliday = new GymHoliday();
 
-        SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-DD");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         try {
             gymHoliday.setGymHolidayDate(format.parse(gymHolidayCreateDTO.getGymHolidayDate()));
         } catch (ParseException e) {

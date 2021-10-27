@@ -32,7 +32,7 @@ public class GymInfoApplicationTests {
         gymOperationInfoService.update(gymOperationInfoDTO);*/
 
         GymHolidayCreateDTO gymHolidayCreateDTO = new GymHolidayCreateDTO();
-        gymHolidayCreateDTO.setGymHolidayDate("2021-10-26");
+        gymHolidayCreateDTO.setGymHolidayDate("2021-10-28");
 
         gymOperationInfoService.createHoliday(gymHolidayCreateDTO);
     }

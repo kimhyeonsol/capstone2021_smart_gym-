@@ -26,7 +26,7 @@ public class GymOperationInfo {
     @Temporal(TemporalType.TIME) //TIME 형식
     private Date gymOperationInfoOperatingStartTime;
 
-    @Column(name="gym_operation_info_operating_end_time", length = 6, columnDefinition = "TIME(6) default '23:59:59'")
+    @Column(name="gym_operation_info_operating_end_time", length = 6, columnDefinition = "TIME(6) default '23:59:00'")
     @NotNull //널 허용 X
     @Temporal(TemporalType.TIME) //TIME 형식
     private Date gymOperationInfoOperatingEndTime;
@@ -35,7 +35,7 @@ public class GymOperationInfo {
         SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
         try {
             gymOperationInfoOperatingStartTime = format.parse("00:00:00");
-            gymOperationInfoOperatingEndTime = format.parse("23:59:59");
+            gymOperationInfoOperatingEndTime = format.parse("23:59:00");
         } catch (ParseException e) {
             e.printStackTrace();
         }

@@ -24,9 +24,8 @@ public class EquipmentServiceImpl extends ImageService implements EquipmentServi
         this.equipmentRepository = equipmentRepository;
     }
 
-    @SneakyThrows
     @Override
-    public boolean create(EquipmentCreateDTO equipmentCreateDTO){
+    public boolean create(EquipmentCreateDTO equipmentCreateDTO) throws IOException {
         Equipment equipment = new Equipment();
         equipment.setEquipmentName(equipmentCreateDTO.getEquipmentInfoDTO().getEquipmentName());
         equipment.setEquipmentNameNth(equipmentCreateDTO.getEquipmentInfoDTO().getEquipmentNameNth());

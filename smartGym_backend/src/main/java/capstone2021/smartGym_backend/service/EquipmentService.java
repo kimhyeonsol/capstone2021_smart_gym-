@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.List;
 
 public interface EquipmentService {
-    boolean create(EquipmentCreateDTO equipmentCreateDTO); //운동기구 등록
+    boolean create(EquipmentCreateDTO equipmentCreateDTO) throws IOException; //운동기구 등록
     boolean update(EquipmentUpdateDTO equipmentUpdateDTO); //운동기구 수정
     boolean delete(EquipmentDeleteDetailedReadDTO equipmentdetailedReadDTO); //운동기구 삭제
     List<Equipment> readAll(); //운동기구 전체 조회

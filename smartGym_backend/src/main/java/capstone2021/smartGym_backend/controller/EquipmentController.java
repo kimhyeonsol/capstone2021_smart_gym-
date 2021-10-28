@@ -23,7 +23,7 @@ public class EquipmentController {
     @CrossOrigin("*")
     @PostMapping("/equipment/create") //운동기구 등록
     @ResponseBody
-    public boolean equipmentCreate(@ModelAttribute final EquipmentCreateDTO equipmentCreateDTO){
+    public boolean equipmentCreate(@ModelAttribute final EquipmentCreateDTO equipmentCreateDTO) throws IOException {
         return equipmentService.create(equipmentCreateDTO);
     }
 

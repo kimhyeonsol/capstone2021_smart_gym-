@@ -4,7 +4,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class EquipmentCreateDTO {
     private MultipartFile equipmentImage;
-    private EquipmentInfoCreateDTO equipmentInfoDTO;
+    private EquipmentInfoCreateDTO equipmentInfoCreateDTO;
 
     public MultipartFile getEquipmentImage() {
         return equipmentImage;
@@ -14,11 +14,11 @@ public class EquipmentCreateDTO {
         this.equipmentImage = equipmentImage;
     }
 
-    public EquipmentInfoCreateDTO getEquipmentInfoDTO() {
-        return equipmentInfoDTO;
+    public EquipmentInfoCreateDTO getEquipmentInfoCreateDTO() {
+        return equipmentInfoCreateDTO;
     }
 
-    public void setEquipmentInfoDTO(EquipmentInfoCreateDTO equipmentInfoDTO) {
-        this.equipmentInfoDTO = equipmentInfoDTO;
+    public void setEquipmentInfoCreateDTO(EquipmentInfoCreateDTO equipmentInfoCreateDTO) {
+        this.equipmentInfoCreateDTO = equipmentInfoCreateDTO;
     }
 }

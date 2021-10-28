@@ -1,12 +1,10 @@
 package capstone2021.smartGym_backend.service;
 
-import capstone2021.smartGym_backend.DTO.Equipment.EquipmentCreateDTO;
-import capstone2021.smartGym_backend.DTO.Equipment.EquipmentDeleteDetailedReadDTO;
-import capstone2021.smartGym_backend.DTO.Equipment.EquipmentReadByCategoryDTO;
-import capstone2021.smartGym_backend.DTO.Equipment.EquipmentUpdateDTO;
+import capstone2021.smartGym_backend.DTO.Equipment.*;
 import capstone2021.smartGym_backend.domain.Equipment;
 import capstone2021.smartGym_backend.domain.EquipmentCategory;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface EquipmentService {

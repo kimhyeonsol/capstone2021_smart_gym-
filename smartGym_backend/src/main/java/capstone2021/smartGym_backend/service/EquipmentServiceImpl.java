@@ -27,10 +27,10 @@ public class EquipmentServiceImpl extends ImageService implements EquipmentServi
     @Override
     public boolean create(EquipmentCreateDTO equipmentCreateDTO) throws IOException {
         Equipment equipment = new Equipment();
-        equipment.setEquipmentName(equipmentCreateDTO.getEquipmentInfoDTO().getEquipmentName());
-        equipment.setEquipmentNameNth(equipmentCreateDTO.getEquipmentInfoDTO().getEquipmentNameNth());
-        equipment.setEquipmentCategoryList(equipmentCreateDTO.getEquipmentInfoDTO().getEquipmentCategoryList());
-        equipment.setEquipmentAvailable(equipmentCreateDTO.getEquipmentInfoDTO().getEquipmentAvailable());
+        equipment.setEquipmentName(equipmentCreateDTO.getEquipmentInfoCreateDTO().getEquipmentName());
+        equipment.setEquipmentNameNth(equipmentCreateDTO.getEquipmentInfoCreateDTO().getEquipmentNameNth());
+        equipment.setEquipmentCategoryList(equipmentCreateDTO.getEquipmentInfoCreateDTO().getEquipmentCategoryList());
+        equipment.setEquipmentAvailable(equipmentCreateDTO.getEquipmentInfoCreateDTO().getEquipmentAvailable());
 
         String fileName = UUID.randomUUID() + "_" + equipmentCreateDTO.getEquipmentImage().getOriginalFilename();
         String fileUrl = upload(equipmentCreateDTO.getEquipmentImage(), fileName,  "/");

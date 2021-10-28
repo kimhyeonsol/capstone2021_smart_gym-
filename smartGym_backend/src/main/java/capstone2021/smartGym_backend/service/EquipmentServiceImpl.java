@@ -1,22 +1,22 @@
 package capstone2021.smartGym_backend.service;
 
 
-import capstone2021.smartGym_backend.DTO.Equipment.EquipmentCreateDTO;
-import capstone2021.smartGym_backend.DTO.Equipment.EquipmentDeleteDetailedReadDTO;
-import capstone2021.smartGym_backend.DTO.Equipment.EquipmentReadByCategoryDTO;
-import capstone2021.smartGym_backend.DTO.Equipment.EquipmentUpdateDTO;
+import capstone2021.smartGym_backend.DTO.Equipment.*;
 import capstone2021.smartGym_backend.domain.Equipment;
 import capstone2021.smartGym_backend.domain.EquipmentCategory;
 import capstone2021.smartGym_backend.repository.EquipmentRepository;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
 @Transactional
-public class EquipmentServiceImpl implements EquipmentService{
+public class EquipmentServiceImpl extends ImageService implements EquipmentService{
+    private static final java.util.UUID UUID = null;
     private final EquipmentRepository equipmentRepository;
 
     @Autowired
@@ -24,14 +24,18 @@ public class EquipmentServiceImpl implements EquipmentService{
         this.equipmentRepository = equipmentRepository;
     }
 
+    @SneakyThrows
     @Override
-    public boolean create(EquipmentCreateDTO equipmentCreateDTO) {
+    public boolean create(EquipmentCreateDTO equipmentCreateDTO){
         Equipment equipment = new Equipment();
-        equipment.setEquipmentName(equipmentCreateDTO.getEquipmentName());
-        equipment.setEquipmentNameNth(equipmentCreateDTO.getEquipmentNameNth());
-        equipment.setEquipmentCategoryList(equipmentCreateDTO.getEquipmentCategoryList());
-        equipment.setEquipmentImage(equipmentCreateDTO.getEquipmentImage());
-        equipment.setEquipmentAvailable(equipmentCreateDTO.getEquipmentAvailable());
+        equipment.setEquipmentName(equipmentCreateDTO.getEquipmentInfoDTO().getEquipmentName());
+        equipment.setEquipmentNameNth(equipmentCreateDTO.getEquipmentInfoDTO().getEquipmentNameNth());
+        equipment.setEquipmentCategoryList(equipmentCreateDTO.getEquipmentInfoDTO().getEquipmentCategoryList());
+        equipment.setEquipmentAvailable(equipmentCreateDTO.getEquipmentInfoDTO().getEquipmentAvailable());
+
+        String fileName = UUID.randomUUID() + "_" + equipmentCreateDTO.getEquipmentImage().getOriginalFilename();
+        String fileUrl = upload(equipmentCreateDTO.getEquipmentImage(), fileName,  "/");
+        equipment.setEquipmentImage(fileUrl);
 
         return equipmentRepository.create(equipment);
     }

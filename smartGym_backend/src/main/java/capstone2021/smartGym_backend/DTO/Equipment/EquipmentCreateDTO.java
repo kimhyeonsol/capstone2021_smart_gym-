@@ -1,49 +1,24 @@
 package capstone2021.smartGym_backend.DTO.Equipment;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class EquipmentCreateDTO {
-    private String equipmentName;
-    private String equipmentNameNth;
-    private String equipmentCategoryList;
-    private String equipmentImage;
-    private int equipmentAvailable;
+    private MultipartFile equipmentImage;
+    private EquipmentInfoCreateDTO equipmentInfoDTO;
 
-    public String getEquipmentName() {
-        return equipmentName;
-    }
-
-    public void setEquipmentName(String equipmentName) {
-        this.equipmentName = equipmentName;
-    }
-
-    public String getEquipmentNameNth() {
-        return equipmentNameNth;
-    }
-
-    public void setEquipmentNameNth(String equipmentNameNth) {
-        this.equipmentNameNth = equipmentNameNth;
-    }
-
-    public String getEquipmentCategoryList() {
-        return equipmentCategoryList;
-    }
-
-    public void setEquipmentCategoryList(String equipmentCategoryList) {
-        this.equipmentCategoryList = equipmentCategoryList;
-    }
-
-    public String getEquipmentImage() {
+    public MultipartFile getEquipmentImage() {
         return equipmentImage;
     }
 
-    public void setEquipmentImage(String equipmentImage) {
+    public void setEquipmentImage(MultipartFile equipmentImage) {
         this.equipmentImage = equipmentImage;
     }
 
-    public int getEquipmentAvailable() {
-        return equipmentAvailable;
+    public EquipmentInfoCreateDTO getEquipmentInfoDTO() {
+        return equipmentInfoDTO;
     }
 
-    public void setEquipmentAvailable(int equipmentAvailable) {
-        this.equipmentAvailable = equipmentAvailable;
+    public void setEquipmentInfoDTO(EquipmentInfoCreateDTO equipmentInfoDTO) {
+        this.equipmentInfoDTO = equipmentInfoDTO;
     }
 }

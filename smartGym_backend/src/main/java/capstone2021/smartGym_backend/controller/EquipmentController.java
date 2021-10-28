@@ -1,9 +1,6 @@
 package capstone2021.smartGym_backend.controller;
 
-import capstone2021.smartGym_backend.DTO.Equipment.EquipmentCreateDTO;
-import capstone2021.smartGym_backend.DTO.Equipment.EquipmentDeleteDetailedReadDTO;
-import capstone2021.smartGym_backend.DTO.Equipment.EquipmentReadByCategoryDTO;
-import capstone2021.smartGym_backend.DTO.Equipment.EquipmentUpdateDTO;
+import capstone2021.smartGym_backend.DTO.Equipment.*;
 import capstone2021.smartGym_backend.domain.Equipment;
 import capstone2021.smartGym_backend.domain.EquipmentCategory;
 import capstone2021.smartGym_backend.service.EquipmentService;
@@ -11,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -25,7 +23,7 @@ public class EquipmentController {
     @CrossOrigin("*")
     @PostMapping("/equipment/create") //운동기구 등록
     @ResponseBody
-    public boolean equipmentCreate(@RequestBody final EquipmentCreateDTO equipmentCreateDTO){
+    public boolean equipmentCreate(@ModelAttribute final EquipmentCreateDTO equipmentCreateDTO){
         return equipmentService.create(equipmentCreateDTO);
     }
 

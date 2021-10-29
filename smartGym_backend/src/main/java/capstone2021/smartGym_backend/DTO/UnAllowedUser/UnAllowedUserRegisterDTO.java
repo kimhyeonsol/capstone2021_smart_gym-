@@ -1,35 +1,11 @@
-package capstone2021.smartGym_backend.domain;
+package capstone2021.smartGym_backend.DTO.UnAllowedUser;
 
-import com.sun.istack.NotNull;
-
-import javax.persistence.*;
-
-@Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name="DTYPE")
-public class User {
-    @Id //식별자
-    @Column(name="user_id") //크기
+public class UnAllowedUserRegisterDTO {
     private String userID;
-
-    @Column(name="user_pw", length = 200) //크기
-    @NotNull //널 허용 X
     private String userPW;
-
-    @Column(name="user_name", length = 200) //크기
-    @NotNull //널 허용 X
     private String userName;
-
-    @Column(name="user_sex", length = 20) //크기
-    @NotNull //널 허용 X
     private String userSex;
-
-    @Column(name="user_phone", length = 200) //크기
-    @NotNull //널 허용 X
     private String userPhone;
-
-    @Column(name="user_email", length = 200) //크기
-    @NotNull //널 허용 X
     private String userEmail;
 
     public String getUserID() {

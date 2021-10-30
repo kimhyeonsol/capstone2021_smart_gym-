@@ -1,8 +1,5 @@
 package capstone2021.smartGym_backend.service;
 
-import capstone2021.smartGym_backend.DTO.EquipmentCreateDTO;
-import capstone2021.smartGym_backend.DTO.EquipmentDeleteDetailedReadDTO;
-import capstone2021.smartGym_backend.DTO.EquipmentUpdateDTO;
 import capstone2021.smartGym_backend.DTO.User.UserCreateDTO;
 import capstone2021.smartGym_backend.DTO.User.UserDeleteDTO;
 import capstone2021.smartGym_backend.DTO.User.UserUpdateDTO;

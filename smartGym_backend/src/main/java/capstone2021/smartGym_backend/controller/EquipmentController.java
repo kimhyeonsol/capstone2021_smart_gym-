@@ -28,7 +28,7 @@ public class EquipmentController {
     }
 
     @CrossOrigin("*")
-    @PostMapping("/equipment/update") //운동기구 수정
+    @PostMapping("/equipment/update") //운동기구 수정 
     @ResponseBody
     public boolean equipmentUpdate(@RequestBody final EquipmentUpdateDTO equipmentUpdateDTO){
         return equipmentService.update(equipmentUpdateDTO);

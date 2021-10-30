@@ -16,8 +16,19 @@ public class AllowedUser extends User{
     @NotNull //널 허용 X
     private LocalDateTime allowedUserApprovalDate;
 
+    public String getAllowedUserReservationAuthority() {
+        return allowedUserReservationAuthority;
+    }
 
+    public void setAllowedUserReservationAuthority(String allowedUserReservationAuthority) {
+        this.allowedUserReservationAuthority = allowedUserReservationAuthority;
+    }
 
+    public LocalDateTime getAllowedUserApprovalDate() {
+        return allowedUserApprovalDate;
+    }
 
-
+    public void setAllowedUserApprovalDate(LocalDateTime allowedUserApprovalDate) {
+        this.allowedUserApprovalDate = allowedUserApprovalDate;
+    }
 }

@@ -44,7 +44,6 @@ public class DBUnAllowedUserRepository implements UnAllowedUserRepository{
                 return true;
             }
         }
-
         return false;
     }
 
@@ -59,7 +58,6 @@ public class DBUnAllowedUserRepository implements UnAllowedUserRepository{
                 return true;
             }
         }
-
         return false;
     }
 
@@ -74,9 +72,6 @@ public class DBUnAllowedUserRepository implements UnAllowedUserRepository{
                 return true;
             }
         }
-
         return false;
     }
-
-
 }

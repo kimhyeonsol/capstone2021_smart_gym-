@@ -17,8 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UnAllowedUserApplicationTests extends SmartGymBackendApplicationTests{
     @Autowired
     UnAllowedUserService unAllowedUserService;
-    @Autowired
-    UnAllowedUserRepository unAllowedUserRepository;
+
 
     @Test
     @Commit
@@ -83,40 +82,32 @@ public class UnAllowedUserApplicationTests extends SmartGymBackendApplicationTes
         unAllowedUserRegisterDTO5.setUserEmail("5");
 
         System.out.println(unAllowedUserService.unAllowedUserRegister(unAllowedUserRegisterDTO5));
-
-
     }
 
     @Test
     @Commit
     void 아이디_중복_테스트() {
-
         UnAllowedUserIdDuplDTO unAllowedUserIdDuplDTO= new UnAllowedUserIdDuplDTO();
         unAllowedUserIdDuplDTO.setUserID("7");
 
         System.out.println(unAllowedUserService.unAllowedUserIdDuplicateCheck(unAllowedUserIdDuplDTO));
-
     }
 
     @Test
     @Commit
     void 전화번호_중복_테스트() {
-
         UnAllowedUserPhoneDuplDTO unAllowedUserPhoneDuplDTO= new UnAllowedUserPhoneDuplDTO();
         unAllowedUserPhoneDuplDTO.setUserPhone("7");
 
         System.out.println(unAllowedUserService.unAllowedUserPhoneDuplicateCheck(unAllowedUserPhoneDuplDTO));
-
     }
 
     @Test
     @Commit
     void 이메일_중복_테스트() {
-
         UnAllowedUserEmailDuplDTO unAllowedUserEmailDuplDTO= new UnAllowedUserEmailDuplDTO();
         unAllowedUserEmailDuplDTO.setUserEmail("7");
 
         System.out.println(unAllowedUserService.unAllowedUserEmailDuplicateCheck(unAllowedUserEmailDuplDTO));
-
     }
 }

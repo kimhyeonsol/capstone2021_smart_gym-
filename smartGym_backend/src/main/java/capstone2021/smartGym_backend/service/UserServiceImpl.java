@@ -20,28 +20,4 @@ public class UserServiceImpl implements UserService {
 
 
 
-    @Override
-    public boolean update(UserUpdateDTO userUpdateDTO) {
-        User user = new User();
-        user.setUserID(userUpdateDTO.getUserID());
-        user.setUserPW(userUpdateDTO.getUserPW());
-        user.setUserName(userUpdateDTO.getUserName());
-        user.setUserSex(userUpdateDTO.getUserSex());
-        user.setUserPhone(userUpdateDTO.getUserPhone());
-        user.setUserEmail(userUpdateDTO.getUserEmail());
-
-        return userRepository.update(user);
-    }
-
-    @Override
-    public boolean delete(UserDeleteDTO userDeleteDTO) {
-        User user = new User();
-        user.setUserID(userDeleteDTO.getUserID());
-        user.setUserPW(userDeleteDTO.getUserPW());
-
-        // userID랑 pw 같은지 학인하는 메소드 어떻게 할지.
-
-        return userRepository.delete(user);
-    }
-
 }

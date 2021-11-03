@@ -6,60 +6,77 @@ import capstone2021.smartGym_backend.DTO.AllowedUser.AllowedUserLoginDTO;
 import capstone2021.smartGym_backend.DTO.User.UserDeleteDTO;
 import capstone2021.smartGym_backend.DTO.User.UserUpdateDTO;
 import capstone2021.smartGym_backend.domain.AllowedUser;
+import capstone2021.smartGym_backend.domain.UnAllowedUser;
+import capstone2021.smartGym_backend.domain.User;
 import capstone2021.smartGym_backend.repository.AllowedUserRepository;
+import capstone2021.smartGym_backend.repository.UnAllowedUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @Transactional
 
-public class AllowedUserServiceImpl implements AllowedUserService{
+public class AllowedUserServiceImpl implements AllowedUserService {
     AllowedUserRepository allowedUserRepository;
+    UnAllowedUserRepository unAllowedUserRepository;
 
     @Autowired
-    public AllowedUserServiceImpl(AllowedUserRepository allowedUserRepository) {
-        this.allowedUserRepository=allowedUserRepository;
+    public AllowedUserServiceImpl(AllowedUserRepository allowedUserRepository, UnAllowedUserRepository unAllowedUserRepository) {
+        this.allowedUserRepository = allowedUserRepository;
+        this.unAllowedUserRepository = unAllowedUserRepository;
     }
 
     @Override
     public int allowedUserLogin(AllowedUserLoginDTO allowedUserLoginDTO) {
+        AllowedUser findAllowedUser = null;
+        UnAllowedUser findUnAllowedUser = null;
 
-        AllowedUser allowedUser = new AllowedUser();
-        allowedUser.setUserID(allowedUserLoginDTO.getUserID());
-        allowedUser.setUserPW(allowedUserLoginDTO.getUserPW());
+        findAllowedUser = allowedUserRepository.findByAllowedUserID(allowedUserLoginDTO.getUserID());
+        if (findAllowedUser != null) {
+            if (findAllowedUser.getUserPW().equals(allowedUserLoginDTO.getUserPW())) {
+                return 0;
+            } else {
+                return 1;
+            }
+        }
 
-        return allowedUserRepository.login(allowedUser);
+        findUnAllowedUser = unAllowedUserRepository.findByUnAllowedUserID(allowedUserLoginDTO.getUserID());
+        if (findUnAllowedUser != null) {
+            return 2;
+        }
+        return 3;
+
     }
 
     @Override
     public String allowedUserFindID(AllowedUserFindIDDTO allowedUserFindIDDTO) {
 
-        AllowedUser allowedUser = new AllowedUser();
-        allowedUser.setUserName(allowedUserFindIDDTO.getUserName());
-        allowedUser.setUserEmail(allowedUserFindIDDTO.getUserEmail());
+        AllowedUser findAllowedUser = null;
+        findAllowedUser = allowedUserRepository.findByAllowedUserName(allowedUserFindIDDTO.getUserName());
 
-        return allowedUserRepository.findID(allowedUser);
+        if (findAllowedUser != null) {
+            if (findAllowedUser.getUserEmail().equals(allowedUserFindIDDTO.getUserEmail())) {
+                return findAllowedUser.getUserID();
+            }
+        }
+        return null;
     }
 
     @Override
     public String allowedUserFindPW(AllowedUserFindPWDTO allowedUserFindPWDTO) {
-        AllowedUser allowedUser = new AllowedUser();
-        allowedUser.setUserID(allowedUserFindPWDTO.getUserID());
-        allowedUser.setUserEmail(allowedUserFindPWDTO.getUserEmail());
 
-        return allowedUserRepository.findPW(allowedUser);
+        AllowedUser findAllowedUser = null;
+        findAllowedUser = allowedUserRepository.findByAllowedUserID(allowedUserFindPWDTO.getUserID());
+        if (findAllowedUser != null) {
+            if (findAllowedUser.getUserEmail().equals(allowedUserFindPWDTO.getUserEmail())) {
+                return findAllowedUser.getUserPW();
+            }
+        }
+        return null;
     }
 
 
-    @Override
-    public boolean update(UserUpdateDTO userUpdateDTO) {
-        return false;
-    }
-
-    @Override
-    public boolean delete(UserDeleteDTO userDeleteDTO) {
-        return false;
-    }
 }

@@ -30,5 +30,4 @@ public class Reservation {
     @NotNull //널 허용 X
     private LocalDateTime endTime;
 
-
 }

@@ -87,7 +87,7 @@ public class UnAllowedUserApplicationTests extends SmartGymBackendApplicationTes
     @Commit
     void 아이디_중복_테스트() {
         UnAllowedUserIdDuplDTO unAllowedUserIdDuplDTO= new UnAllowedUserIdDuplDTO();
-        unAllowedUserIdDuplDTO.setUserID("7");
+        unAllowedUserIdDuplDTO.setUserID("3");
 
         System.out.println(unAllowedUserService.unAllowedUserIdDuplicateCheck(unAllowedUserIdDuplDTO));
     }

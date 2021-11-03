@@ -22,8 +22,8 @@ public class AllowedUserApplicationTest extends SmartGymBackendApplicationTests{
     void 로그인테스트() {
 
         AllowedUserLoginDTO allowedUserLoginDTO1 = new AllowedUserLoginDTO();
-        allowedUserLoginDTO1.setUserID("6");
-        allowedUserLoginDTO1.setUserPW("6");
+        allowedUserLoginDTO1.setUserID("1");
+        allowedUserLoginDTO1.setUserPW("1");
 
         System.out.println(allowedUserService.allowedUserLogin(allowedUserLoginDTO1));
 

@@ -1,10 +1,10 @@
-package capstone2021.smartGym_backend.DTO;
+package capstone2021.smartGym_backend.DTO.Equipment;
 
-public class EquipmentUpdateDTO {
+public class EquipmentInfoUpdateDTO {
     private Long equipmentID;
     private String equipmentName;
-    private String equipmentCategory;
-    private String equipmentImage;
+    private String equipmentNameNth;
+    private String equipmentCategoryList;
     private int equipmentAvailable;
 
     public Long getEquipmentID() {
@@ -23,20 +23,20 @@ public class EquipmentUpdateDTO {
         this.equipmentName = equipmentName;
     }
 
-    public String getEquipmentCategory() {
-        return equipmentCategory;
+    public String getEquipmentNameNth() {
+        return equipmentNameNth;
     }
 
-    public void setEquipmentCategory(String equipmentCategory) {
-        this.equipmentCategory = equipmentCategory;
+    public void setEquipmentNameNth(String equipmentNameNth) {
+        this.equipmentNameNth = equipmentNameNth;
     }
 
-    public String getEquipmentImage() {
-        return equipmentImage;
+    public String getEquipmentCategoryList() {
+        return equipmentCategoryList;
     }
 
-    public void setEquipmentImage(String equipmentImage) {
-        this.equipmentImage = equipmentImage;
+    public void setEquipmentCategoryList(String equipmentCategoryList) {
+        this.equipmentCategoryList = equipmentCategoryList;
     }
 
     public int getEquipmentAvailable() {

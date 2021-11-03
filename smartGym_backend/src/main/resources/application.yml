@@ -4,7 +4,10 @@ spring:
     url: jdbc:mysql://localhost:3306/capstone2021?useSSL=false&useUnicode=true&serverTimezone=UTC&characterEncoding=UTF-8
     username: root
     password: root
+    initialization-mode : always
+
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: update
+    defer-datasource-initialization : true

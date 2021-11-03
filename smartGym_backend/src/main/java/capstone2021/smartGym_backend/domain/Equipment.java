@@ -7,23 +7,27 @@ import javax.persistence.*;
 @Entity //DB 테이블
 public class Equipment {
     @Id //식별자
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //자동으로 올라가게 설정
-    @Column(name="equipment_id") //크기
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //ID값 자동으로 올라가게 설정
+    @Column(name="equipment_id")
     private Long equipmentID;
 
-    @Column(name="equipment_name", length = 200) //크기
+    @Column(name="equipment_name", length = 200) //운동기구 이름
     @NotNull //널 허용 X
     private String equipmentName;
 
-    @Column(name="equipment_category", length = 200)
+    @Column(name="equipment_name_nth", length = 200) //운동기구 이름 순서
     @NotNull
-    private String equipmentCategory;
+    private String equipmentNameNth;
 
-    @Column(name="equipment_image", length = 5000)
+    @Column(name="equipment_category_list", length = 200) //운동기구 카테고리 문자열
+    @NotNull
+    private String equipmentCategoryList;
+
+    @Column(name="equipment_image", length = 5000) //운동기구 이미지
     @NotNull
     private String equipmentImage;
 
-    @Column(name="equipment_available", length = 11)
+    @Column(name="equipment_available", length = 11) //운동기구 상태
     @NotNull
     private int equipmentAvailable;
 
@@ -43,12 +47,20 @@ public class Equipment {
         this.equipmentName = equipmentName;
     }
 
-    public String getEquipmentCategory() {
-        return equipmentCategory;
+    public String getEquipmentNameNth() {
+        return equipmentNameNth;
     }
 
-    public void setEquipmentCategory(String equipmentCategory) {
-        this.equipmentCategory = equipmentCategory;
+    public void setEquipmentNameNth(String equipmentNameNth) {
+        this.equipmentNameNth = equipmentNameNth;
+    }
+
+    public String getEquipmentCategoryList() {
+        return equipmentCategoryList;
+    }
+
+    public void setEquipmentCategoryList(String equipmentCategoryList) {
+        this.equipmentCategoryList = equipmentCategoryList;
     }
 
     public String getEquipmentImage() {

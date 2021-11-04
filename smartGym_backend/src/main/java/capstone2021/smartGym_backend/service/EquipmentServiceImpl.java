@@ -38,7 +38,7 @@ public class EquipmentServiceImpl extends ImageService implements EquipmentServi
         if(equipmentCreateDTO.getEquipmentInfoCreateDTO().getEquipmentCategoryList() == null || equipmentCreateDTO.getEquipmentInfoCreateDTO().getEquipmentCategoryList().isBlank()) {
             return 1;
         }
-        if(equipmentCreateDTO.getEquipmentInfoCreateDTO().getEquipmentAvailable() != 0 && equipmentCreateDTO.getEquipmentInfoCreateDTO().getEquipmentAvailable() != 2) {
+        if(equipmentCreateDTO.getEquipmentInfoCreateDTO().getEquipmentAvailable() == -1) {
             return 1;
         }
         if(equipmentCreateDTO.getEquipmentImage().isEmpty()){
@@ -70,7 +70,7 @@ public class EquipmentServiceImpl extends ImageService implements EquipmentServi
         if(equipmentUpdateDTO.getEquipmentInfoUpdateDTO().getEquipmentCategoryList() == null || equipmentUpdateDTO.getEquipmentInfoUpdateDTO().getEquipmentCategoryList().isBlank()) {
             return 1;
         }
-        if(equipmentUpdateDTO.getEquipmentInfoUpdateDTO().getEquipmentAvailable() != 0 && equipmentUpdateDTO.getEquipmentInfoUpdateDTO().getEquipmentAvailable() != 2) {
+        if(equipmentUpdateDTO.getEquipmentInfoUpdateDTO().getEquipmentAvailable() == -1) {
             return 1;
         }
         if(equipmentUpdateDTO.getEquipmentImage().isEmpty()){

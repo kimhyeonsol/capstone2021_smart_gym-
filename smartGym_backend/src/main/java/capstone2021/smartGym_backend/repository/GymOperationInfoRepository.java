@@ -7,7 +7,7 @@ import capstone2021.smartGym_backend.domain.GymOperationInfo;
 import java.util.List;
 
 public interface GymOperationInfoRepository {
-    boolean update(GymOperationInfo gymOperationInfo);
+    int update(GymOperationInfo gymOperationInfo);
     GymOperationInfoDTO read();
     boolean createHoliday(GymHoliday gymHoliday);
     boolean deleteHoliday(GymHoliday gymHoliday);

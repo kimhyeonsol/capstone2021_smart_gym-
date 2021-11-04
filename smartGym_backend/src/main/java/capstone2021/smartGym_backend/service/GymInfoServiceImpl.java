@@ -23,15 +23,15 @@ public class GymInfoServiceImpl extends ImageService implements GymInfoService{
     }
 
     @Override
-    public boolean update(GymInfoDTO gymInfoDTO) {
+    public int update(GymInfoDTO gymInfoDTO) {
         if(gymInfoDTO.getGymInfoName() == null || gymInfoDTO.getGymInfoName().isBlank()){
-            return false;
+            return 1;
         }
         if(gymInfoDTO.getGymInfoAddress() == null || gymInfoDTO.getGymInfoAddress().isBlank()){
-            return false;
+            return 1;
         }
         if(gymInfoDTO.getGymInfoPhoneNumber() == null || gymInfoDTO.getGymInfoPhoneNumber().isBlank()){
-            return false;
+            return 1;
         }
 
         GymInfo gymInfo = new GymInfo();

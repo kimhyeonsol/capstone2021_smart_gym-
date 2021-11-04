@@ -15,14 +15,14 @@ public class DBGymInfoRepository implements GymInfoRepository{
     }
 
     @Override
-    public boolean update(GymInfo gymInfo) {
+    public int update(GymInfo gymInfo) {
         try{
             em.merge(gymInfo);
-            return true;
+            return 0;
 
         } catch (PersistenceException | IllegalStateException e){
             System.out.println("update 오류");
-            return false;
+            return 2;
         }
     }
 

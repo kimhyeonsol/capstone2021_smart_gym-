@@ -26,7 +26,7 @@ public class GymInfoController {
     @CrossOrigin("*")
     @PostMapping("/gymInfo/update") //헬스장 정보 수정
     @ResponseBody
-    public boolean gymInfoUpdate(@RequestBody final GymInfoDTO gymInfoDTO){
+    public int gymInfoUpdate(@RequestBody final GymInfoDTO gymInfoDTO){
         return gymInfoService.update(gymInfoDTO);
     }
 
@@ -54,7 +54,7 @@ public class GymInfoController {
     @CrossOrigin("*")
     @PostMapping("/gymOperationInfo/update") //헬스장 운영정보 수정
     @ResponseBody
-    public boolean gymOperationInfoUpdate(@RequestBody final GymOperationInfoDTO gymOperationInfoDTO){
+    public int gymOperationInfoUpdate(@RequestBody final GymOperationInfoDTO gymOperationInfoDTO){
         return gymOperationInfoService.update(gymOperationInfoDTO);
     }
 

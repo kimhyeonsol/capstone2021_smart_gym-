@@ -81,7 +81,7 @@ public class DBEquipmentRepository implements EquipmentRepository{
     }
 
     @Override
-    public boolean create(Equipment equipment) {
+    public int create(Equipment equipment) {
         boolean duplicateResult;
 
         duplicateResult = duplicateCheckEquipmentName(null, equipment.getEquipmentName(), equipment.getEquipmentNameNth());
@@ -93,18 +93,18 @@ public class DBEquipmentRepository implements EquipmentRepository{
                 categorySettings(equipment, equipmentCategory);
                 em.persist(equipmentCategory);
 
-                return true;
+                return 0;
             } catch (PersistenceException | IllegalStateException e){
                 System.out.println("create 오류");
-                return false;
+                return 3;
             }
         }
         System.out.println("운동기구 이름 중복!");
-        return false;
+        return 2;
     }
 
     @Override
-    public boolean update(Equipment equipment) {
+    public int update(Equipment equipment) {
         boolean duplicateResult;
 
         duplicateResult = duplicateCheckEquipmentName(equipment.getEquipmentID(), equipment.getEquipmentName(), equipment.getEquipmentNameNth());
@@ -132,15 +132,14 @@ public class DBEquipmentRepository implements EquipmentRepository{
 
                 em.merge(equipmentCategory);
 
-                return true;
-
+                return 0;
             } catch (PersistenceException | IllegalStateException e){
                 System.out.println("update 오류");
-                return false;
+                return 3;
             }
         }
         System.out.println("운동기구 이름 중복!");
-        return false;
+        return 2;
     }
 
     @Override

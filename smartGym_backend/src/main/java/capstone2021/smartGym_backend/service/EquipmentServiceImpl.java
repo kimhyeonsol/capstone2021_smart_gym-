@@ -28,21 +28,21 @@ public class EquipmentServiceImpl extends ImageService implements EquipmentServi
     }
 
     @Override
-    public boolean create(EquipmentCreateDTO equipmentCreateDTO) throws IOException {
+    public int create(EquipmentCreateDTO equipmentCreateDTO) throws IOException {
         if(equipmentCreateDTO.getEquipmentInfoCreateDTO().getEquipmentName() == null || equipmentCreateDTO.getEquipmentInfoCreateDTO().getEquipmentName().isBlank()) {
-            return false;
+            return 1;
         }
         if(equipmentCreateDTO.getEquipmentInfoCreateDTO().getEquipmentNameNth() == null || equipmentCreateDTO.getEquipmentInfoCreateDTO().getEquipmentNameNth().isBlank()) {
-            return false;
+            return 1;
         }
         if(equipmentCreateDTO.getEquipmentInfoCreateDTO().getEquipmentCategoryList() == null || equipmentCreateDTO.getEquipmentInfoCreateDTO().getEquipmentCategoryList().isBlank()) {
-            return false;
+            return 1;
         }
         if(equipmentCreateDTO.getEquipmentInfoCreateDTO().getEquipmentAvailable() != 0 && equipmentCreateDTO.getEquipmentInfoCreateDTO().getEquipmentAvailable() != 2) {
-            return false;
+            return 1;
         }
         if(equipmentCreateDTO.getEquipmentImage().isEmpty()){
-            return false;
+            return 1;
         }
 
         Equipment equipment = new Equipment();
@@ -60,21 +60,21 @@ public class EquipmentServiceImpl extends ImageService implements EquipmentServi
     }
 
     @Override
-    public boolean update(EquipmentUpdateDTO equipmentUpdateDTO) throws IOException {
+    public int update(EquipmentUpdateDTO equipmentUpdateDTO) throws IOException {
         if(equipmentUpdateDTO.getEquipmentInfoUpdateDTO().getEquipmentName() == null || equipmentUpdateDTO.getEquipmentInfoUpdateDTO().getEquipmentName().isBlank()) {
-            return false;
+            return 1;
         }
         if(equipmentUpdateDTO.getEquipmentInfoUpdateDTO().getEquipmentNameNth() == null || equipmentUpdateDTO.getEquipmentInfoUpdateDTO().getEquipmentNameNth().isBlank()) {
-            return false;
+            return 1;
         }
         if(equipmentUpdateDTO.getEquipmentInfoUpdateDTO().getEquipmentCategoryList() == null || equipmentUpdateDTO.getEquipmentInfoUpdateDTO().getEquipmentCategoryList().isBlank()) {
-            return false;
+            return 1;
         }
         if(equipmentUpdateDTO.getEquipmentInfoUpdateDTO().getEquipmentAvailable() != 0 && equipmentUpdateDTO.getEquipmentInfoUpdateDTO().getEquipmentAvailable() != 2) {
-            return false;
+            return 1;
         }
         if(equipmentUpdateDTO.getEquipmentImage().isEmpty()){
-            return false;
+            return 1;
         }
 
         Equipment equipment = new Equipment();

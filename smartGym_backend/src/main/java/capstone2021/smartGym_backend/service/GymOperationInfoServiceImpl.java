@@ -26,6 +26,16 @@ public class GymOperationInfoServiceImpl implements GymOperationInfoService{
 
     @Override
     public boolean update(GymOperationInfoDTO gymOperationInfoDTO) {
+        if(gymOperationInfoDTO.getGymOperationInfoReservationDuration() == null || gymOperationInfoDTO.getGymOperationInfoReservationDuration().isBlank()) {
+            return false;
+        }
+        if(gymOperationInfoDTO.getGymOperationInfoOperatingStartTime() == null || gymOperationInfoDTO.getGymOperationInfoOperatingStartTime().isBlank()) {
+            return false;
+        }
+        if(gymOperationInfoDTO.getGymOperationInfoOperatingEndTime() == null || gymOperationInfoDTO.getGymOperationInfoOperatingEndTime().isBlank()) {
+            return false;
+        }
+
         if(gymOperationInfoDTO.getGymOperationInfoRegularHoliday().equals("월화수목금토일")){ //모든 요일 정기휴무로 지정할 시 false
             return false;
         }
@@ -55,6 +65,10 @@ public class GymOperationInfoServiceImpl implements GymOperationInfoService{
 
     @Override
     public boolean createHoliday(GymHolidayCreateDTO gymHolidayCreateDTO) {
+        if(gymHolidayCreateDTO.getGymHolidayDate() == null || gymHolidayCreateDTO.getGymHolidayDate().isBlank()){
+            return false;
+        }
+
         GymHoliday gymHoliday = new GymHoliday();
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -62,6 +76,7 @@ public class GymOperationInfoServiceImpl implements GymOperationInfoService{
             gymHoliday.setGymHolidayDate(format.parse(gymHolidayCreateDTO.getGymHolidayDate()));
         } catch (ParseException e) {
             e.printStackTrace();
+            return false;
         }
 
         return gymOperationInfoRepository.createHoliday(gymHoliday);
@@ -69,6 +84,10 @@ public class GymOperationInfoServiceImpl implements GymOperationInfoService{
 
     @Override
     public boolean deleteHoliday(GymHolidayDeleteDTO gymHolidayDeleteDTO) {
+        if(gymHolidayDeleteDTO.getGymHolidayID() == null) {
+            return false;
+        }
+        
         GymHoliday gymHoliday = new GymHoliday();
 
         gymHoliday.setGymHolidayID(gymHolidayDeleteDTO.getGymHolidayID());

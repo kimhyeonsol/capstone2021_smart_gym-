@@ -1,8 +1,5 @@
 package capstone2021.smartGym_backend;
 
-import capstone2021.smartGym_backend.DTO.EquipmentCreateDTO;
-import capstone2021.smartGym_backend.DTO.EquipmentDeleteDetailedReadDTO;
-import capstone2021.smartGym_backend.DTO.EquipmentUpdateDTO;
 import capstone2021.smartGym_backend.repository.EquipmentRepository;
 import capstone2021.smartGym_backend.service.EquipmentService;
 import org.junit.jupiter.api.Test;
@@ -19,7 +16,7 @@ public class EquipmentApplicationTests extends SmartGymBackendApplicationTests{
     @Autowired
     EquipmentRepository equipmentRepository;
 
-    @Test
+    /*@Test
     @Commit
     void create테스트() {
         EquipmentCreateDTO equipmentCreateDTO1 = new EquipmentCreateDTO();
@@ -84,5 +81,5 @@ public class EquipmentApplicationTests extends SmartGymBackendApplicationTests{
         equipmentDeleteDetailedReadDTO.setEquipmentID((long)1); //id 값만 일치하면 잘 삭제됨
 
         equipmentService.delete(equipmentDeleteDetailedReadDTO);
-    }
+    }*/
 }

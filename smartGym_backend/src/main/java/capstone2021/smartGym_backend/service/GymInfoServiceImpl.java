@@ -24,6 +24,16 @@ public class GymInfoServiceImpl extends ImageService implements GymInfoService{
 
     @Override
     public boolean update(GymInfoDTO gymInfoDTO) {
+        if(gymInfoDTO.getGymInfoName() == null || gymInfoDTO.getGymInfoName().isBlank()){
+            return false;
+        }
+        if(gymInfoDTO.getGymInfoAddress() == null || gymInfoDTO.getGymInfoAddress().isBlank()){
+            return false;
+        }
+        if(gymInfoDTO.getGymInfoPhoneNumber() == null || gymInfoDTO.getGymInfoPhoneNumber().isBlank()){
+            return false;
+        }
+
         GymInfo gymInfo = new GymInfo();
         gymInfo.setGymInfoName(gymInfoDTO.getGymInfoName());
         gymInfo.setGymInfoAddress(gymInfoDTO.getGymInfoAddress());
@@ -40,6 +50,10 @@ public class GymInfoServiceImpl extends ImageService implements GymInfoService{
     @Override
     public boolean equipmentLayoutUpdate(GymInfoEquipmentLayoutDTO gymInfoEquipmentLayoutDTO) throws IOException {
         GymInfo findGymInfo = read();
+
+        if(gymInfoEquipmentLayoutDTO.getGymInfoEquipmentLayout().isEmpty()){
+            return false;
+        }
 
         if(findGymInfo.getGymInfoEquipmentLayout().equals("")){
             String fileName = UUID.randomUUID() + "_" + gymInfoEquipmentLayoutDTO.getGymInfoEquipmentLayout().getOriginalFilename(); //S3에 이미지 업로드

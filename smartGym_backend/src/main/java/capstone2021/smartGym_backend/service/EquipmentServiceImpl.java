@@ -73,9 +73,8 @@ public class EquipmentServiceImpl extends ImageService implements EquipmentServi
         if(equipmentUpdateDTO.getEquipmentInfoUpdateDTO().getEquipmentAvailable() == -1) {
             return 1;
         }
-        if(equipmentUpdateDTO.getEquipmentImage().isEmpty()){
-            return 1;
-        }
+
+        Equipment findEquipment = findByID(equipmentUpdateDTO.getEquipmentInfoUpdateDTO().getEquipmentID());
 
         Equipment equipment = new Equipment();
         equipment.setEquipmentID(equipmentUpdateDTO.getEquipmentInfoUpdateDTO().getEquipmentID());
@@ -83,16 +82,18 @@ public class EquipmentServiceImpl extends ImageService implements EquipmentServi
         equipment.setEquipmentNameNth(equipmentUpdateDTO.getEquipmentInfoUpdateDTO().getEquipmentNameNth());
         equipment.setEquipmentCategoryList(equipmentUpdateDTO.getEquipmentInfoUpdateDTO().getEquipmentCategoryList());
         equipment.setEquipmentAvailable(equipmentUpdateDTO.getEquipmentInfoUpdateDTO().getEquipmentAvailable());
+        equipment.setEquipmentImage(findEquipment.getEquipmentImage());
 
-        Equipment findEquipment = findByID(equipmentUpdateDTO.getEquipmentInfoUpdateDTO().getEquipmentID()); //S3에서 변경 전 이미지 삭제
-        String oldFile = findEquipment.getEquipmentImage();
-        oldFile = URLDecoder.decode(oldFile.replace("https://smartgym-bucket.s3.ap-northeast-2.amazonaws.com//", ""), "UTF-8");
-        deleteS3(oldFile);
+        if(equipmentUpdateDTO.getEquipmentImage() != null) { //이미지를 수정할 경우
+            String oldFile = findEquipment.getEquipmentImage(); //S3에서 변경 전 이미지 삭제
+            oldFile = URLDecoder.decode(oldFile.replace("https://smartgym-bucket.s3.ap-northeast-2.amazonaws.com//", ""), "UTF-8");
+            deleteS3(oldFile);
 
-        String fileName = UUID.randomUUID() + "_" + equipmentUpdateDTO.getEquipmentImage().getOriginalFilename(); //S3에 변경 후 이미지 업로드
-        String fileUrl = upload(equipmentUpdateDTO.getEquipmentImage(), fileName,  "/");
-        fileUrl = fileUrl.replace("https://smartgym-bucket.s3.ap-northeast-2.amazonaws.com/%2F%2F", "https://smartgym-bucket.s3.ap-northeast-2.amazonaws.com//");
-        equipment.setEquipmentImage(fileUrl);
+            String fileName = UUID.randomUUID() + "_" + equipmentUpdateDTO.getEquipmentImage().getOriginalFilename(); //S3에 변경 후 이미지 업로드
+            String fileUrl = upload(equipmentUpdateDTO.getEquipmentImage(), fileName,  "/");
+            fileUrl = fileUrl.replace("https://smartgym-bucket.s3.ap-northeast-2.amazonaws.com/%2F%2F", "https://smartgym-bucket.s3.ap-northeast-2.amazonaws.com//");
+            equipment.setEquipmentImage(fileUrl);
+        }
 
         return equipmentRepository.update(equipment);
     }

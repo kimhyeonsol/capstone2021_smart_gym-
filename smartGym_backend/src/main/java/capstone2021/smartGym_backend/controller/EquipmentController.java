@@ -6,6 +6,7 @@ import capstone2021.smartGym_backend.domain.EquipmentCategory;
 import capstone2021.smartGym_backend.service.EquipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -30,7 +31,7 @@ public class EquipmentController {
     @CrossOrigin("*")
     @PostMapping("/equipment/update") //운동기구 수정 
     @ResponseBody
-    public int equipmentUpdate(@ModelAttribute final EquipmentUpdateDTO equipmentUpdateDTO) throws IOException {
+    public int equipmentUpdate(@ModelAttribute final EquipmentUpdateDTO equipmentUpdateDTO, BindingResult bindingResult) throws IOException {
         return equipmentService.update(equipmentUpdateDTO);
     }
 

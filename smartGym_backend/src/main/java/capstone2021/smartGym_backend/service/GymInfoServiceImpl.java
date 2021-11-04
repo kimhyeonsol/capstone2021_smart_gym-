@@ -51,11 +51,11 @@ public class GymInfoServiceImpl extends ImageService implements GymInfoService{
     public boolean equipmentLayoutUpdate(GymInfoEquipmentLayoutDTO gymInfoEquipmentLayoutDTO) throws IOException {
         GymInfo findGymInfo = read();
 
-        if(gymInfoEquipmentLayoutDTO.getGymInfoEquipmentLayout().isEmpty()){
+        if(gymInfoEquipmentLayoutDTO.getGymInfoEquipmentLayout() == null){
             return false;
         }
 
-        if(findGymInfo.getGymInfoEquipmentLayout().equals("")){
+        if(findGymInfo.getGymInfoEquipmentLayout().isBlank()){
             String fileName = UUID.randomUUID() + "_" + gymInfoEquipmentLayoutDTO.getGymInfoEquipmentLayout().getOriginalFilename(); //S3에 이미지 업로드
             String fileUrl = upload(gymInfoEquipmentLayoutDTO.getGymInfoEquipmentLayout(), fileName,  "/");
             fileUrl = fileUrl.replace("https://smartgym-bucket.s3.ap-northeast-2.amazonaws.com/%2F%2F", "https://smartgym-bucket.s3.ap-northeast-2.amazonaws.com//");

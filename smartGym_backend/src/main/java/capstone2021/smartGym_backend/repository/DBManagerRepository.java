@@ -14,13 +14,13 @@ public class DBManagerRepository implements ManagerRepository{
     }
 
     @Override
-    public boolean managerLogin(Manager manager) {
+    public int managerLogin(Manager manager) {
         Manager findManager = em.find(Manager.class, manager.getManagerPassword());
 
         if(findManager == null){
-            return false;
+            return 2;
         }
 
-        return true;
+        return 0;
     }
 }

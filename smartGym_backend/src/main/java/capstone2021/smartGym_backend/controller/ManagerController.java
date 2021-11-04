@@ -21,7 +21,7 @@ public class ManagerController {
     @CrossOrigin("*")
     @PostMapping("/manager/login") //관리자 로그인
     @ResponseBody
-    public boolean managerLogin(@RequestBody final ManagerLoginDTO managerLoginDTO){
+    public int managerLogin(@RequestBody final ManagerLoginDTO managerLoginDTO){
         return managerService.managerLogin(managerLoginDTO);
     }
 }

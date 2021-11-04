@@ -18,7 +18,10 @@ public class ManagerServiceImpl implements ManagerService{
     }
 
     @Override
-    public boolean managerLogin(ManagerLoginDTO managerLoginDTO) {
+    public int managerLogin(ManagerLoginDTO managerLoginDTO) {
+        if(managerLoginDTO.getManagerPassword() == null || managerLoginDTO.getManagerPassword().isBlank()){
+            return 1;
+        }
         Manager manager = new Manager();
         manager.setManagerPassword(managerLoginDTO.getManagerPassword());
 

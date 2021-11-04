@@ -1,6 +1,7 @@
 package capstone2021.smartGym_backend.repository;
 
 import capstone2021.smartGym_backend.domain.AllowedUser;
+import capstone2021.smartGym_backend.domain.Equipment;
 import capstone2021.smartGym_backend.domain.UnAllowedUser;
 import capstone2021.smartGym_backend.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,24 @@ public class DBUnAllowedUserRepository implements UnAllowedUserRepository {
         UnAllowedUser findUnAllowedUser=null;
         findUnAllowedUser=em.find(UnAllowedUser.class,userEmail);
         return findUnAllowedUser;
+    }
+
+    @Override
+    public List<UnAllowedUser> unAllowedUserReadAll() {
+        return em.createQuery("SELECT u FROM UnAllowedUser u", UnAllowedUser.class)
+                .getResultList();
+    }
+
+    @Override
+    public List<UnAllowedUser> unAllowedUserReadByID(UnAllowedUser unAllowedUser) {
+        return em.createQuery("SELECT u FROM UnAllowedUser u WHERE u.userID = :unAllowedUser")
+                .setParameter("unAllowedUser", unAllowedUser.getUserID()).getResultList();
+    }
+
+    @Override
+    public List<UnAllowedUser> unAllowedUserReadByName(UnAllowedUser unAllowedUser) {
+        return em.createQuery("SELECT u FROM UnAllowedUser u WHERE u.userName = :unAllowedUser")
+                .setParameter("unAllowedUser", unAllowedUser.getUserName()).getResultList();
     }
 
     public User findByUserID(String userID) {

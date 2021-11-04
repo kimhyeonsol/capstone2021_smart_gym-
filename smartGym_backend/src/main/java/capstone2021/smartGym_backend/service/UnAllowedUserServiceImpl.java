@@ -1,9 +1,6 @@
 package capstone2021.smartGym_backend.service;
 
-import capstone2021.smartGym_backend.DTO.UnAllowedUser.UnAllowedUserEmailDuplDTO;
-import capstone2021.smartGym_backend.DTO.UnAllowedUser.UnAllowedUserIdDuplDTO;
-import capstone2021.smartGym_backend.DTO.UnAllowedUser.UnAllowedUserPhoneDuplDTO;
-import capstone2021.smartGym_backend.DTO.UnAllowedUser.UnAllowedUserRegisterDTO;
+import capstone2021.smartGym_backend.DTO.UnAllowedUser.*;
 import capstone2021.smartGym_backend.DTO.User.UserDeleteDTO;
 import capstone2021.smartGym_backend.DTO.User.UserUpdateDTO;
 import capstone2021.smartGym_backend.domain.UnAllowedUser;
@@ -70,6 +67,27 @@ public class UnAllowedUserServiceImpl implements UnAllowedUserService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<UnAllowedUser> unAllowedUserReadAll() {
+        return unAllowedUserRepository.unAllowedUserReadAll();
+    }
+
+    @Override
+    public List<UnAllowedUser> unAllowedUserReadByID(UnAllowedUserReadByIDDTO unAllowedUserReadByIDDTO) {
+        UnAllowedUser unAllowedUser = new UnAllowedUser();
+        unAllowedUser.setUserID(unAllowedUserReadByIDDTO.getUserID());
+
+        return unAllowedUserRepository.unAllowedUserReadByID(unAllowedUser);
+    }
+
+    @Override
+    public List<UnAllowedUser> unAllowedUserReadByName(UnAllowedUserReadByNameDTO unAllowedUserReadByNameDTO) {
+        UnAllowedUser unAllowedUser = new UnAllowedUser();
+        unAllowedUser.setUserName(unAllowedUserReadByNameDTO.getUserName());
+
+        return unAllowedUserRepository.unAllowedUserReadByName(unAllowedUser);
     }
 
 

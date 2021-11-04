@@ -11,4 +11,7 @@ public interface UnAllowedUserRepository {
     UnAllowedUser findByUnAllowedUserID(String userID);
     UnAllowedUser findByUnAllowedUserPhone(String userPhone);
     UnAllowedUser findByUnAllowedUserEmail(String userEmail);//이메일 중복 체크
+    List<UnAllowedUser> unAllowedUserReadAll();
+    List<UnAllowedUser> unAllowedUserReadByID(UnAllowedUser unAllowedUser);
+    List<UnAllowedUser> unAllowedUserReadByName(UnAllowedUser unAllowedUser);
 }

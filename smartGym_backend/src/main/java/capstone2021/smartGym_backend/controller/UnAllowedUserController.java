@@ -2,10 +2,7 @@ package capstone2021.smartGym_backend.controller;
 
 import capstone2021.smartGym_backend.DTO.Equipment.EquipmentDeleteDetailedReadDTO;
 import capstone2021.smartGym_backend.DTO.Return.ReturnBooleanDTO;
-import capstone2021.smartGym_backend.DTO.UnAllowedUser.UnAllowedUserEmailDuplDTO;
-import capstone2021.smartGym_backend.DTO.UnAllowedUser.UnAllowedUserIdDuplDTO;
-import capstone2021.smartGym_backend.DTO.UnAllowedUser.UnAllowedUserPhoneDuplDTO;
-import capstone2021.smartGym_backend.DTO.UnAllowedUser.UnAllowedUserRegisterDTO;
+import capstone2021.smartGym_backend.DTO.UnAllowedUser.*;
 import capstone2021.smartGym_backend.domain.UnAllowedUser;
 import capstone2021.smartGym_backend.service.UnAllowedUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,11 +74,25 @@ public class UnAllowedUserController {
         return returnBooleanDTO;
     }
 
-    /*@CrossOrigin("*")
+    @CrossOrigin("*")
     @GetMapping("/unAllowedUser/readAll") //가입대기 사용자 전체 조회
     @ResponseBody
     public List<UnAllowedUser> unAllowedUserReadAll() {
-        return unAllowedUserService.readAll(equipmentdetailedReadDTO);
-    }*/
+        return unAllowedUserService.unAllowedUserReadAll();
+    }
+
+    @CrossOrigin("*")
+    @PostMapping("/unAllowedUser/readByID") //가입대기 사용자 ID 조회
+    @ResponseBody
+    public List<UnAllowedUser> unAllowedUserReadByID(@RequestBody final UnAllowedUserReadByIDDTO unAllowedUserReadByIDDTO) {
+        return unAllowedUserService.unAllowedUserReadByID(unAllowedUserReadByIDDTO);
+    }
+
+    @CrossOrigin("*")
+    @PostMapping("/unAllowedUser/readByName") //가입대기 사용자 이름 조회
+    @ResponseBody
+    public List<UnAllowedUser> unAllowedUserReadByName(@RequestBody final UnAllowedUserReadByNameDTO unAllowedUserReadByNameDTO) {
+        return unAllowedUserService.unAllowedUserReadByName(unAllowedUserReadByNameDTO);
+    }
 
 }

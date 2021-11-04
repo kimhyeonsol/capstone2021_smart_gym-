@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
-@Controller
+@Controller1
 public class EquipmentController {
     private final EquipmentService equipmentService;
 

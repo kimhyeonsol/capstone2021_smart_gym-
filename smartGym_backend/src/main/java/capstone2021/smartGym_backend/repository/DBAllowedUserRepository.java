@@ -47,4 +47,23 @@ public class DBAllowedUserRepository implements AllowedUserRepository{
         return false;
     }
 
+    @Override
+    public List<AllowedUser> allowedUserReadAll() {
+        return em.createQuery("SELECT u FROM AllowedUser u", AllowedUser.class)
+                .getResultList();
+    }
+
+    @Override
+    public List<AllowedUser> allowedUserReadByID(AllowedUser AllowedUser) {
+        return em.createQuery("SELECT u FROM AllowedUser u WHERE u.userID = :allowedUserID")
+                .setParameter("allowedUserID", AllowedUser.getUserID()).getResultList();
+    }
+
+    @Override
+    public List<AllowedUser> allowedUserReadByName(AllowedUser AllowedUser) {
+        return em.createQuery("SELECT u FROM AllowedUser u WHERE u.userName = :allowedUserName")
+                .setParameter("allowedUserName", AllowedUser.getUserName()).getResultList();
+    }
+
+
 }

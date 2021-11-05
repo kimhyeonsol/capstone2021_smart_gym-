@@ -1,8 +1,6 @@
 package capstone2021.smartGym_backend.service;
 
-import capstone2021.smartGym_backend.DTO.AllowedUser.AllowedUserFindIDDTO;
-import capstone2021.smartGym_backend.DTO.AllowedUser.AllowedUserFindPWDTO;
-import capstone2021.smartGym_backend.DTO.AllowedUser.AllowedUserLoginDTO;
+import capstone2021.smartGym_backend.DTO.AllowedUser.*;
 import capstone2021.smartGym_backend.DTO.User.UserDeleteDTO;
 import capstone2021.smartGym_backend.DTO.User.UserUpdateDTO;
 import capstone2021.smartGym_backend.domain.AllowedUser;
@@ -76,6 +74,27 @@ public class AllowedUserServiceImpl implements AllowedUserService {
             }
         }
         return null;
+    }
+
+    @Override
+    public List<AllowedUser> allowedUserReadAll() {
+        return allowedUserRepository.allowedUserReadAll();
+    }
+
+    @Override
+    public List<AllowedUser> allowedUserReadByID(AllowedUserReadByIDDTO allowedUserReadByIDDTO) {
+        AllowedUser allowedUser = new AllowedUser();
+        allowedUser.setUserID(allowedUserReadByIDDTO.getUserID());
+
+        return allowedUserRepository.allowedUserReadByID(allowedUser);
+    }
+
+    @Override
+    public List<AllowedUser> allowedUserReadByName(AllowedUserReadByNameDTO allowedUserReadByNameDTO) {
+        AllowedUser allowedUser = new AllowedUser();
+        allowedUser.setUserName(allowedUserReadByNameDTO.getUserName());
+
+        return allowedUserRepository.allowedUserReadByName(allowedUser);
     }
 
 

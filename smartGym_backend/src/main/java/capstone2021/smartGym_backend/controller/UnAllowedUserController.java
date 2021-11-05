@@ -35,7 +35,7 @@ public class UnAllowedUserController {
     }
 
     @CrossOrigin("*")
-    @GetMapping("/unAllowedUser/idDuplicateCheck") //가입대기- id 중복 체크
+    @PostMapping("/unAllowedUser/idDuplicateCheck") //가입대기- id 중복 체크
     @ResponseBody
     public ReturnBooleanDTO unAllowedUserIdDuplicateCheck(@RequestBody final UnAllowedUserIdDuplDTO unAllowedUserIdDuplDTO){
         ReturnBooleanDTO returnBooleanDTO=new ReturnBooleanDTO();
@@ -49,7 +49,7 @@ public class UnAllowedUserController {
     }
 
     @CrossOrigin("*")
-    @GetMapping("/unAllowedUser/phoneDuplicateCheck") //가입대기- 핸드폰 번호 중복 체크
+    @PostMapping("/unAllowedUser/phoneDuplicateCheck") //가입대기- 핸드폰 번호 중복 체크
     @ResponseBody
     public ReturnBooleanDTO unAllowedUserPhoneDuplicateCheck(@RequestBody final UnAllowedUserPhoneDuplDTO unAllowedUserPhoneDuplDTO){
         ReturnBooleanDTO returnBooleanDTO=new ReturnBooleanDTO();
@@ -62,7 +62,7 @@ public class UnAllowedUserController {
     }
 
     @CrossOrigin("*")
-    @GetMapping("/unAllowedUser/emailDuplicateCheck") //가입대기- 이메일 중복 체크
+    @PostMapping("/unAllowedUser/emailDuplicateCheck") //가입대기- 이메일 중복 체크
     @ResponseBody
     public ReturnBooleanDTO unAllowedUserEmailDuplicateCheck(@RequestBody final UnAllowedUserEmailDuplDTO unAllowedUserEmailDuplDTO){
         ReturnBooleanDTO returnBooleanDTO=new ReturnBooleanDTO();
@@ -92,7 +92,7 @@ public class UnAllowedUserController {
     @ResponseBody
     public ReturnBooleanDTO unAllowedUserUnApprove(@RequestBody final UnAllowedUserApproveDTO unAllowedUserApproveDTO){
         ReturnBooleanDTO returnBooleanDTO=new ReturnBooleanDTO();
-        if(unAllowedUserApproveDTO.getUserID().equals(""))
+        if(unAllowedUserApproveDTO.getUserID().equals("")||unAllowedUserApproveDTO==null)
             returnBooleanDTO.setSuccess(false);
         else {
             returnBooleanDTO.setData(unAllowedUserService.unAllowedUserUnApprove(unAllowedUserApproveDTO));

@@ -11,5 +11,6 @@ public interface AllowedUserRepository {
 //    String findPW(AllowedUser allowedUser);//비밀번호찾기
     AllowedUser findByAllowedUserID(String userID);
     AllowedUser findByAllowedUserName(String userName);
+    Boolean save(AllowedUser allowedUser);
 
 }

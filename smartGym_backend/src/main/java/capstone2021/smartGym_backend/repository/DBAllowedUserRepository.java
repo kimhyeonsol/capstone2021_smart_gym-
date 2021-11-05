@@ -38,5 +38,13 @@ public class DBAllowedUserRepository implements AllowedUserRepository{
         return findAllowedUser;
     }
 
+    @Override
+    public Boolean save(AllowedUser allowedUser) {
+        if(findByAllowedUserID(allowedUser.getUserID())==null) {
+            em.persist(allowedUser);
+            return true;
+        }
+        return false;
+    }
 
 }

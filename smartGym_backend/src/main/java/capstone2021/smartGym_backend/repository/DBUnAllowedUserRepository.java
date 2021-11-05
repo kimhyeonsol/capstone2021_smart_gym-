@@ -56,6 +56,20 @@ public class DBUnAllowedUserRepository implements UnAllowedUserRepository {
         return findUnAllowedUser;
     }
 
+    @Override
+    public UnAllowedUser deleteByID(String userID) {
+        UnAllowedUser findUnAllowedUser=null;
+        UnAllowedUser deletedUser=null;
+
+        findUnAllowedUser=findByUnAllowedUserID(userID);
+        if(findUnAllowedUser!=null) {
+            deletedUser=findUnAllowedUser;
+            em.remove(findUnAllowedUser);
+            return deletedUser;
+        }
+        return null;
+    }
+
     public User findByUserID(String userID) {
         User findUser=null;
         findUser=em.find(User.class,userID);

@@ -75,7 +75,7 @@ public class UnAllowedUserController {
     }
 
     @CrossOrigin("*")
-    @GetMapping("/unAllowedUser/approve") //가입대기- 가입대기자 승인
+    @PostMapping("/unAllowedUser/approve") //가입대기- 가입대기자 승인
     @ResponseBody
     public ReturnBooleanDTO unAllowedUserApprove(@RequestBody final UnAllowedUserApproveDTO unAllowedUserApproveDTO){
         ReturnBooleanDTO returnBooleanDTO=new ReturnBooleanDTO();
@@ -86,6 +86,7 @@ public class UnAllowedUserController {
         }
         return returnBooleanDTO;
     }
+
     @CrossOrigin("*")
     @GetMapping("/unAllowedUser/readAll") //가입대기 사용자 전체 조회
     @ResponseBody

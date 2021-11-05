@@ -41,7 +41,6 @@ public class UnAllowedUserServiceImpl implements UnAllowedUserService {
         unAllowedUser.setUserPhone(unAllowedUserRegisterDTO.getUserPhone());
         unAllowedUser.setUserEmail(unAllowedUserRegisterDTO.getUserEmail());
         unAllowedUser.setUserRegisterDate(now);
-        unAllowedUser.setUnAllowedUserApprovalAuthority("1");
 
         return unAllowedUserRepository.save(unAllowedUser);
     }

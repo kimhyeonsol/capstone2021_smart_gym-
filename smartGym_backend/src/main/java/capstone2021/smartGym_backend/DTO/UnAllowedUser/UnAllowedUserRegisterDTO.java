@@ -1,5 +1,7 @@
 package capstone2021.smartGym_backend.DTO.UnAllowedUser;
 
+import java.time.LocalDateTime;
+
 public class UnAllowedUserRegisterDTO {
     private String userID;
     private String userPW;
@@ -7,6 +9,7 @@ public class UnAllowedUserRegisterDTO {
     private String userSex;
     private String userPhone;
     private String userEmail;
+
 
     public String getUserID() {
         return userID;
@@ -55,4 +58,6 @@ public class UnAllowedUserRegisterDTO {
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
     }
+
+
 }

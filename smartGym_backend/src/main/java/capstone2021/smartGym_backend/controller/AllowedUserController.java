@@ -8,10 +8,7 @@ import capstone2021.smartGym_backend.DTO.Return.ReturnStringDTO;
 import capstone2021.smartGym_backend.service.AllowedUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class AllowedUserController {
@@ -23,7 +20,7 @@ public class AllowedUserController {
     }
 
     @CrossOrigin("*")
-    @PostMapping("/allowedUser/login") //가입승인- 로그인
+    @GetMapping("/allowedUser/login") //가입승인- 로그인
     @ResponseBody
     public ReturnIntDTO allowedUserLogin(@RequestBody final AllowedUserLoginDTO allowedUserLoginDTO)  {
         ReturnIntDTO returnIntDTO =new ReturnIntDTO();
@@ -37,7 +34,7 @@ public class AllowedUserController {
     }
 
     @CrossOrigin("*")
-    @PostMapping("/allowedUser/findID") //가입승인- 아이디찾기
+    @GetMapping("/allowedUser/findID") //가입승인- 아이디찾기
     @ResponseBody
     public ReturnStringDTO allowedUserFindID(@RequestBody final AllowedUserFindIDDTO allowedUserFindIDDTO) {
         ReturnStringDTO resturnStringDTO =new ReturnStringDTO();
@@ -56,7 +53,7 @@ public class AllowedUserController {
     }
 
     @CrossOrigin("*")
-    @PostMapping("/allowedUser/findPW") //가입승인- 비밀번호찾기
+    @GetMapping("/allowedUser/findPW") //가입승인- 비밀번호찾기
     @ResponseBody
     public ReturnStringDTO allowedUserFindPW(@RequestBody final AllowedUserFindPWDTO allowedUserFindPWDTO) {
         ReturnStringDTO resturnStringDTO =new ReturnStringDTO();

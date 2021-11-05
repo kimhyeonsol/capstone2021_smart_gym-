@@ -3,13 +3,16 @@ package capstone2021.smartGym_backend.service;
 import capstone2021.smartGym_backend.DTO.UnAllowedUser.*;
 import capstone2021.smartGym_backend.DTO.User.UserDeleteDTO;
 import capstone2021.smartGym_backend.DTO.User.UserUpdateDTO;
+import capstone2021.smartGym_backend.domain.AllowedUser;
 import capstone2021.smartGym_backend.domain.UnAllowedUser;
 import capstone2021.smartGym_backend.domain.User;
+import capstone2021.smartGym_backend.repository.AllowedUserRepository;
 import capstone2021.smartGym_backend.repository.UnAllowedUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -17,11 +20,13 @@ import java.util.List;
 public class UnAllowedUserServiceImpl implements UnAllowedUserService {
 
     UnAllowedUserRepository unAllowedUserRepository;
+    AllowedUserRepository allowedUserRepository;
 
 
     @Autowired
-    public UnAllowedUserServiceImpl(UnAllowedUserRepository unAllowedUserRepository) {
+    public UnAllowedUserServiceImpl(UnAllowedUserRepository unAllowedUserRepository,AllowedUserRepository allowedUserRepository) {
         this.unAllowedUserRepository = unAllowedUserRepository;
+        this.allowedUserRepository=allowedUserRepository;
     }
 
     @Override
@@ -70,9 +75,30 @@ public class UnAllowedUserServiceImpl implements UnAllowedUserService {
     }
 
     @Override
+    public boolean unAllowedUserApprove(UnAllowedUserApproveDTO unAllowedUserApproveDTO) {
+        UnAllowedUser deletedUser=null;
+        AllowedUser allowedUser=null;
+    @Override
     public List<UnAllowedUser> unAllowedUserReadAll() {
         return unAllowedUserRepository.unAllowedUserReadAll();
     }
+
+        deletedUser=unAllowedUserRepository.deleteByID(unAllowedUserApproveDTO.getUserID());
+        if(deletedUser!=null) {
+            allowedUser=new AllowedUser();
+            allowedUser.setUserID(deletedUser.getUserID());
+            allowedUser.setUserPW(deletedUser.getUserPW());
+            allowedUser.setUserName(deletedUser.getUserName());
+            allowedUser.setUserSex(deletedUser.getUserSex());
+            allowedUser.setUserPhone(deletedUser.getUserPhone());
+            allowedUser.setUserEmail(deletedUser.getUserEmail());
+            LocalDateTime now = LocalDateTime.now();
+            allowedUser.setAllowedUserApprovalDate(now);
+            return allowedUserRepository.save(allowedUser);
+        }
+        return false;
+    }
+
 
     @Override
     public List<UnAllowedUser> unAllowedUserReadByID(UnAllowedUserReadByIDDTO unAllowedUserReadByIDDTO) {

@@ -35,7 +35,7 @@ public class UnAllowedUserController {
     }
 
     @CrossOrigin("*")
-    @PostMapping("/unAllowedUser/idDuplicateCheck") //가입대기- id 중복 체크
+    @GetMapping("/unAllowedUser/idDuplicateCheck") //가입대기- id 중복 체크
     @ResponseBody
     public ReturnBooleanDTO unAllowedUserIdDuplicateCheck(@RequestBody final UnAllowedUserIdDuplDTO unAllowedUserIdDuplDTO){
         ReturnBooleanDTO returnBooleanDTO=new ReturnBooleanDTO();
@@ -49,7 +49,7 @@ public class UnAllowedUserController {
     }
 
     @CrossOrigin("*")
-    @PostMapping("/unAllowedUser/phoneDuplicateCheck") //가입대기- 핸드폰 번호 중복 체크
+    @GetMapping("/unAllowedUser/phoneDuplicateCheck") //가입대기- 핸드폰 번호 중복 체크
     @ResponseBody
     public ReturnBooleanDTO unAllowedUserPhoneDuplicateCheck(@RequestBody final UnAllowedUserPhoneDuplDTO unAllowedUserPhoneDuplDTO){
         ReturnBooleanDTO returnBooleanDTO=new ReturnBooleanDTO();
@@ -62,7 +62,7 @@ public class UnAllowedUserController {
     }
 
     @CrossOrigin("*")
-    @PostMapping("/unAllowedUser/emailDuplicateCheck") //가입대기- 이메일 중복 체크
+    @GetMapping("/unAllowedUser/emailDuplicateCheck") //가입대기- 이메일 중복 체크
     @ResponseBody
     public ReturnBooleanDTO unAllowedUserEmailDuplicateCheck(@RequestBody final UnAllowedUserEmailDuplDTO unAllowedUserEmailDuplDTO){
         ReturnBooleanDTO returnBooleanDTO=new ReturnBooleanDTO();
@@ -74,6 +74,18 @@ public class UnAllowedUserController {
         return returnBooleanDTO;
     }
 
+    @CrossOrigin("*")
+    @GetMapping("/unAllowedUser/approve") //가입대기- 가입대기자 승인
+    @ResponseBody
+    public ReturnBooleanDTO unAllowedUserApprove(@RequestBody final UnAllowedUserApproveDTO unAllowedUserApproveDTO){
+        ReturnBooleanDTO returnBooleanDTO=new ReturnBooleanDTO();
+        if(unAllowedUserApproveDTO.getUserID().equals(""))
+            returnBooleanDTO.setSuccess(false);
+        else {
+            returnBooleanDTO.setData(unAllowedUserService.unAllowedUserApprove(unAllowedUserApproveDTO));
+        }
+        return returnBooleanDTO;
+    }
     @CrossOrigin("*")
     @GetMapping("/unAllowedUser/readAll") //가입대기 사용자 전체 조회
     @ResponseBody

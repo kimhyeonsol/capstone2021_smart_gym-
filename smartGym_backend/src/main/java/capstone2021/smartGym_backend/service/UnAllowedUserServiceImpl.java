@@ -78,10 +78,7 @@ public class UnAllowedUserServiceImpl implements UnAllowedUserService {
     public boolean unAllowedUserApprove(UnAllowedUserApproveDTO unAllowedUserApproveDTO) {
         UnAllowedUser deletedUser=null;
         AllowedUser allowedUser=null;
-    @Override
-    public List<UnAllowedUser> unAllowedUserReadAll() {
-        return unAllowedUserRepository.unAllowedUserReadAll();
-    }
+
 
         deletedUser=unAllowedUserRepository.deleteByID(unAllowedUserApproveDTO.getUserID());
         if(deletedUser!=null) {
@@ -99,6 +96,10 @@ public class UnAllowedUserServiceImpl implements UnAllowedUserService {
         return false;
     }
 
+    @Override
+    public List<UnAllowedUser> unAllowedUserReadAll() {
+        return unAllowedUserRepository.unAllowedUserReadAll();
+    }
 
     @Override
     public List<UnAllowedUser> unAllowedUserReadByID(UnAllowedUserReadByIDDTO unAllowedUserReadByIDDTO) {

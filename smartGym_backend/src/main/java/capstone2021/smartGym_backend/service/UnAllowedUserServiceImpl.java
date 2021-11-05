@@ -32,12 +32,15 @@ public class UnAllowedUserServiceImpl implements UnAllowedUserService {
     @Override
     public boolean unAllowedUserRegister(UnAllowedUserRegisterDTO unAllowedUserRegisterDTO) {
         UnAllowedUser unAllowedUser = new UnAllowedUser();
+        LocalDateTime now = LocalDateTime.now();
+
         unAllowedUser.setUserID(unAllowedUserRegisterDTO.getUserID());
         unAllowedUser.setUserPW(unAllowedUserRegisterDTO.getUserPW());
         unAllowedUser.setUserName(unAllowedUserRegisterDTO.getUserName());
         unAllowedUser.setUserSex(unAllowedUserRegisterDTO.getUserSex());
         unAllowedUser.setUserPhone(unAllowedUserRegisterDTO.getUserPhone());
         unAllowedUser.setUserEmail(unAllowedUserRegisterDTO.getUserEmail());
+        unAllowedUser.setUserRegisterDate(now);
         unAllowedUser.setUnAllowedUserApprovalAuthority("1");
 
         return unAllowedUserRepository.save(unAllowedUser);
@@ -88,6 +91,7 @@ public class UnAllowedUserServiceImpl implements UnAllowedUserService {
             allowedUser.setUserSex(deletedUser.getUserSex());
             allowedUser.setUserPhone(deletedUser.getUserPhone());
             allowedUser.setUserEmail(deletedUser.getUserEmail());
+            allowedUser.setUserRegisterDate(deletedUser.getUserRegisterDate());
             LocalDateTime now = LocalDateTime.now();
             allowedUser.setAllowedUserApprovalDate(now);
             return allowedUserRepository.save(allowedUser);

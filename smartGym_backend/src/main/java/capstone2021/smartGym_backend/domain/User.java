@@ -3,6 +3,7 @@ package capstone2021.smartGym_backend.domain;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -31,6 +32,10 @@ public class User {
     @Column(name="user_email", length = 200) //크기
     @NotNull //널 허용 X
     private String userEmail;
+
+    @Column(name="user_register_date") //크기
+    @NotNull //널 허용 X
+    private LocalDateTime userRegisterDate;
 
     public String getUserID() {
         return userID;
@@ -78,5 +83,13 @@ public class User {
 
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
+    }
+
+    public LocalDateTime getUserRegisterDate() {
+        return userRegisterDate;
+    }
+
+    public void setUserRegisterDate(LocalDateTime userRegisterDate) {
+        this.userRegisterDate = userRegisterDate;
     }
 }

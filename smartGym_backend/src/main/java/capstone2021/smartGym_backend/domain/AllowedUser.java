@@ -16,6 +16,7 @@ public class AllowedUser extends User{
     @NotNull //널 허용 X
     private LocalDateTime allowedUserApprovalDate;
 
+
     public String getAllowedUserReservationAuthority() {
         return allowedUserReservationAuthority;
     }

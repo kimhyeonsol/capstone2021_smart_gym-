@@ -12,6 +12,7 @@ public interface AllowedUserRepository {
     AllowedUser findByAllowedUserID(String userID);
     AllowedUser findByAllowedUserName(String userName);
     Boolean save(AllowedUser allowedUser);
+    boolean allowedUserReservationAuthorityUpdate(AllowedUser allowedUser);
     List<AllowedUser> allowedUserReadAll();
     List<AllowedUser> allowedUserReadByID(AllowedUser AllowedUser);
     List<AllowedUser> allowedUserReadByName(AllowedUser AllowedUser);

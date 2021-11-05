@@ -1,6 +1,5 @@
 package capstone2021.smartGym_backend.controller;
 
-import capstone2021.smartGym_backend.DTO.Equipment.EquipmentDeleteDetailedReadDTO;
 import capstone2021.smartGym_backend.DTO.Return.ReturnBooleanDTO;
 import capstone2021.smartGym_backend.DTO.UnAllowedUser.*;
 import capstone2021.smartGym_backend.domain.UnAllowedUser;

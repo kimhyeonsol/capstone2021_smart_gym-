@@ -76,6 +76,14 @@ public class AllowedUserController {
     }
 
     @CrossOrigin("*")
+    @PostMapping("/allowedUser/reservationAuthorityUpdate") //가입승인 사용자 예약 권한 변경
+    @ResponseBody
+    public boolean allowedUserReservationAuthorityUpdate(@RequestBody final AllowedUserReservationAuthorityDTO allowedUserReservationAuthorityDTO) {
+        return allowedUserService.allowedUserReservationAuthorityUpdate(allowedUserReservationAuthorityDTO);
+
+    }
+
+    @CrossOrigin("*")
     @GetMapping("/allowedUser/readAll") //가입대기 사용자 전체 조회
     @ResponseBody
     public ReturnAllowedUserListDTO allowedUserReadAll() {
@@ -112,4 +120,5 @@ public class AllowedUserController {
         return returnAllowedUserListDTO;
 
     }
+
 }

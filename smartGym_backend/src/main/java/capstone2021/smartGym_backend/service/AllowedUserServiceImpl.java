@@ -77,6 +77,14 @@ public class AllowedUserServiceImpl implements AllowedUserService {
     }
 
     @Override
+    public boolean allowedUserReservationAuthorityUpdate(AllowedUserReservationAuthorityDTO allowedUserReservationAuthorityDTO) {
+        AllowedUser findAllowedUser = allowedUserRepository.findByAllowedUserID(allowedUserReservationAuthorityDTO.getUserID());
+        findAllowedUser.setAllowedUserReservationAuthority(allowedUserReservationAuthorityDTO.getAllowedUserReservationAuthority());
+
+        return allowedUserRepository.allowedUserReservationAuthorityUpdate(findAllowedUser);
+    }
+
+    @Override
     public List<AllowedUser> allowedUserReadAll() {
         return allowedUserRepository.allowedUserReadAll();
     }

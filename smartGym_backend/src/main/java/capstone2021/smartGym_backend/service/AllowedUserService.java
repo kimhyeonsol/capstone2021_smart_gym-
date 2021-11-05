@@ -12,6 +12,7 @@ public interface AllowedUserService extends UserService{
     int allowedUserLogin(AllowedUserLoginDTO allowedUserLoginDTO); //로그인
     String allowedUserFindID(AllowedUserFindIDDTO allowedUserFindIDDTO); //아이디찾기
     String allowedUserFindPW(AllowedUserFindPWDTO allowedUserFindPWDTO); //비밀번호찾기
+    boolean allowedUserReservationAuthorityUpdate(AllowedUserReservationAuthorityDTO allowedUserReservationAuthorityDTO); //예약 권한 변경
     List<AllowedUser> allowedUserReadAll(); //가입대기 사용자 전체 조회
     List<AllowedUser> allowedUserReadByID(AllowedUserReadByIDDTO allowedUserReadByIDDTO); //가입대기 사용자 ID 조회
     List<AllowedUser> allowedUserReadByName(AllowedUserReadByNameDTO allowedUserReadByNameDTO); //가입대기 사용자 이름 조회

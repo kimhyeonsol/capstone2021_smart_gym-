@@ -11,6 +11,7 @@ public interface UnAllowedUserService extends UserService{
     boolean unAllowedUserPhoneDuplicateCheck(UnAllowedUserPhoneDuplDTO unAllowedUserPhoneDuplDTO);//전화번호 중복 체크
     boolean unAllowedUserEmailDuplicateCheck(UnAllowedUserEmailDuplDTO unAllowedUserEmailDuplDTO);//이메일 중복 체크
     boolean unAllowedUserApprove(UnAllowedUserApproveDTO unAllowedUserApproveDTO);// 가입대기 사용자 승인
+    boolean unAllowedUserUnApprove(UnAllowedUserApproveDTO unAllowedUserApproveDTO);// 가입대기 사용자 승인
     List<UnAllowedUser> unAllowedUserReadAll(); //가입대기 사용자 전체 조회
     List<UnAllowedUser> unAllowedUserReadByID(UnAllowedUserReadByIDDTO unAllowedUserReadByIDDTO); //가입대기 사용자 ID 조회
     List<UnAllowedUser> unAllowedUserReadByName(UnAllowedUserReadByNameDTO unAllowedUserReadByNameDTO); //가입대기 사용자 이름 조회

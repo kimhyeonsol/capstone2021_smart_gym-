@@ -1,6 +1,7 @@
 package capstone2021.smartGym_backend.repository;
 
 import capstone2021.smartGym_backend.domain.AllowedUser;
+import capstone2021.smartGym_backend.domain.EquipmentCategory;
 import capstone2021.smartGym_backend.domain.UnAllowedUser;
 import capstone2021.smartGym_backend.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -45,6 +47,17 @@ public class DBAllowedUserRepository implements AllowedUserRepository{
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean allowedUserReservationAuthorityUpdate(AllowedUser allowedUser) {
+        try{
+            em.merge(allowedUser);
+            return true;
+        } catch (PersistenceException | IllegalStateException e){
+            System.out.println("update 오류");
+            return false;
+        }
     }
 
     @Override

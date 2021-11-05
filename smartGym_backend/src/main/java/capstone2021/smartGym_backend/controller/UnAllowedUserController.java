@@ -88,6 +88,19 @@ public class UnAllowedUserController {
     }
 
     @CrossOrigin("*")
+    @PostMapping("/unAllowedUser/unApprove") //가입대기- 가입대기자 승인 거부
+    @ResponseBody
+    public ReturnBooleanDTO unAllowedUserUnApprove(@RequestBody final UnAllowedUserApproveDTO unAllowedUserApproveDTO){
+        ReturnBooleanDTO returnBooleanDTO=new ReturnBooleanDTO();
+        if(unAllowedUserApproveDTO.getUserID().equals(""))
+            returnBooleanDTO.setSuccess(false);
+        else {
+            returnBooleanDTO.setData(unAllowedUserService.unAllowedUserUnApprove(unAllowedUserApproveDTO));
+        }
+        return returnBooleanDTO;
+    }
+
+    @CrossOrigin("*")
     @GetMapping("/unAllowedUser/readAll") //가입대기 사용자 전체 조회
     @ResponseBody
     public List<UnAllowedUser> unAllowedUserReadAll() {

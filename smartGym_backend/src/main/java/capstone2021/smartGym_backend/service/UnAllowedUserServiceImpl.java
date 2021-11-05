@@ -79,7 +79,6 @@ public class UnAllowedUserServiceImpl implements UnAllowedUserService {
         UnAllowedUser deletedUser=null;
         AllowedUser allowedUser=null;
 
-
         deletedUser=unAllowedUserRepository.deleteByID(unAllowedUserApproveDTO.getUserID());
         if(deletedUser!=null) {
             allowedUser=new AllowedUser();
@@ -92,6 +91,16 @@ public class UnAllowedUserServiceImpl implements UnAllowedUserService {
             LocalDateTime now = LocalDateTime.now();
             allowedUser.setAllowedUserApprovalDate(now);
             return allowedUserRepository.save(allowedUser);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean unAllowedUserUnApprove(UnAllowedUserApproveDTO unAllowedUserApproveDTO) {
+        UnAllowedUser deletedUser=null;
+        deletedUser=unAllowedUserRepository.deleteByID(unAllowedUserApproveDTO.getUserID());
+        if(deletedUser!=null) {
+            return true;
         }
         return false;
     }

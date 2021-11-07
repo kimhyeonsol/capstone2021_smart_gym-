@@ -71,7 +71,7 @@ public class GymOperationInfoServiceImpl implements GymOperationInfoService{
 
         GymHoliday gymHoliday = new GymHoliday();
 
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
         try {
             gymHoliday.setGymHolidayDate(format.parse(gymHolidayCreateDTO.getGymHolidayDate()));
         } catch (ParseException e) {

@@ -1,7 +1,6 @@
 package capstone2021.smartGym_backend.service;
 
-import capstone2021.smartGym_backend.DTO.GymInfo.GymHolidayCreateDTO;
-import capstone2021.smartGym_backend.DTO.GymInfo.GymHolidayDeleteDTO;
+import capstone2021.smartGym_backend.DTO.GymInfo.GymHolidayCreateDeleteDTO;
 import capstone2021.smartGym_backend.DTO.GymInfo.GymOperationInfoDTO;
 import capstone2021.smartGym_backend.domain.GymHoliday;
 import capstone2021.smartGym_backend.domain.GymOperationInfo;
@@ -64,8 +63,8 @@ public class GymOperationInfoServiceImpl implements GymOperationInfoService{
     }
 
     @Override
-    public boolean createHoliday(GymHolidayCreateDTO gymHolidayCreateDTO) {
-        if(gymHolidayCreateDTO.getGymHolidayDate() == null || gymHolidayCreateDTO.getGymHolidayDate().isBlank()){
+    public boolean createHoliday(GymHolidayCreateDeleteDTO gymHolidayCreateDeleteDTO) {
+        if(gymHolidayCreateDeleteDTO.getGymHolidayDate() == null || gymHolidayCreateDeleteDTO.getGymHolidayDate().isBlank()){
             return false;
         }
 
@@ -73,7 +72,7 @@ public class GymOperationInfoServiceImpl implements GymOperationInfoService{
 
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
         try {
-            gymHoliday.setGymHolidayDate(format.parse(gymHolidayCreateDTO.getGymHolidayDate()));
+            gymHoliday.setGymHolidayDate(format.parse(gymHolidayCreateDeleteDTO.getGymHolidayDate()));
         } catch (ParseException e) {
             e.printStackTrace();
             return false;
@@ -83,14 +82,20 @@ public class GymOperationInfoServiceImpl implements GymOperationInfoService{
     }
 
     @Override
-    public boolean deleteHoliday(GymHolidayDeleteDTO gymHolidayDeleteDTO) {
-        if(gymHolidayDeleteDTO.getGymHolidayID() == null) {
+    public boolean deleteHoliday(GymHolidayCreateDeleteDTO gymHolidayCreateDeleteDTO) {
+        if(gymHolidayCreateDeleteDTO.getGymHolidayDate() == null || gymHolidayCreateDeleteDTO.getGymHolidayDate().isBlank()){
             return false;
         }
-        
+
         GymHoliday gymHoliday = new GymHoliday();
 
-        gymHoliday.setGymHolidayID(gymHolidayDeleteDTO.getGymHolidayID());
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+        try {
+            gymHoliday.setGymHolidayDate(format.parse(gymHolidayCreateDeleteDTO.getGymHolidayDate()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false;
+        }
 
         return gymOperationInfoRepository.deleteHoliday(gymHoliday);
     }

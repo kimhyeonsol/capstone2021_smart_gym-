@@ -10,10 +10,6 @@ import java.util.Date;
 @Entity
 public class GymHoliday {
     @Id //식별자
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //자동으로 올라가게 설정
-    @Column(name="gym_holiday_id")
-    private Long gymHolidayID;
-
     @Column(name="gym_holiday_date", length = 8)
     @NotNull //널 허용 X
     @Temporal(TemporalType.DATE) //DATE 형식
@@ -26,14 +22,6 @@ public class GymHoliday {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-    }
-
-    public Long getGymHolidayID() {
-        return gymHolidayID;
-    }
-
-    public void setGymHolidayID(Long gymHolidayID) {
-        this.gymHolidayID = gymHolidayID;
     }
 
     public Date getGymHolidayDate() {

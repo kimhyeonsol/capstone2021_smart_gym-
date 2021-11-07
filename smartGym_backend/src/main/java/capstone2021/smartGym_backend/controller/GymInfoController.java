@@ -68,15 +68,15 @@ public class GymInfoController {
     @CrossOrigin("*")
     @PostMapping("/gymOperationInfo/holiday/create") //헬스장 운영정보 휴무일 등록
     @ResponseBody
-    public boolean gymOperationInfoHolidayCreate(@RequestBody final GymHolidayCreateDTO gymHolidayCreateDTO){
-        return gymOperationInfoService.createHoliday(gymHolidayCreateDTO);
+    public boolean gymOperationInfoHolidayCreate(@RequestBody final GymHolidayCreateDeleteDTO gymHolidayCreateDeleteDTO){
+        return gymOperationInfoService.createHoliday(gymHolidayCreateDeleteDTO);
     }
 
     @CrossOrigin("*")
     @PostMapping("/gymOperationInfo/holiday/delete") //헬스장 운영정보 휴무일 삭제
     @ResponseBody
-    public boolean gymOperationInfoHolidayDelete(@RequestBody final GymHolidayDeleteDTO gymHolidayDeleteDTO){
-        return gymOperationInfoService.deleteHoliday(gymHolidayDeleteDTO);
+    public boolean gymOperationInfoHolidayDelete(@RequestBody final GymHolidayCreateDeleteDTO gymHolidayCreateDeleteDTO){
+        return gymOperationInfoService.deleteHoliday(gymHolidayCreateDeleteDTO);
     }
 
     @CrossOrigin("*")

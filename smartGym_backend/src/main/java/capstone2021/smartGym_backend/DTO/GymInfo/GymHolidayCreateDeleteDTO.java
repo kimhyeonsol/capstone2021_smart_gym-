@@ -1,6 +1,6 @@
 package capstone2021.smartGym_backend.DTO.GymInfo;
 
-public class GymHolidayCreateDTO {
+public class GymHolidayCreateDeleteDTO {
     private String gymHolidayDate;
 
     public String getGymHolidayDate() {

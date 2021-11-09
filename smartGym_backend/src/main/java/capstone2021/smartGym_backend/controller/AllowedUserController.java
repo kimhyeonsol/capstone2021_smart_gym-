@@ -18,7 +18,7 @@ import java.util.List;
 @Controller
 public class AllowedUserController {
 
-    AllowedUserService allowedUserService;
+    private final AllowedUserService allowedUserService;
     @Autowired
     public AllowedUserController(AllowedUserService allowedUserService) {
         this.allowedUserService = allowedUserService;

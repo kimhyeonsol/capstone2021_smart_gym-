@@ -12,4 +12,6 @@ public interface GymOperationInfoRepository {
     boolean createHoliday(GymHoliday gymHoliday);
     boolean deleteHoliday(GymHoliday gymHoliday);
     List<GymHoliday> readHoliday();
+
+    String readGymOperationInfoReservationDuration();
 }

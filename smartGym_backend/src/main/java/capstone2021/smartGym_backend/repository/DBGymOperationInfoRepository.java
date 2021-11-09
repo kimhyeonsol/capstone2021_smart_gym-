@@ -1,6 +1,7 @@
 package capstone2021.smartGym_backend.repository;
 
 import capstone2021.smartGym_backend.DTO.GymInfo.GymOperationInfoDTO;
+import capstone2021.smartGym_backend.domain.AllowedUser;
 import capstone2021.smartGym_backend.domain.GymHoliday;
 import capstone2021.smartGym_backend.domain.GymOperationInfo;
 import org.springframework.stereotype.Repository;
@@ -83,5 +84,11 @@ public class DBGymOperationInfoRepository implements GymOperationInfoRepository{
     public List<GymHoliday> readHoliday() {
         return em.createQuery("SELECT gh FROM GymHoliday gh", GymHoliday.class)
                 .getResultList();
+    }
+
+    @Override
+    public String readGymOperationInfoReservationDuration() {
+        GymOperationInfo gymOperationInfoFind = em.find(GymOperationInfo.class, 1);
+        return gymOperationInfoFind.getGymOperationInfoReservationDuration();
     }
 }

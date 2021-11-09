@@ -14,4 +14,6 @@ public interface GymOperationInfoRepository {
     List<GymHoliday> readHoliday();
 
     String readGymOperationInfoReservationDuration();
+    String readRegularHoliday();
+    List<GymHoliday> readHolidayByMonth(int year,int month,int lastOfMonth);
 }

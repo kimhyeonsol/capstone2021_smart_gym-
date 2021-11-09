@@ -8,7 +8,10 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
+import javax.persistence.TemporalType;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -90,5 +93,30 @@ public class DBGymOperationInfoRepository implements GymOperationInfoRepository{
     public String readGymOperationInfoReservationDuration() {
         GymOperationInfo gymOperationInfoFind = em.find(GymOperationInfo.class, 1);
         return gymOperationInfoFind.getGymOperationInfoReservationDuration();
+    }
+
+    @Override
+    public String readRegularHoliday() {
+        GymOperationInfo gymOperationInfoFind = em.find(GymOperationInfo.class, 1);
+        return gymOperationInfoFind.getGymOperationInfoRegularHoliday();
+    }
+
+    @Override
+    public List<GymHoliday> readHolidayByMonth(int year, int month,int lastOfMonth) {
+        Date startdate=new Date();
+        Date enddate=new Date();
+
+        Calendar cal= Calendar.getInstance();
+
+        cal.set(year,month-1,1);
+        startdate=cal.getTime();
+
+        cal.set(year,month-1,lastOfMonth);
+        enddate=cal.getTime();
+
+        return em.createQuery("SELECT gh FROM GymHoliday gh WHERE gh.gymHolidayDate BETWEEN :startdate AND :enddate")
+                .setParameter("startdate", startdate, TemporalType.DATE)
+                .setParameter("enddate", enddate, TemporalType.DATE)
+                .getResultList();
     }
 }

@@ -1,5 +1,8 @@
 package capstone2021.smartGym_backend.controller;
 
+import capstone2021.smartGym_backend.DTO.Reservation.CalHolidayDateDTO;
+import capstone2021.smartGym_backend.DTO.Return.ReturnDateListDTO;
+import capstone2021.smartGym_backend.DTO.Return.ReturnIntegerListDTO;
 import capstone2021.smartGym_backend.DTO.Return.ReturnStringListDTO;
 import capstone2021.smartGym_backend.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,5 +26,33 @@ public class ReservationController {
         ReturnStringListDTO returnStringListDTO =new ReturnStringListDTO();
         returnStringListDTO.setData(reservationService.calAvailableDate());
         return returnStringListDTO;
+    }
+
+    @CrossOrigin("*")
+    @GetMapping("/reservation/calRegularHolidayDate") //예약- 정기 휴무일 계산
+    @ResponseBody
+    public ReturnIntegerListDTO calRegularHolidayDate(@RequestBody CalHolidayDateDTO calHolidayDateDTO) {
+        ReturnIntegerListDTO returnIntegerListDTO =new ReturnIntegerListDTO();
+        if(calHolidayDateDTO==null){
+            returnIntegerListDTO.setSuccess(false);
+        }
+        else {
+            returnIntegerListDTO.setData(reservationService.calRegularHolidayDate(calHolidayDateDTO));
+        }
+        return returnIntegerListDTO;
+    }
+
+    @CrossOrigin("*")
+    @GetMapping("/reservation/calHolidayDate") //예약- 휴무일 계산
+    @ResponseBody
+    public ReturnIntegerListDTO calHolidayDate(@RequestBody CalHolidayDateDTO calHolidayDateDTO) {
+        ReturnIntegerListDTO returnIntegerListDTO =new ReturnIntegerListDTO();
+        if(calHolidayDateDTO==null){
+            returnIntegerListDTO.setSuccess(false);
+        }
+        else {
+            returnIntegerListDTO.setData(reservationService.calHolidayDate(calHolidayDateDTO));
+        }
+        return returnIntegerListDTO;
     }
 }

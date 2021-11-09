@@ -5,7 +5,7 @@ import capstone2021.smartGym_backend.domain.AllowedUser;
 import java.util.Date;
 import java.util.List;
 
-public class ReturnDateListDTO {
+public class ReturnStringListDTO {
     Boolean success=true;
     List<String> data;
 

@@ -1,6 +1,6 @@
 package capstone2021.smartGym_backend.controller;
 
-import capstone2021.smartGym_backend.DTO.Return.ReturnDateListDTO;
+import capstone2021.smartGym_backend.DTO.Return.ReturnStringListDTO;
 import capstone2021.smartGym_backend.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,9 +19,9 @@ public class ReservationController {
     @CrossOrigin("*")
     @GetMapping("/reservation/calAvailableDate") //예약- 예약 가능일 계산
     @ResponseBody
-    public ReturnDateListDTO calAvailableDate() {
-        ReturnDateListDTO returnDateListDTO=new ReturnDateListDTO();
-        returnDateListDTO.setData(reservationService.calAvailableDate());
-        return returnDateListDTO;
+    public ReturnStringListDTO calAvailableDate() {
+        ReturnStringListDTO returnStringListDTO =new ReturnStringListDTO();
+        returnStringListDTO.setData(reservationService.calAvailableDate());
+        return returnStringListDTO;
     }
 }

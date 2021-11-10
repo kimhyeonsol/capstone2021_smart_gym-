@@ -8,4 +8,5 @@ public interface StatisticsService {
     List statisticsMembership(StatisticsDTO statisticsDTO);
     List statisticsReservation(StatisticsDTO statisticsDTO);
     List statisticsEquipment(StatisticsDTO statisticsDTO);
+    List statisticsEquipmentCategory(StatisticsDTO statisticsDTO);
 }

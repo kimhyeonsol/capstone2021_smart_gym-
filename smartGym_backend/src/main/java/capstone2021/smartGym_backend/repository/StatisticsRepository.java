@@ -6,4 +6,5 @@ public interface StatisticsRepository {
     List statisticsMembership(String year);
     List statisticsReservation(String year);
     List statisticsEquipment(String year);
+    List statisticsEquipmentCategory(String year);
 }

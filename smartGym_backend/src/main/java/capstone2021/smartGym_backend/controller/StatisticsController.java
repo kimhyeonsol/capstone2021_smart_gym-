@@ -35,9 +35,16 @@ public class StatisticsController {
     }
 
     @CrossOrigin("*")
-    @PostMapping("/statistics/equipment") //인기많은 운동기구 통계
+    @PostMapping("/statistics/equipment") //인기 운동기구 TOP5 통계
     @ResponseBody
     public List statisticsEquipment(@RequestBody final StatisticsDTO statisticsDTO){
         return statisticsService.statisticsEquipment(statisticsDTO);
+    }
+
+    @CrossOrigin("*")
+    @PostMapping("/statistics/equipmentCategory") //운동기구 부위별 예약 수 통계
+    @ResponseBody
+    public List statisticsEquipmentCategory(@RequestBody final StatisticsDTO statisticsDTO){
+        return statisticsService.statisticsEquipmentCategory(statisticsDTO);
     }
 }

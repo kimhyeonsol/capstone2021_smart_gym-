@@ -38,4 +38,11 @@ public class StatisticsServiceImpl implements StatisticsService{
 
         return statisticsRepository.statisticsEquipment(year);
     }
+
+    @Override
+    public List statisticsEquipmentCategory(StatisticsDTO statisticsDTO) {
+        String year = statisticsDTO.getYear();
+
+        return statisticsRepository.statisticsEquipmentCategory(year);
+    }
 }

@@ -1,8 +1,8 @@
 package capstone2021.smartGym_backend.DTO.Reservation;
 
 public class CalHolidayDateDTO {
-    int year;
-    int month;
+    private int year;
+    private int month;
 
     public int getYear() {
         return year;

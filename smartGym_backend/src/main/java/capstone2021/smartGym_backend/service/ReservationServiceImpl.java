@@ -1,7 +1,9 @@
 package capstone2021.smartGym_backend.service;
 
+import capstone2021.smartGym_backend.DTO.Equipment.EquipmentSearchByCategoryDTO;
 import capstone2021.smartGym_backend.DTO.Reservation.CalHolidayDateDTO;
 import capstone2021.smartGym_backend.domain.GymHoliday;
+import capstone2021.smartGym_backend.repository.EquipmentRepository;
 import capstone2021.smartGym_backend.repository.GymOperationInfoRepository;
 import capstone2021.smartGym_backend.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +19,14 @@ public class ReservationServiceImpl implements ReservationService{
 
     private final ReservationRepository reservationRepository;
     private final GymOperationInfoRepository gymOperationInfoRepository;
+    private final EquipmentRepository equipmentRepository;
 
     @Autowired
 
-    public ReservationServiceImpl(ReservationRepository reservationRepository,GymOperationInfoRepository gymOperationInfoRepository) {
+    public ReservationServiceImpl(ReservationRepository reservationRepository,GymOperationInfoRepository gymOperationInfoRepository,EquipmentRepository equipmentRepository) {
         this.reservationRepository = reservationRepository;
         this.gymOperationInfoRepository=gymOperationInfoRepository;
+        this.equipmentRepository=equipmentRepository;
     }
 
 
@@ -109,6 +113,24 @@ public class ReservationServiceImpl implements ReservationService{
             list.add(Integer.parseInt(sdformat.format(gm.getGymHolidayDate())));
         }
         return list;
+    }
+
+    @Override
+    public EquipmentSearchByCategoryDTO searchEquipmentByCategory() {
+        EquipmentSearchByCategoryDTO equipmentSearchByCategoryDTO=new EquipmentSearchByCategoryDTO();
+        equipmentSearchByCategoryDTO.setChest(equipmentRepository.readByCategory("가슴"));
+        equipmentSearchByCategoryDTO.setBack(equipmentRepository.readByCategory("등"));
+        equipmentSearchByCategoryDTO.setNeck(equipmentRepository.readByCategory("목"));
+        equipmentSearchByCategoryDTO.setStomach(equipmentRepository.readByCategory("복부"));
+        equipmentSearchByCategoryDTO.setTriceps(equipmentRepository.readByCategory("삼두"));
+        equipmentSearchByCategoryDTO.setTrapezius(equipmentRepository.readByCategory("승모근"));
+        equipmentSearchByCategoryDTO.setShoulder(equipmentRepository.readByCategory("어깨"));
+        equipmentSearchByCategoryDTO.setAerobic(equipmentRepository.readByCategory("유산소"));
+        equipmentSearchByCategoryDTO.setBiceps(equipmentRepository.readByCategory("이두"));
+        equipmentSearchByCategoryDTO.setLower_body(equipmentRepository.readByCategory("하체"));
+        equipmentSearchByCategoryDTO.setWaist(equipmentRepository.readByCategory("허리"));
+        equipmentSearchByCategoryDTO.setEtc(equipmentRepository.readByCategory("기타"));
+        return equipmentSearchByCategoryDTO;
     }
 
 }

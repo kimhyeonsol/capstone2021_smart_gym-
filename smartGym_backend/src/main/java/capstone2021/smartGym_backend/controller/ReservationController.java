@@ -2,6 +2,7 @@ package capstone2021.smartGym_backend.controller;
 
 import capstone2021.smartGym_backend.DTO.Reservation.CalHolidayDateDTO;
 import capstone2021.smartGym_backend.DTO.Return.ReturnDateListDTO;
+import capstone2021.smartGym_backend.DTO.Return.ReturnEquipmentSearchByCategoryDTO;
 import capstone2021.smartGym_backend.DTO.Return.ReturnIntegerListDTO;
 import capstone2021.smartGym_backend.DTO.Return.ReturnStringListDTO;
 import capstone2021.smartGym_backend.service.ReservationService;
@@ -54,5 +55,14 @@ public class ReservationController {
             returnIntegerListDTO.setData(reservationService.calHolidayDate(calHolidayDateDTO));
         }
         return returnIntegerListDTO;
+    }
+
+    @CrossOrigin("*")
+    @GetMapping("/reservation/searchEquipmentByCategory") //운동기구 조회: 카테고리별 조회
+    @ResponseBody
+    public ReturnEquipmentSearchByCategoryDTO searchEquipmentByCategory() {
+        ReturnEquipmentSearchByCategoryDTO returnEquipmentSearchByCategoryDTO =new ReturnEquipmentSearchByCategoryDTO();
+        returnEquipmentSearchByCategoryDTO.setData(reservationService.searchEquipmentByCategory());
+        return returnEquipmentSearchByCategoryDTO;
     }
 }

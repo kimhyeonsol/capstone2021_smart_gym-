@@ -1,10 +1,13 @@
 package capstone2021.smartGym_backend.repository;
 
+import capstone2021.smartGym_backend.DTO.Reservation.ReservationCreateDTO;
+import capstone2021.smartGym_backend.domain.Reservation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 
 @Repository
 public class DBReservationRepository implements ReservationRepository{
@@ -18,4 +21,14 @@ public class DBReservationRepository implements ReservationRepository{
     }
 
 
+    @Override
+    public Boolean reservationCreate(Reservation reservation) {
+        try{
+            em.persist(reservation);
+            return true;
+        } catch (PersistenceException | IllegalStateException e){
+            System.out.println("create 오류");
+            return false;
+        }
+    }
 }

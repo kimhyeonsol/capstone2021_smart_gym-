@@ -76,7 +76,7 @@ public class AllowedUserController {
     }
 
     @CrossOrigin("*")
-    @GetMapping("/allowedUser/readAll") //가입대기 사용자 전체 조회
+    @GetMapping("/allowedUser/readAll") //가입승인- 사용자 전체 조회
     @ResponseBody
     public ReturnAllowedUserListDTO allowedUserReadAll() {
         ReturnAllowedUserListDTO returnAllowedUserListDTO=new ReturnAllowedUserListDTO();
@@ -85,7 +85,7 @@ public class AllowedUserController {
     }
 
     @CrossOrigin("*")
-    @PostMapping("/allowedUser/readByID") //가입대기 사용자 ID 조회
+    @PostMapping("/allowedUser/readByID") //가입승인- 사용자 ID 조회
     @ResponseBody
     public ReturnAllowedUserListDTO allowedUserReadByID(@RequestBody final AllowedUserReadByIDDTO allowedUserReadByIDDTO) {
         ReturnAllowedUserListDTO returnAllowedUserListDTO=new ReturnAllowedUserListDTO();
@@ -99,7 +99,7 @@ public class AllowedUserController {
     }
 
     @CrossOrigin("*")
-    @PostMapping("/allowedUser/readByName") //가입대기 사용자 이름 조회
+    @PostMapping("/allowedUser/readByName") //가입승인- 사용자 이름 조회
     @ResponseBody
     public ReturnAllowedUserListDTO allowedUserReadByName(@RequestBody final AllowedUserReadByNameDTO allowedUserReadByNameDTO) {
         ReturnAllowedUserListDTO returnAllowedUserListDTO=new ReturnAllowedUserListDTO();

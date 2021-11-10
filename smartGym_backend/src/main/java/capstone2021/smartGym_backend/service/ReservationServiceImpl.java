@@ -2,7 +2,12 @@ package capstone2021.smartGym_backend.service;
 
 import capstone2021.smartGym_backend.DTO.Equipment.EquipmentSearchByCategoryDTO;
 import capstone2021.smartGym_backend.DTO.Reservation.CalHolidayDateDTO;
+import capstone2021.smartGym_backend.DTO.Reservation.ReservationCreateDTO;
+import capstone2021.smartGym_backend.domain.AllowedUser;
+import capstone2021.smartGym_backend.domain.Equipment;
 import capstone2021.smartGym_backend.domain.GymHoliday;
+import capstone2021.smartGym_backend.domain.Reservation;
+import capstone2021.smartGym_backend.repository.AllowedUserRepository;
 import capstone2021.smartGym_backend.repository.EquipmentRepository;
 import capstone2021.smartGym_backend.repository.GymOperationInfoRepository;
 import capstone2021.smartGym_backend.repository.ReservationRepository;
@@ -20,13 +25,15 @@ public class ReservationServiceImpl implements ReservationService{
     private final ReservationRepository reservationRepository;
     private final GymOperationInfoRepository gymOperationInfoRepository;
     private final EquipmentRepository equipmentRepository;
+    private final AllowedUserRepository allowedUserRepository;
 
     @Autowired
 
-    public ReservationServiceImpl(ReservationRepository reservationRepository,GymOperationInfoRepository gymOperationInfoRepository,EquipmentRepository equipmentRepository) {
+    public ReservationServiceImpl(ReservationRepository reservationRepository,GymOperationInfoRepository gymOperationInfoRepository,EquipmentRepository equipmentRepository,AllowedUserRepository allowedUserRepository) {
         this.reservationRepository = reservationRepository;
         this.gymOperationInfoRepository=gymOperationInfoRepository;
         this.equipmentRepository=equipmentRepository;
+        this.allowedUserRepository=allowedUserRepository;
     }
 
 
@@ -131,6 +138,30 @@ public class ReservationServiceImpl implements ReservationService{
         equipmentSearchByCategoryDTO.setWaist(equipmentRepository.readByCategory("허리"));
         equipmentSearchByCategoryDTO.setEtc(equipmentRepository.readByCategory("기타"));
         return equipmentSearchByCategoryDTO;
+    }
+
+    @Override
+    public int makeReservation(ReservationCreateDTO reservationCreateDTO) {
+        Reservation reservation= new Reservation();
+
+        //reservation 권한 있는지 확인하는 코드 추가 필요:return 1
+        //if(reservationCreateDTO.getUserID())
+
+        AllowedUser allowedUser= allowedUserRepository.findByAllowedUserID(reservationCreateDTO.getUserID());
+        if(allowedUser==null) return 2;
+        reservation.setUserID(allowedUser);
+
+        Equipment equipment=equipmentRepository.findByID(reservationCreateDTO.getEquipmentID());
+        if(equipment==null) return 3;
+        reservation.setEquipmentID(equipment);
+
+        reservation.setStartTime(reservationCreateDTO.getStartTime());
+        reservation.setEndTime(reservationCreateDTO.getEndTime());
+
+        reservationRepository.reservationCreate(reservation);
+
+        return 0;
+
     }
 
 }

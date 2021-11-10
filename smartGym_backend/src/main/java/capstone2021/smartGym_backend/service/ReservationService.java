@@ -2,6 +2,7 @@ package capstone2021.smartGym_backend.service;
 
 import capstone2021.smartGym_backend.DTO.Equipment.EquipmentSearchByCategoryDTO;
 import capstone2021.smartGym_backend.DTO.Reservation.CalHolidayDateDTO;
+import capstone2021.smartGym_backend.DTO.Reservation.ReservationCreateDTO;
 
 import java.util.Date;
 import java.util.List;
@@ -11,4 +12,5 @@ public interface ReservationService {
     List<Integer> calRegularHolidayDate(CalHolidayDateDTO calRegularHolidayDateDTO);//헬스장 정기 휴무일 반환
     List<Integer> calHolidayDate(CalHolidayDateDTO calRegularHolidayDateDTO);//헬스장 휴무일 반환
     EquipmentSearchByCategoryDTO searchEquipmentByCategory();
+    int makeReservation(ReservationCreateDTO reservationCreateDTO);
 }

@@ -30,4 +30,35 @@ public class Reservation {
     @NotNull //널 허용 X
     private LocalDateTime endTime;
 
+    public AllowedUser getUserID() {
+        return userID;
+    }
+
+    public void setUserID(AllowedUser userID) {
+        this.userID = userID;
+    }
+
+    public Equipment getEquipmentID() {
+        return equipmentID;
+    }
+
+    public void setEquipmentID(Equipment equipmentID) {
+        this.equipmentID = equipmentID;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
 }

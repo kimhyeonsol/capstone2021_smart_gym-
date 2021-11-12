@@ -41,6 +41,9 @@ public class EquipmentServiceImpl extends ImageService implements EquipmentServi
         if(equipmentCreateDTO.getEquipmentInfoCreateDTO().getEquipmentAvailable() == -1) {
             return 1;
         }
+        if(equipmentCreateDTO.getEquipmentInfoCreateDTO().getEquipmentQRCode() == null || equipmentCreateDTO.getEquipmentInfoCreateDTO().getEquipmentQRCode().isBlank()) {
+            return 1;
+        }
         if(equipmentCreateDTO.getEquipmentImage().isEmpty()){
             return 1;
         }
@@ -50,6 +53,7 @@ public class EquipmentServiceImpl extends ImageService implements EquipmentServi
         equipment.setEquipmentNameNth(equipmentCreateDTO.getEquipmentInfoCreateDTO().getEquipmentNameNth());
         equipment.setEquipmentCategoryList(equipmentCreateDTO.getEquipmentInfoCreateDTO().getEquipmentCategoryList());
         equipment.setEquipmentAvailable(equipmentCreateDTO.getEquipmentInfoCreateDTO().getEquipmentAvailable());
+        equipment.setEquipmentQRCode(equipmentCreateDTO.getEquipmentInfoCreateDTO().getEquipmentQRCode());
 
         String fileName = UUID.randomUUID() + "_" + equipmentCreateDTO.getEquipmentImage().getOriginalFilename(); //S3에 이미지 업로드
         String fileUrl = upload(equipmentCreateDTO.getEquipmentImage(), fileName,  "/");
@@ -70,6 +74,9 @@ public class EquipmentServiceImpl extends ImageService implements EquipmentServi
         if(equipmentUpdateDTO.getEquipmentInfoUpdateDTO().getEquipmentCategoryList() == null || equipmentUpdateDTO.getEquipmentInfoUpdateDTO().getEquipmentCategoryList().isBlank()) {
             return 1;
         }
+        if(equipmentUpdateDTO.getEquipmentInfoUpdateDTO().getEquipmentQRCode() == null || equipmentUpdateDTO.getEquipmentInfoUpdateDTO().getEquipmentQRCode().isBlank()) {
+            return 1;
+        }
         if(equipmentUpdateDTO.getEquipmentInfoUpdateDTO().getEquipmentAvailable() == -1) {
             return 1;
         }
@@ -82,6 +89,7 @@ public class EquipmentServiceImpl extends ImageService implements EquipmentServi
         equipment.setEquipmentNameNth(equipmentUpdateDTO.getEquipmentInfoUpdateDTO().getEquipmentNameNth());
         equipment.setEquipmentCategoryList(equipmentUpdateDTO.getEquipmentInfoUpdateDTO().getEquipmentCategoryList());
         equipment.setEquipmentAvailable(equipmentUpdateDTO.getEquipmentInfoUpdateDTO().getEquipmentAvailable());
+        equipment.setEquipmentQRCode(equipmentUpdateDTO.getEquipmentInfoUpdateDTO().getEquipmentQRCode());
         equipment.setEquipmentImage(findEquipment.getEquipmentImage());
 
         if(equipmentUpdateDTO.getEquipmentImage() != null) { //이미지를 수정할 경우

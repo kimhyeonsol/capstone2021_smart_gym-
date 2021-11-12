@@ -31,6 +31,10 @@ public class Equipment {
     @NotNull
     private int equipmentAvailable;
 
+    @Column(name="equipment_qr_code", length = 5000) //운동기구 QR 코드 URL
+    @NotNull
+    private String equipmentQRCode;
+
     public Long getEquipmentID() {
         return equipmentID;
     }
@@ -77,5 +81,13 @@ public class Equipment {
 
     public void setEquipmentAvailable(int equipmentAvailable) {
         this.equipmentAvailable = equipmentAvailable;
+    }
+
+    public String getEquipmentQRCode() {
+        return equipmentQRCode;
+    }
+
+    public void setEquipmentQRCode(String equipmentQRCode) {
+        this.equipmentQRCode = equipmentQRCode;
     }
 }

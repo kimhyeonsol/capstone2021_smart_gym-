@@ -6,6 +6,7 @@ public class EquipmentInfoUpdateDTO {
     private String equipmentNameNth;
     private String equipmentCategoryList;
     private int equipmentAvailable;
+    private String equipmentQRCode;
 
     public Long getEquipmentID() {
         return equipmentID;
@@ -45,5 +46,13 @@ public class EquipmentInfoUpdateDTO {
 
     public void setEquipmentAvailable(int equipmentAvailable) {
         this.equipmentAvailable = equipmentAvailable;
+    }
+
+    public String getEquipmentQRCode() {
+        return equipmentQRCode;
+    }
+
+    public void setEquipmentQRCode(String equipmentQRCode) {
+        this.equipmentQRCode = equipmentQRCode;
     }
 }

@@ -1,9 +1,9 @@
 package capstone2021.smartGym_backend.repository;
 
-import capstone2021.smartGym_backend.domain.EquipmentCategory;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -63,26 +63,28 @@ public class DBStatisticsRepository implements StatisticsRepository{
 
     @Override
     public List statisticsEquipmentCategory(String year) {
+        ArrayList list = new ArrayList();
+        String[] str1 = {"가슴", "등", "목", "복부", "삼두", "승모근", "어깨", "유산소", "이두", "하체", "허리", "기타"};
+
+        String[] str2 = {"equipmentCategoryChest", "equipmentCategoryBack", "equipmentCategoryNeck",
+                "equipmentCategoryStomach", "equipmentCategoryTriceps", "equipmentCategoryTrapezius",
+                "equipmentCategoryShoulder", "equipmentCategoryAerobic", "equipmentCategoryBiceps",
+                "equipmentCategoryLowerBody", "equipmentCategoryWaist", "equipmentCategoryEtc"};
+
         if(year.isBlank()){
-            return em.createQuery("SELECT SUM(ec.equipmentCategoryChest) AS 가슴, SUM(ec.equipmentCategoryBack) AS 등, " +
-                            "SUM(ec.equipmentCategoryNeck) AS 목, SUM(ec.equipmentCategoryStomach) AS 복부, " +
-                            "SUM(ec.equipmentCategoryTriceps) AS 삼두, SUM(ec.equipmentCategoryTrapezius) AS 승모근, " +
-                            "SUM(ec.equipmentCategoryShoulder) AS 어깨, SUM(ec.equipmentCategoryAerobic) AS 유산소, " +
-                            "SUM(ec.equipmentCategoryBiceps) AS 이두, SUM(ec.equipmentCategoryLowerBody) AS 하체, " +
-                            "SUM(ec.equipmentCategoryWaist) AS 허리, SUM(ec.equipmentCategoryEtc) AS 기타 " +
-                    "FROM EquipmentCategory ec, Reservation r WHERE r.equipmentID = ec.equipmentCategoryID")
-                    .getResultList();
+            for(int i=0; i<12; i++){
+                String sql = "SELECT '" + str1[i] + "', " + "SUM(ec." + str2[i] + ")" + " FROM EquipmentCategory ec, Reservation r WHERE r.equipmentID = ec.equipmentCategoryID";
+                list.add(i, em.createQuery(sql).getSingleResult());
+            }
+
+            return list;
         }
 
-        String sql1 = "SELECT SUM(ec.equipmentCategoryChest) AS 가슴, SUM(ec.equipmentCategoryBack) AS 등, " +
-                "SUM(ec.equipmentCategoryNeck) AS 목, SUM(ec.equipmentCategoryStomach) AS 복부, " +
-                "SUM(ec.equipmentCategoryTriceps) AS 삼두, SUM(ec.equipmentCategoryTrapezius) AS 승모근, " +
-                "SUM(ec.equipmentCategoryShoulder) AS 어깨, SUM(ec.equipmentCategoryAerobic) AS 유산소, " +
-                "SUM(ec.equipmentCategoryBiceps) AS 이두, SUM(ec.equipmentCategoryLowerBody) AS 하체, " +
-                "SUM(ec.equipmentCategoryWaist) AS 허리, SUM(ec.equipmentCategoryEtc) AS 기타 " +
-                "FROM EquipmentCategory ec, Reservation r WHERE r.equipmentID = ec.equipmentCategoryID AND function('date_format', r.startTime, '%Y') = ";
-        String qlString = sql1 + year;
+        for(int i=0; i<12; i++){
+            String sql = "SELECT '" + str1[i] + "', " + "SUM(ec." + str2[i] + ")" + " FROM EquipmentCategory ec, Reservation r WHERE r.equipmentID = ec.equipmentCategoryID AND function('date_format', r.startTime, '%Y') = " + year;
+            list.add(i, em.createQuery(sql).getSingleResult());
+        }
 
-        return em.createQuery(qlString).getResultList();
+        return list;
     }
 }

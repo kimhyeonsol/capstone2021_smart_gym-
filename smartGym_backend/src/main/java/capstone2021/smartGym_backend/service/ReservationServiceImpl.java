@@ -3,6 +3,8 @@ package capstone2021.smartGym_backend.service;
 import capstone2021.smartGym_backend.DTO.Equipment.EquipmentSearchByCategoryDTO;
 import capstone2021.smartGym_backend.DTO.Reservation.CalHolidayDateDTO;
 import capstone2021.smartGym_backend.DTO.Reservation.ReservationCreateDTO;
+import capstone2021.smartGym_backend.DTO.Reservation.ReservationReadByEquipmentDTO;
+import capstone2021.smartGym_backend.DTO.Return.ReturnReservationReadByEquipmentDTO;
 import capstone2021.smartGym_backend.domain.AllowedUser;
 import capstone2021.smartGym_backend.domain.Equipment;
 import capstone2021.smartGym_backend.domain.GymHoliday;
@@ -164,4 +166,8 @@ public class ReservationServiceImpl implements ReservationService{
 
     }
 
+    @Override
+    public List<ReturnReservationReadByEquipmentDTO> reservationReadByEquipment(ReservationReadByEquipmentDTO reservationReadByEquipmentDTO) {
+        return reservationRepository.reservationReadByEquipment(reservationReadByEquipmentDTO.getEquipmentID());
+    }
 }

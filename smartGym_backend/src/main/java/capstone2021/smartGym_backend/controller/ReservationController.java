@@ -2,11 +2,14 @@ package capstone2021.smartGym_backend.controller;
 
 import capstone2021.smartGym_backend.DTO.Reservation.CalHolidayDateDTO;
 import capstone2021.smartGym_backend.DTO.Reservation.ReservationCreateDTO;
+import capstone2021.smartGym_backend.DTO.Reservation.ReservationReadByEquipmentDTO;
 import capstone2021.smartGym_backend.DTO.Return.*;
 import capstone2021.smartGym_backend.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 public class ReservationController {
@@ -76,5 +79,12 @@ public class ReservationController {
             returnIntDTO.setData(reservationService.makeReservation(reservationCreateDTO));
         }
         return returnIntDTO;
+    }
+
+    @CrossOrigin("*")
+    @PostMapping("/reservation/readByEquipment") //운동기구 별 예약 조회
+    @ResponseBody
+    public List<ReturnReservationReadByEquipmentDTO> reservationReadByEquipment(@RequestBody ReservationReadByEquipmentDTO reservationReadByEquipmentDTO){
+        return reservationService.reservationReadByEquipment(reservationReadByEquipmentDTO);
     }
 }

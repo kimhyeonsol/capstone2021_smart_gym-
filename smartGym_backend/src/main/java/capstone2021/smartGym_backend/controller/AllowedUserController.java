@@ -18,7 +18,7 @@ import java.util.List;
 @Controller
 public class AllowedUserController {
 
-    AllowedUserService allowedUserService;
+    private final AllowedUserService allowedUserService;
     @Autowired
     public AllowedUserController(AllowedUserService allowedUserService) {
         this.allowedUserService = allowedUserService;
@@ -93,7 +93,7 @@ public class AllowedUserController {
     }
 
     @CrossOrigin("*")
-    @PostMapping("/allowedUser/readByID") //가입대기 사용자 ID 조회
+    @PostMapping("/allowedUser/readByID") //가입승인- 사용자 ID 조회
     @ResponseBody
     public ReturnAllowedUserListDTO allowedUserReadByID(@RequestBody final AllowedUserReadByIDDTO allowedUserReadByIDDTO) {
         ReturnAllowedUserListDTO returnAllowedUserListDTO=new ReturnAllowedUserListDTO();
@@ -107,7 +107,7 @@ public class AllowedUserController {
     }
 
     @CrossOrigin("*")
-    @PostMapping("/allowedUser/readByName") //가입대기 사용자 이름 조회
+    @PostMapping("/allowedUser/readByName") //가입승인- 사용자 이름 조회
     @ResponseBody
     public ReturnAllowedUserListDTO allowedUserReadByName(@RequestBody final AllowedUserReadByNameDTO allowedUserReadByNameDTO) {
         ReturnAllowedUserListDTO returnAllowedUserListDTO=new ReturnAllowedUserListDTO();

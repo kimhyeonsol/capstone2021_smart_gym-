@@ -14,11 +14,11 @@ public class SmartGymBackendApplication {
 			+ "classpath:application.yml,"
 			+ "classpath:aws.yml";
 
-	@PostConstruct
-	public void started(){
-		TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
-		System.out.println("현재시각: "+new Date());
-	}
+//	@PostConstruct
+//	public void started(){
+//		TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
+//		System.out.println("현재시각: "+new Date());
+//	}
 	public static void main(String[] args) {
 		new SpringApplicationBuilder(SmartGymBackendApplication.class)
 				.properties(APPLICATION_LOCATIONS)

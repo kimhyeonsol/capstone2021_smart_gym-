@@ -30,6 +30,10 @@ public class Reservation {
     @NotNull //널 허용 X
     private LocalDateTime endTime;
 
+    public Long getReservationID() {
+        return reservationID;
+    }
+
     public AllowedUser getUserID() {
         return userID;
     }

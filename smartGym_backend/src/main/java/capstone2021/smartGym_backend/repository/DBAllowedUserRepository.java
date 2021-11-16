@@ -1,9 +1,6 @@
 package capstone2021.smartGym_backend.repository;
 
-import capstone2021.smartGym_backend.domain.AllowedUser;
-import capstone2021.smartGym_backend.domain.EquipmentCategory;
-import capstone2021.smartGym_backend.domain.UnAllowedUser;
-import capstone2021.smartGym_backend.domain.User;
+import capstone2021.smartGym_backend.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -76,6 +73,33 @@ public class DBAllowedUserRepository implements AllowedUserRepository{
     public List<AllowedUser> allowedUserReadByName(AllowedUser AllowedUser) {
         return em.createQuery("SELECT u FROM AllowedUser u WHERE u.userName = :allowedUserName")
                 .setParameter("allowedUserName", AllowedUser.getUserName()).getResultList();
+    }
+
+    @Override
+    public AllowedUser delete(AllowedUser allowedUser) {
+        List<Reservation> reservations;
+        AllowedUser delete=allowedUser;
+        reservations = em.createQuery("SELECT r FROM Reservation r WHERE r.userID IN (SELECT au.userID FROM AllowedUser au WHERE r.userID = :userID)", Reservation.class)
+                .setParameter("userID", allowedUser).getResultList();
+
+        try {
+            if (em.contains(allowedUser)) {
+                for(Reservation reservation : reservations){ //예약 다 삭제
+                    em.remove(reservation);
+                }
+                em.remove(allowedUser);
+            }
+            else {
+                for(Reservation reservation : reservations){
+                    em.remove(em.merge(reservation));
+                }
+                em.remove(em.merge(allowedUser));
+            }
+            return delete;
+        }
+        catch (PersistenceException | IllegalStateException e){
+            return null;
+        }
     }
 
 

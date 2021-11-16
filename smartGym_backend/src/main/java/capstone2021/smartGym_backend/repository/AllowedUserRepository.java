@@ -16,4 +16,5 @@ public interface AllowedUserRepository {
     List<AllowedUser> allowedUserReadAll();
     List<AllowedUser> allowedUserReadByID(AllowedUser AllowedUser);
     List<AllowedUser> allowedUserReadByName(AllowedUser AllowedUser);
+    AllowedUser delete(AllowedUser allowedUser);
 }

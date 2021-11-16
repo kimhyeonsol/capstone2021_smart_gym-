@@ -3,6 +3,8 @@ package capstone2021.smartGym_backend.service;
 import capstone2021.smartGym_backend.DTO.Equipment.EquipmentSearchByCategoryDTO;
 import capstone2021.smartGym_backend.DTO.Reservation.CalHolidayDateDTO;
 import capstone2021.smartGym_backend.DTO.Reservation.ReservationCreateDTO;
+import capstone2021.smartGym_backend.DTO.Reservation.ReservationReadSelectedDayDTO;
+import capstone2021.smartGym_backend.DTO.Reservation.SelectedDayReservationDTO;
 import capstone2021.smartGym_backend.DTO.Reservation.ReservationReadByEquipmentDTO;
 import capstone2021.smartGym_backend.DTO.Return.ReturnReservationReadByEquipmentDTO;
 import capstone2021.smartGym_backend.domain.AllowedUser;
@@ -164,6 +166,30 @@ public class ReservationServiceImpl implements ReservationService{
 
         return 0;
 
+    }
+
+    @Override
+    public List<SelectedDayReservationDTO> readMyReservationOfSelectedDay(ReservationReadSelectedDayDTO reservationReadSelectedDayDTO) {
+        ArrayList<SelectedDayReservationDTO> list=new ArrayList<SelectedDayReservationDTO>();
+        List<Reservation> reservationList=null;
+
+        Equipment equipment=null;
+        reservationList=reservationRepository.readReservationByUserIDAndDay(reservationReadSelectedDayDTO.getUserID(),reservationReadSelectedDayDTO.getYear(),reservationReadSelectedDayDTO.getMonth(),reservationReadSelectedDayDTO.getDay());
+
+        for(Reservation r:reservationList){
+            SelectedDayReservationDTO selectedDayReservationDTO=new SelectedDayReservationDTO();
+            selectedDayReservationDTO.setReservationID(r.getReservationID());
+            selectedDayReservationDTO.setEquipmentID(r.getEquipmentID().getEquipmentID());
+            selectedDayReservationDTO.setEquipmentName(r.getEquipmentID().getEquipmentName());
+            selectedDayReservationDTO.setEquipmentNameNth(r.getEquipmentID().getEquipmentNameNth());
+            selectedDayReservationDTO.setStartTime(r.getStartTime());
+            selectedDayReservationDTO.setEndTime(r.getEndTime());
+            list.add(selectedDayReservationDTO);
+        }
+
+
+
+        return list;
     }
 
     @Override

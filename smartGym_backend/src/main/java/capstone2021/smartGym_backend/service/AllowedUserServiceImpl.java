@@ -50,6 +50,17 @@ public class AllowedUserServiceImpl implements AllowedUserService {
     }
 
     @Override
+    public AllowedUser readUserInfo(AllowedUserReadUserInfoDTO allowedUserReadUserInfoDT) {
+        AllowedUser findAllowedUser = null;
+        findAllowedUser = allowedUserRepository.findByAllowedUserID(allowedUserReadUserInfoDT.getUserID());
+
+        if (findAllowedUser != null) {
+            return findAllowedUser;
+        }
+        return null;
+    }
+
+    @Override
     public String allowedUserFindID(AllowedUserFindIDDTO allowedUserFindIDDTO) {
 
         AllowedUser findAllowedUser = null;
@@ -103,6 +114,14 @@ public class AllowedUserServiceImpl implements AllowedUserService {
         allowedUser.setUserName(allowedUserReadByNameDTO.getUserName());
 
         return allowedUserRepository.allowedUserReadByName(allowedUser);
+    }
+
+    @Override
+    public AllowedUser deleteUser(AllowedUserDeleteDTO allowedUserDeleteDTO) {
+        AllowedUser allowedUser = new AllowedUser();
+        allowedUser=allowedUserRepository.findByAllowedUserID(allowedUserDeleteDTO.getUserID());
+        allowedUser=allowedUserRepository.delete(allowedUser);
+        return allowedUser;
     }
 
 

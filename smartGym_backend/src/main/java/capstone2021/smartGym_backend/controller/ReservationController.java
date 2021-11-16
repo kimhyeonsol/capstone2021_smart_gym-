@@ -2,6 +2,7 @@ package capstone2021.smartGym_backend.controller;
 
 import capstone2021.smartGym_backend.DTO.Reservation.CalHolidayDateDTO;
 import capstone2021.smartGym_backend.DTO.Reservation.ReservationCreateDTO;
+import capstone2021.smartGym_backend.DTO.Reservation.ReservationReadSelectedDayDTO;
 import capstone2021.smartGym_backend.DTO.Reservation.ReservationReadByEquipmentDTO;
 import capstone2021.smartGym_backend.DTO.Return.*;
 import capstone2021.smartGym_backend.service.ReservationService;
@@ -72,7 +73,7 @@ public class ReservationController {
     @ResponseBody
     public ReturnIntDTO makeReservation(@RequestBody ReservationCreateDTO reservationCreateDTO) {
         ReturnIntDTO returnIntDTO =new ReturnIntDTO();
-        if(returnIntDTO==null){
+        if(reservationCreateDTO==null){
             returnIntDTO.setSuccess(false);
         }
         else {
@@ -86,5 +87,19 @@ public class ReservationController {
     @ResponseBody
     public List<ReturnReservationReadByEquipmentDTO> reservationReadByEquipment(@RequestBody ReservationReadByEquipmentDTO reservationReadByEquipmentDTO){
         return reservationService.reservationReadByEquipment(reservationReadByEquipmentDTO);
+    }
+
+    @CrossOrigin("*")
+    @PostMapping("/reservation/readMyReservationOfSelectedDay") //예약 - 선택한날짜 내 예약 조회
+    @ResponseBody
+    public ReturnReservationListDTO readMyReservationOfSelectedDay(@RequestBody ReservationReadSelectedDayDTO reservationReadSelectedDayDTO) {
+        ReturnReservationListDTO returnReservationListDTO =new ReturnReservationListDTO();
+        if(reservationReadSelectedDayDTO==null){
+            returnReservationListDTO.setSuccess(false);
+        }
+        else {
+            returnReservationListDTO.setData(reservationService.readMyReservationOfSelectedDay(reservationReadSelectedDayDTO));
+        }
+        return returnReservationListDTO;
     }
 }

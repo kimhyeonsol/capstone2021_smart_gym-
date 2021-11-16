@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface ReservationRepository {
     Boolean reservationCreate(Reservation reservation);
+    List<Reservation> readReservationByUserIDAndDay(String UserID, int year, int month, int day);
     List<ReturnReservationReadByEquipmentDTO> reservationReadByEquipment(long id);
 }

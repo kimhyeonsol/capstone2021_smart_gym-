@@ -1,6 +1,7 @@
 package capstone2021.smartGym_backend.controller;
 
 import capstone2021.smartGym_backend.DTO.AllowedUser.*;
+import capstone2021.smartGym_backend.DTO.Return.ReturnAllowedUserDTO;
 import capstone2021.smartGym_backend.DTO.Return.ReturnAllowedUserListDTO;
 import capstone2021.smartGym_backend.DTO.Return.ReturnIntDTO;
 import capstone2021.smartGym_backend.DTO.Return.ReturnStringDTO;
@@ -39,6 +40,20 @@ public class AllowedUserController {
     }
 
     @CrossOrigin("*")
+    @PostMapping("/allowedUser/readUserInfo") //가입승인- 회원정보 조회
+    @ResponseBody
+    public ReturnAllowedUserDTO allowedUserLogin(@RequestBody final AllowedUserReadUserInfoDTO allowedUserReadUserInfoDTO)  {
+        ReturnAllowedUserDTO returnAllowedUserDTO =new ReturnAllowedUserDTO();
+        if(allowedUserReadUserInfoDTO.getUserID().equals("")||allowedUserReadUserInfoDTO==null){
+            returnAllowedUserDTO.setSuccess(false);
+        }
+        else {
+            returnAllowedUserDTO.setData(allowedUserService.readUserInfo(allowedUserReadUserInfoDTO));
+        }
+        return returnAllowedUserDTO;
+    }
+
+    @CrossOrigin("*")
     @PostMapping("/allowedUser/findID") //가입승인- 아이디찾기
     @ResponseBody
     public ReturnStringDTO allowedUserFindID(@RequestBody final AllowedUserFindIDDTO allowedUserFindIDDTO) {
@@ -61,18 +76,18 @@ public class AllowedUserController {
     @PostMapping("/allowedUser/findPW") //가입승인- 비밀번호찾기
     @ResponseBody
     public ReturnStringDTO allowedUserFindPW(@RequestBody final AllowedUserFindPWDTO allowedUserFindPWDTO) {
-        ReturnStringDTO resturnStringDTO =new ReturnStringDTO();
+        ReturnStringDTO returnStringDTO =new ReturnStringDTO();
         String result=null;
         if(allowedUserFindPWDTO.getUserID().equals("")||allowedUserFindPWDTO.getUserEmail().equals("")){
-            resturnStringDTO.setSuccess(false);
+            returnStringDTO.setSuccess(false);
         }
         else {
             result=allowedUserService.allowedUserFindPW(allowedUserFindPWDTO);
             if(result==null)
-                resturnStringDTO.setCode(0);
-            resturnStringDTO.setData(result);
+                returnStringDTO.setCode(0);
+            returnStringDTO.setData(result);
         }
-        return resturnStringDTO;
+        return returnStringDTO;
     }
 
     @CrossOrigin("*")
@@ -107,7 +122,7 @@ public class AllowedUserController {
     }
 
     @CrossOrigin("*")
-    @PostMapping("/allowedUser/readByName") //가입승인- 사용자 이름 조회
+    @PostMapping("/allowedUser/readByName") //가입승인- 사용자 이름으로 조회하기
     @ResponseBody
     public ReturnAllowedUserListDTO allowedUserReadByName(@RequestBody final AllowedUserReadByNameDTO allowedUserReadByNameDTO) {
         ReturnAllowedUserListDTO returnAllowedUserListDTO=new ReturnAllowedUserListDTO();
@@ -118,6 +133,21 @@ public class AllowedUserController {
             returnAllowedUserListDTO.setData(allowedUserService.allowedUserReadByName(allowedUserReadByNameDTO));
         }
         return returnAllowedUserListDTO;
+
+    }
+
+    @CrossOrigin("*")
+    @PostMapping("/allowedUser/deleteUser") //가입승인- 사용자 이름 조회
+    @ResponseBody
+    public ReturnAllowedUserDTO deleteUser(@RequestBody final AllowedUserDeleteDTO allowedUserDeleteDTO) {
+        ReturnAllowedUserDTO returnAllowedUserDTO=new ReturnAllowedUserDTO();
+        if(allowedUserDeleteDTO.getUserID().equals("")||allowedUserDeleteDTO==null){
+            returnAllowedUserDTO.setSuccess(false);
+        }
+        else {
+            returnAllowedUserDTO.setData(allowedUserService.deleteUser(allowedUserDeleteDTO));
+        }
+        return returnAllowedUserDTO;
 
     }
 

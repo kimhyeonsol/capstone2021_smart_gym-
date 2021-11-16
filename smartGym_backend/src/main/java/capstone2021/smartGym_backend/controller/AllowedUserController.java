@@ -137,7 +137,7 @@ public class AllowedUserController {
     }
 
     @CrossOrigin("*")
-    @PostMapping("/allowedUser/deleteUser") //가입승인- 사용자 이름 조회
+    @PostMapping("/allowedUser/deleteUser") //가입승인- 사용자 탈퇴
     @ResponseBody
     public ReturnAllowedUserDTO deleteUser(@RequestBody final AllowedUserDeleteDTO allowedUserDeleteDTO) {
         ReturnAllowedUserDTO returnAllowedUserDTO=new ReturnAllowedUserDTO();
@@ -151,4 +151,17 @@ public class AllowedUserController {
 
     }
 
+    @CrossOrigin("*")
+    @PostMapping("/allowedUser/updateUser") //가입승인- 사용자 이름 조회
+    @ResponseBody
+    public ReturnAllowedUserDTO updateUser(@RequestBody final AllowedUserUpdateDTO allowedUserUpdateDTO) {
+        ReturnAllowedUserDTO returnAllowedUserDTO=new ReturnAllowedUserDTO();
+        if(allowedUserUpdateDTO.getUserID().equals("")||allowedUserUpdateDTO==null){
+            returnAllowedUserDTO.setSuccess(false);
+        }
+        else {
+            returnAllowedUserDTO.setData(allowedUserService.update(allowedUserUpdateDTO));
+        }
+        return returnAllowedUserDTO;
+    }
 }

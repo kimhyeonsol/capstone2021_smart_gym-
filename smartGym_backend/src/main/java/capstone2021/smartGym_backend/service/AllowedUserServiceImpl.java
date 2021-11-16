@@ -118,11 +118,17 @@ public class AllowedUserServiceImpl implements AllowedUserService {
 
     @Override
     public AllowedUser deleteUser(AllowedUserDeleteDTO allowedUserDeleteDTO) {
-        AllowedUser allowedUser = new AllowedUser();
+        AllowedUser allowedUser = null;
         allowedUser=allowedUserRepository.findByAllowedUserID(allowedUserDeleteDTO.getUserID());
         allowedUser=allowedUserRepository.delete(allowedUser);
         return allowedUser;
     }
 
+    @Override
+    public AllowedUser update(AllowedUserUpdateDTO allowedUserUpdateDTO) {
+        AllowedUser allowedUser=null;
+        allowedUser=allowedUserRepository.update(allowedUserUpdateDTO);
+        return allowedUser;
+    }
 
 }

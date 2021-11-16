@@ -1,5 +1,6 @@
 package capstone2021.smartGym_backend.repository;
 
+import capstone2021.smartGym_backend.DTO.AllowedUser.AllowedUserUpdateDTO;
 import capstone2021.smartGym_backend.domain.AllowedUser;
 import capstone2021.smartGym_backend.domain.UnAllowedUser;
 
@@ -17,4 +18,5 @@ public interface AllowedUserRepository {
     List<AllowedUser> allowedUserReadByID(AllowedUser AllowedUser);
     List<AllowedUser> allowedUserReadByName(AllowedUser AllowedUser);
     AllowedUser delete(AllowedUser allowedUser);
+    AllowedUser update(AllowedUserUpdateDTO allowedUserUpdateDTO);
 }

@@ -1,5 +1,6 @@
 package capstone2021.smartGym_backend.repository;
 
+import capstone2021.smartGym_backend.DTO.AllowedUser.AllowedUserUpdateDTO;
 import capstone2021.smartGym_backend.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -102,5 +103,26 @@ public class DBAllowedUserRepository implements AllowedUserRepository{
         }
     }
 
+    @Override
+    public AllowedUser update(AllowedUserUpdateDTO allowedUserUpdateDTO) {
+        AllowedUser findUser=findByAllowedUserID(allowedUserUpdateDTO.getUserID());
+
+        if(findUser != null) {
+            try {
+                findUser.setUserName(allowedUserUpdateDTO.getUserName());
+                findUser.setUserPW(allowedUserUpdateDTO.getUserPW());
+                findUser.setUserEmail(allowedUserUpdateDTO.getUserEmail());
+                findUser.setUserPhone(allowedUserUpdateDTO.getUserPhone());
+                findUser.setUserEmail(allowedUserUpdateDTO.getUserEmail());
+                findUser.setUserSex(allowedUserUpdateDTO.getUserSex());
+
+                return findUser;
+            } catch (PersistenceException | IllegalStateException e) {
+                System.out.println("update 오류");
+                return null;
+            }
+        }
+        return null;
+    }
 
 }

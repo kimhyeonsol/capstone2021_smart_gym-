@@ -148,10 +148,13 @@ public class ReservationServiceImpl implements ReservationService{
     public int makeReservation(ReservationCreateDTO reservationCreateDTO) {
         Reservation reservation= new Reservation();
 
-        //reservation 권한 있는지 확인하는 코드 추가 필요:return 1
-        //if(reservationCreateDTO.getUserID())
+
+
 
         AllowedUser allowedUser= allowedUserRepository.findByAllowedUserID(reservationCreateDTO.getUserID());
+
+        //reservation 권한 있는지 확인하는 코드 추가 필요:return 1
+        if(allowedUser.getAllowedUserReservationAuthority().equals("X")) return 1;
         if(allowedUser==null) return 2;
         reservation.setUserID(allowedUser);
 

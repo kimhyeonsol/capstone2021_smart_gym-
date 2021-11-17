@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -106,12 +107,32 @@ public class DBEquipmentRepository implements EquipmentRepository{
     @Override
     public int update(Equipment equipment) {
         boolean duplicateResult;
+        List<Reservation> reservations;
+        LocalDateTime now = LocalDateTime.now();
 
         duplicateResult = duplicateCheckEquipmentName(equipment.getEquipmentID(), equipment.getEquipmentName(), equipment.getEquipmentNameNth());
         if(duplicateResult == true){
             try{
                 em.merge(equipment);
 
+                if(equipment.getEquipmentAvailable() == 0){
+                    reservations = em.createQuery("SELECT r FROM Reservation r WHERE function('date_format', :now, '%Y-%m-%d %H:%i:%s') <= r.startTime AND r.equipmentID = :equipment", Reservation.class)
+                            .setParameter("now", now).setParameter("equipment", equipment).getResultList();
+                    try {
+                        if (em.contains(equipment)) {
+                            for(Reservation reservation : reservations){ //현재시간 이후의 예약 삭제
+                                em.remove(reservation);
+                            }
+                        } else {
+                            for(Reservation reservation : reservations){
+                                em.remove(em.merge(reservation));
+                            }
+                        }
+                    } catch (PersistenceException | IllegalStateException e){
+                        System.out.println("운동기구 상태 update 오류");
+                        return 3;
+                    }
+                }
                 EquipmentCategory equipmentCategory = new EquipmentCategory();
                 equipmentCategory.setEquipmentCategoryID(equipment);
                 equipmentCategory.setEquipmentCategoryChest(0);
@@ -147,10 +168,10 @@ public class DBEquipmentRepository implements EquipmentRepository{
         List<Reservation> reservations;
         List<EquipmentCategory> equipmentCategories;
 
-        reservations = em.createQuery("SELECT r FROM Reservation r WHERE r.equipmentID IN (SELECT e.equipmentID FROM Equipment e WHERE r.equipmentID = :equipment)", Reservation.class)
+        reservations = em.createQuery("SELECT r FROM Reservation r WHERE r.equipmentID = :equipment", Reservation.class)
                 .setParameter("equipment", equipment).getResultList();
 
-        equipmentCategories = em.createQuery("SELECT ec FROM EquipmentCategory ec WHERE ec.equipmentCategoryID IN (SELECT e.equipmentID FROM Equipment e WHERE ec.equipmentCategoryID = :equipment)", EquipmentCategory.class)
+        equipmentCategories = em.createQuery("SELECT ec FROM EquipmentCategory ec WHERE ec.equipmentCategoryID = :equipment", EquipmentCategory.class)
                 .setParameter("equipment", equipment).getResultList();
 
         try {

@@ -208,69 +208,69 @@ public class DBEquipmentRepository implements EquipmentRepository{
 
     @Override
     public List<Equipment> readAll() {
-        return em.createQuery("SELECT e FROM Equipment e", Equipment.class)
+        return em.createQuery("SELECT e FROM Equipment e ORDER BY e.equipmentName, e.equipmentNameNth", Equipment.class)
                 .getResultList();
     }
 
     @Override
     public List<Equipment> readByCategory(String equipmentCategorySelect) {
         if(equipmentCategorySelect.equals("가슴")){
-            return em.createQuery("SELECT e FROM Equipment e WHERE e.equipmentID IN (SELECT ec.equipmentCategoryID FROM EquipmentCategory ec WHERE ec.equipmentCategoryID = e AND ec.equipmentCategoryChest = 1)", Equipment.class)
+            return em.createQuery("SELECT e FROM Equipment e WHERE e.equipmentID IN (SELECT ec.equipmentCategoryID FROM EquipmentCategory ec WHERE ec.equipmentCategoryID = e AND ec.equipmentCategoryChest = 1) ORDER BY e.equipmentName, e.equipmentNameNth", Equipment.class)
                     .getResultList();
         }
 
         else if(equipmentCategorySelect.equals("등")){
-            return em.createQuery("SELECT e FROM Equipment e WHERE e.equipmentID IN (SELECT ec.equipmentCategoryID FROM EquipmentCategory ec WHERE ec.equipmentCategoryID = e AND ec.equipmentCategoryBack = 1)", Equipment.class)
+            return em.createQuery("SELECT e FROM Equipment e WHERE e.equipmentID IN (SELECT ec.equipmentCategoryID FROM EquipmentCategory ec WHERE ec.equipmentCategoryID = e AND ec.equipmentCategoryBack = 1) ORDER BY e.equipmentName, e.equipmentNameNth", Equipment.class)
                     .getResultList();
         }
 
         else if(equipmentCategorySelect.equals("목")){
-            return em.createQuery("SELECT e FROM Equipment e WHERE e.equipmentID IN (SELECT ec.equipmentCategoryID FROM EquipmentCategory ec WHERE ec.equipmentCategoryID = e AND ec.equipmentCategoryNeck = 1)", Equipment.class)
+            return em.createQuery("SELECT e FROM Equipment e WHERE e.equipmentID IN (SELECT ec.equipmentCategoryID FROM EquipmentCategory ec WHERE ec.equipmentCategoryID = e AND ec.equipmentCategoryNeck = 1) ORDER BY e.equipmentName, e.equipmentNameNth", Equipment.class)
                     .getResultList();
         }
 
         else if(equipmentCategorySelect.equals("복부")){
-            return em.createQuery("SELECT e FROM Equipment e WHERE e.equipmentID IN (SELECT ec.equipmentCategoryID FROM EquipmentCategory ec WHERE ec.equipmentCategoryID = e AND ec.equipmentCategoryStomach = 1)", Equipment.class)
+            return em.createQuery("SELECT e FROM Equipment e WHERE e.equipmentID IN (SELECT ec.equipmentCategoryID FROM EquipmentCategory ec WHERE ec.equipmentCategoryID = e AND ec.equipmentCategoryStomach = 1) ORDER BY e.equipmentName, e.equipmentNameNth", Equipment.class)
                     .getResultList();
         }
 
         else if(equipmentCategorySelect.equals("삼두")){
-            return em.createQuery("SELECT e FROM Equipment e WHERE e.equipmentID IN (SELECT ec.equipmentCategoryID FROM EquipmentCategory ec WHERE ec.equipmentCategoryID = e AND ec.equipmentCategoryTriceps = 1)", Equipment.class)
+            return em.createQuery("SELECT e FROM Equipment e WHERE e.equipmentID IN (SELECT ec.equipmentCategoryID FROM EquipmentCategory ec WHERE ec.equipmentCategoryID = e AND ec.equipmentCategoryTriceps = 1) ORDER BY e.equipmentName, e.equipmentNameNth", Equipment.class)
                     .getResultList();
         }
 
         else if(equipmentCategorySelect.equals("승모근")){
-            return em.createQuery("SELECT e FROM Equipment e WHERE e.equipmentID IN (SELECT ec.equipmentCategoryID FROM EquipmentCategory ec WHERE ec.equipmentCategoryID = e AND ec.equipmentCategoryTrapezius = 1)", Equipment.class)
+            return em.createQuery("SELECT e FROM Equipment e WHERE e.equipmentID IN (SELECT ec.equipmentCategoryID FROM EquipmentCategory ec WHERE ec.equipmentCategoryID = e AND ec.equipmentCategoryTrapezius = 1) ORDER BY e.equipmentName, e.equipmentNameNth", Equipment.class)
                     .getResultList();
         }
 
         else if(equipmentCategorySelect.equals("어깨")){
-            return em.createQuery("SELECT e FROM Equipment e WHERE e.equipmentID IN (SELECT ec.equipmentCategoryID FROM EquipmentCategory ec WHERE ec.equipmentCategoryID = e AND ec.equipmentCategoryShoulder = 1)", Equipment.class)
+            return em.createQuery("SELECT e FROM Equipment e WHERE e.equipmentID IN (SELECT ec.equipmentCategoryID FROM EquipmentCategory ec WHERE ec.equipmentCategoryID = e AND ec.equipmentCategoryShoulder = 1) ORDER BY e.equipmentName, e.equipmentNameNth", Equipment.class)
                     .getResultList();
         }
 
         else if(equipmentCategorySelect.equals("유산소")) {
-            return em.createQuery("SELECT e FROM Equipment e WHERE e.equipmentID IN (SELECT ec.equipmentCategoryID FROM EquipmentCategory ec WHERE ec.equipmentCategoryID = e AND ec.equipmentCategoryAerobic = 1)", Equipment.class)
+            return em.createQuery("SELECT e FROM Equipment e WHERE e.equipmentID IN (SELECT ec.equipmentCategoryID FROM EquipmentCategory ec WHERE ec.equipmentCategoryID = e AND ec.equipmentCategoryAerobic = 1) ORDER BY e.equipmentName, e.equipmentNameNth", Equipment.class)
                     .getResultList();
         }
 
         else if(equipmentCategorySelect.equals("이두")){
-            return em.createQuery("SELECT e FROM Equipment e WHERE e.equipmentID IN (SELECT ec.equipmentCategoryID FROM EquipmentCategory ec WHERE ec.equipmentCategoryID = e AND ec.equipmentCategoryBiceps = 1)", Equipment.class)
+            return em.createQuery("SELECT e FROM Equipment e WHERE e.equipmentID IN (SELECT ec.equipmentCategoryID FROM EquipmentCategory ec WHERE ec.equipmentCategoryID = e AND ec.equipmentCategoryBiceps = 1) ORDER BY e.equipmentName, e.equipmentNameNth", Equipment.class)
                     .getResultList();
         }
 
         else if(equipmentCategorySelect.equals("하체")){
-            return em.createQuery("SELECT e FROM Equipment e WHERE e.equipmentID IN (SELECT ec.equipmentCategoryID FROM EquipmentCategory ec WHERE ec.equipmentCategoryID = e AND ec.equipmentCategoryLowerBody = 1)", Equipment.class)
+            return em.createQuery("SELECT e FROM Equipment e WHERE e.equipmentID IN (SELECT ec.equipmentCategoryID FROM EquipmentCategory ec WHERE ec.equipmentCategoryID = e AND ec.equipmentCategoryLowerBody = 1) ORDER BY e.equipmentName, e.equipmentNameNth", Equipment.class)
                     .getResultList();
         }
 
         else if(equipmentCategorySelect.equals("허리")){
-            return em.createQuery("SELECT e FROM Equipment e WHERE e.equipmentID IN (SELECT ec.equipmentCategoryID FROM EquipmentCategory ec WHERE ec.equipmentCategoryID = e AND ec.equipmentCategoryWaist = 1)", Equipment.class)
+            return em.createQuery("SELECT e FROM Equipment e WHERE e.equipmentID IN (SELECT ec.equipmentCategoryID FROM EquipmentCategory ec WHERE ec.equipmentCategoryID = e AND ec.equipmentCategoryWaist = 1) ORDER BY e.equipmentName, e.equipmentNameNth", Equipment.class)
                     .getResultList();
         }
 
         else if(equipmentCategorySelect.equals("기타")){
-            return em.createQuery("SELECT e FROM Equipment e WHERE e.equipmentID IN (SELECT ec.equipmentCategoryID FROM EquipmentCategory ec WHERE ec.equipmentCategoryID = e AND ec.equipmentCategoryEtc = 1)", Equipment.class)
+            return em.createQuery("SELECT e FROM Equipment e WHERE e.equipmentID IN (SELECT ec.equipmentCategoryID FROM EquipmentCategory ec WHERE ec.equipmentCategoryID = e AND ec.equipmentCategoryEtc = 1) ORDER BY e.equipmentName, e.equipmentNameNth", Equipment.class)
                     .getResultList();
         }
 

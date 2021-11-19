@@ -1,6 +1,7 @@
 package capstone2021.smartGym_backend.repository;
 
 import capstone2021.smartGym_backend.DTO.Reservation.ReservationCreateDTO;
+import capstone2021.smartGym_backend.domain.AllowedUser;
 import capstone2021.smartGym_backend.domain.GymHoliday;
 import capstone2021.smartGym_backend.DTO.Return.ReturnReservationReadByEquipmentDTO;
 import capstone2021.smartGym_backend.domain.Equipment;
@@ -46,6 +47,24 @@ public class DBReservationRepository implements ReservationRepository{
         Equipment findEquipment = em.find(Equipment.class, id);
         return em.createQuery("SELECT new capstone2021.smartGym_backend.DTO.Return.ReturnReservationReadByEquipmentDTO(r.reservationID, r.userID.userID, r.equipmentID.equipmentName, r.equipmentID.equipmentNameNth, r.startTime, r.endTime) FROM Reservation r WHERE r.equipmentID = :equipment ORDER BY r.reservationID DESC", ReturnReservationReadByEquipmentDTO.class)
                 .setParameter("equipment", findEquipment).getResultList();
+    }
+
+    @Override
+    public Boolean delete(Long reservationID) {
+        Reservation findReservation=null;
+        findReservation=findByID(reservationID);
+        if(findReservation!=null) {
+            em.remove(findReservation);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Reservation findByID(Long reservationID) {
+        Reservation findReservation=null;
+        findReservation=em.find(Reservation.class,reservationID);
+        return findReservation;
     }
 
     @Override

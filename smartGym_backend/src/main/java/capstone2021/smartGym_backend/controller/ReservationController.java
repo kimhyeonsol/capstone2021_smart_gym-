@@ -1,9 +1,6 @@
 package capstone2021.smartGym_backend.controller;
 
-import capstone2021.smartGym_backend.DTO.Reservation.CalHolidayDateDTO;
-import capstone2021.smartGym_backend.DTO.Reservation.ReservationCreateDTO;
-import capstone2021.smartGym_backend.DTO.Reservation.ReservationReadSelectedDayDTO;
-import capstone2021.smartGym_backend.DTO.Reservation.ReservationReadByEquipmentDTO;
+import capstone2021.smartGym_backend.DTO.Reservation.*;
 import capstone2021.smartGym_backend.DTO.Return.*;
 import capstone2021.smartGym_backend.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,6 +77,20 @@ public class ReservationController {
             returnIntDTO.setData(reservationService.makeReservation(reservationCreateDTO));
         }
         return returnIntDTO;
+    }
+
+    @CrossOrigin("*")
+    @PostMapping("/reservation/cancleReservation") //예약 - 운동기구 예약취소하기
+    @ResponseBody
+    public ReturnBooleanDTO cancleReservation(@RequestBody ReservationCancleDTO reservationCancleDTO) {
+        ReturnBooleanDTO returnBooleanDTO =new ReturnBooleanDTO();
+        if(reservationCancleDTO==null){
+            returnBooleanDTO.setSuccess(false);
+        }
+        else {
+            returnBooleanDTO.setData(reservationService.cancleReservation(reservationCancleDTO));
+        }
+        return returnBooleanDTO;
     }
 
     @CrossOrigin("*")

@@ -31,8 +31,13 @@ public class ReservationController {
     @CrossOrigin("*")
     @GetMapping("/reservation/calRegularHolidayDate") //예약- 정기 휴무일 계산
     @ResponseBody
-    public ReturnIntegerListDTO calRegularHolidayDate(@RequestBody CalHolidayDateDTO calHolidayDateDTO) {
+    public ReturnIntegerListDTO calRegularHolidayDate(@RequestParam( value="year",required = false)int year,@RequestParam( value="month",required = false)int month) {
         ReturnIntegerListDTO returnIntegerListDTO =new ReturnIntegerListDTO();
+        CalHolidayDateDTO calHolidayDateDTO=new CalHolidayDateDTO();
+
+        calHolidayDateDTO.setYear(year);
+        calHolidayDateDTO.setMonth(month);
+
         if(calHolidayDateDTO==null){
             returnIntegerListDTO.setSuccess(false);
         }
@@ -45,8 +50,14 @@ public class ReservationController {
     @CrossOrigin("*")
     @GetMapping("/reservation/calHolidayDate") //예약- 휴무일 계산
     @ResponseBody
-    public ReturnIntegerListDTO calHolidayDate(@RequestBody CalHolidayDateDTO calHolidayDateDTO) {
+    public ReturnIntegerListDTO calHolidayDate(@RequestParam( value="year",required = false)int year,@RequestParam( value="month",required = false)int month) {
         ReturnIntegerListDTO returnIntegerListDTO =new ReturnIntegerListDTO();
+
+        CalHolidayDateDTO calHolidayDateDTO=new CalHolidayDateDTO();
+
+        calHolidayDateDTO.setYear(year);
+        calHolidayDateDTO.setMonth(month);
+        
         if(calHolidayDateDTO==null){
             returnIntegerListDTO.setSuccess(false);
         }

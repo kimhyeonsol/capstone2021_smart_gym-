@@ -203,10 +203,10 @@ public class ReservationServiceImpl implements ReservationService{
 
     @Override
     public ReservationReadOperatingTimeDTO readOperatingTime() {
-        SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+        SimpleDateFormat format1 = new SimpleDateFormat("HH:mm");
         ReservationReadOperatingTimeDTO reservationReadOperatingTimeDTO=new ReservationReadOperatingTimeDTO();
-        reservationReadOperatingTimeDTO.setGymOperationInfoOperatingStartTime(format.format(gymOperationInfoRepository.readGymOperationInfo().getGymOperationInfoOperatingStartTime()));
-        reservationReadOperatingTimeDTO.setGymOperationInfoOperatingStartTime(format.format(gymOperationInfoRepository.readGymOperationInfo().getGymOperationInfoOperatingEndTime()));
+        reservationReadOperatingTimeDTO.setGymOperationInfoOperatingStartTime(format1.format(gymOperationInfoRepository.readGymOperationInfo().getGymOperationInfoOperatingStartTime()));
+        reservationReadOperatingTimeDTO.setGymOperationInfoOperatingEndTime(format1.format(gymOperationInfoRepository.readGymOperationInfo().getGymOperationInfoOperatingEndTime()));
         return reservationReadOperatingTimeDTO;
     }
 }

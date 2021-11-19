@@ -1,22 +1,23 @@
 package capstone2021.smartGym_backend.service;
 
 import capstone2021.smartGym_backend.DTO.Equipment.EquipmentSearchByCategoryDTO;
-import capstone2021.smartGym_backend.DTO.Reservation.CalHolidayDateDTO;
-import capstone2021.smartGym_backend.DTO.Reservation.ReservationCreateDTO;
-import capstone2021.smartGym_backend.DTO.Reservation.ReservationReadSelectedDayDTO;
-import capstone2021.smartGym_backend.DTO.Reservation.SelectedDayReservationDTO;
-import capstone2021.smartGym_backend.DTO.Reservation.ReservationReadByEquipmentDTO;
+import capstone2021.smartGym_backend.DTO.Reservation.*;
 import capstone2021.smartGym_backend.DTO.Return.ReturnReservationReadByEquipmentDTO;
 
 import java.util.Date;
 import java.util.List;
 
 public interface ReservationService {
+
     List<String> calAvailableDate(); //헬스장 예약 가능일 반환
     List<Integer> calRegularHolidayDate(CalHolidayDateDTO calRegularHolidayDateDTO);//헬스장 정기 휴무일 반환
     List<Integer> calHolidayDate(CalHolidayDateDTO calRegularHolidayDateDTO);//헬스장 휴무일 반환
-    EquipmentSearchByCategoryDTO searchEquipmentByCategory();
-    int makeReservation(ReservationCreateDTO reservationCreateDTO);
-    List<SelectedDayReservationDTO> readMyReservationOfSelectedDay(ReservationReadSelectedDayDTO reservationReadSelectedDayDTO);
+    EquipmentSearchByCategoryDTO searchEquipmentByCategory();//카테고리별 운동기구 조회
+    int makeReservation(ReservationCreateDTO reservationCreateDTO);//예약하기
+    List<SelectedDayReservationDTO> readMyReservationOfSelectedDay(ReservationReadSelectedDayDTO reservationReadSelectedDayDTO);//선택한 날짜 내 예약 조회하기
+    List<SelectedDayReservationDTO> readEquipmentReservationOfSeletedDay(ReservationReadBySelectedDayAndEquipmentDTO reservationReadBySelectedDayAndEquipmentDTO);//선택한 날짜 운동기굽 별 조회하기
     List<ReturnReservationReadByEquipmentDTO> reservationReadByEquipment(ReservationReadByEquipmentDTO reservationReadByEquipmentDTO); //운동기구 별 예약 이력 조회
+    Boolean cancleReservation(ReservationCancleDTO reservationCancleDTO);//예약 취소하기
+    ReservationReadOperatingTimeDTO readOperatingTime();//헬스장 운영 시간 조회
+
 }

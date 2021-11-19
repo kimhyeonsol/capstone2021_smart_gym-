@@ -12,7 +12,7 @@ public interface GymOperationInfoRepository {
     boolean createHoliday(GymHoliday gymHoliday);
     boolean deleteHoliday(GymHoliday gymHoliday);
     List<GymHoliday> readHoliday();
-
+    GymOperationInfo readGymOperationInfo();
     String readGymOperationInfoReservationDuration();
     String readRegularHoliday();
     List<GymHoliday> readHolidayByMonth(int year,int month,int lastOfMonth);

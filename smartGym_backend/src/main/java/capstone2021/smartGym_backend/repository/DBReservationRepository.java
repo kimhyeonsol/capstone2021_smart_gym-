@@ -1,6 +1,7 @@
 package capstone2021.smartGym_backend.repository;
 
 import capstone2021.smartGym_backend.DTO.Reservation.ReservationCreateDTO;
+import capstone2021.smartGym_backend.domain.AllowedUser;
 import capstone2021.smartGym_backend.domain.GymHoliday;
 import capstone2021.smartGym_backend.DTO.Return.ReturnReservationReadByEquipmentDTO;
 import capstone2021.smartGym_backend.domain.Equipment;
@@ -49,6 +50,24 @@ public class DBReservationRepository implements ReservationRepository{
     }
 
     @Override
+    public Boolean delete(Long reservationID) {
+        Reservation findReservation=null;
+        findReservation=findByID(reservationID);
+        if(findReservation!=null) {
+            em.remove(findReservation);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Reservation findByID(Long reservationID) {
+        Reservation findReservation=null;
+        findReservation=em.find(Reservation.class,reservationID);
+        return findReservation;
+    }
+
+    @Override
     public List<Reservation> readReservationByUserIDAndDay(String userID, int year, int month, int day) {
         LocalDateTime selectedDate=LocalDateTime.of(year,month,day,0,0,0);
         LocalDateTime nextDate=LocalDateTime.of(year,month,day+1,0,0,0);
@@ -58,6 +77,20 @@ public class DBReservationRepository implements ReservationRepository{
                 .setParameter("selectedDate", selectedDate)
                 .setParameter("nextDate", nextDate)
                 .setParameter("userID", userID )
+                .getResultList();
+    }
+
+    @Override
+    public List<Reservation> readReservationByEquipmentAndDay(Long equipmentID, int year, int month, int day) {
+
+        LocalDateTime selectedDate=LocalDateTime.of(year,month,day,0,0,0);
+        LocalDateTime nextDate=LocalDateTime.of(year,month,day+1,0,0,0);
+
+
+        return em.createQuery("SELECT r FROM Reservation r WHERE (r.startTime BETWEEN :selectedDate AND :nextDate)AND(r.equipmentID.equipmentID=:equipmentID)")
+                .setParameter("selectedDate", selectedDate)
+                .setParameter("nextDate", nextDate)
+                .setParameter("equipmentID", equipmentID )
                 .getResultList();
     }
 

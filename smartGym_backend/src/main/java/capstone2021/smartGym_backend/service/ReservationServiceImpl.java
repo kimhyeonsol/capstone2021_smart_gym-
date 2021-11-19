@@ -1,11 +1,7 @@
 package capstone2021.smartGym_backend.service;
 
 import capstone2021.smartGym_backend.DTO.Equipment.EquipmentSearchByCategoryDTO;
-import capstone2021.smartGym_backend.DTO.Reservation.CalHolidayDateDTO;
-import capstone2021.smartGym_backend.DTO.Reservation.ReservationCreateDTO;
-import capstone2021.smartGym_backend.DTO.Reservation.ReservationReadSelectedDayDTO;
-import capstone2021.smartGym_backend.DTO.Reservation.SelectedDayReservationDTO;
-import capstone2021.smartGym_backend.DTO.Reservation.ReservationReadByEquipmentDTO;
+import capstone2021.smartGym_backend.DTO.Reservation.*;
 import capstone2021.smartGym_backend.DTO.Return.ReturnReservationReadByEquipmentDTO;
 import capstone2021.smartGym_backend.domain.AllowedUser;
 import capstone2021.smartGym_backend.domain.Equipment;
@@ -101,9 +97,11 @@ public class ReservationServiceImpl implements ReservationService{
 
         for(int i=1;i<=lastDayOfMonth;i++) {
             cal.set(calHolidayDateDTO.getYear(),calHolidayDateDTO.getMonth()-1,i);
-            for(int j=0;j<regularHoliday.length();j++){
-                if(cal.get(Calendar.DAY_OF_WEEK)==regularHolidayArray.get(j)) {
-                    list.add(i);
+            if(!regularHolidayArray.isEmpty()) {
+                for (int j = 0; j < regularHoliday.length(); j++) {
+                    if (cal.get(Calendar.DAY_OF_WEEK) == regularHolidayArray.get(j)) {
+                        list.add(i);
+                    }
                 }
             }
         }
@@ -148,12 +146,8 @@ public class ReservationServiceImpl implements ReservationService{
     public int makeReservation(ReservationCreateDTO reservationCreateDTO) {
         Reservation reservation= new Reservation();
 
-
-
-
         AllowedUser allowedUser= allowedUserRepository.findByAllowedUserID(reservationCreateDTO.getUserID());
 
-        //reservation 권한 있는지 확인하는 코드 추가 필요:return 1
         if(allowedUser.getAllowedUserReservationAuthority().equals("X")) return 1;
         if(allowedUser==null) return 2;
         reservation.setUserID(allowedUser);
@@ -167,6 +161,8 @@ public class ReservationServiceImpl implements ReservationService{
 
         reservationRepository.reservationCreate(reservation);
 
+        equipmentRepository.findByID(reservationCreateDTO.getEquipmentID()).setEquipmentAvailable(1);
+
         return 0;
 
     }
@@ -176,7 +172,6 @@ public class ReservationServiceImpl implements ReservationService{
         ArrayList<SelectedDayReservationDTO> list=new ArrayList<SelectedDayReservationDTO>();
         List<Reservation> reservationList=null;
 
-        Equipment equipment=null;
         reservationList=reservationRepository.readReservationByUserIDAndDay(reservationReadSelectedDayDTO.getUserID(),reservationReadSelectedDayDTO.getYear(),reservationReadSelectedDayDTO.getMonth(),reservationReadSelectedDayDTO.getDay());
 
         for(Reservation r:reservationList){
@@ -190,13 +185,48 @@ public class ReservationServiceImpl implements ReservationService{
             list.add(selectedDayReservationDTO);
         }
 
+        return list;
+    }
 
+    @Override
+    public List<SelectedDayReservationDTO> readEquipmentReservationOfSeletedDay(ReservationReadBySelectedDayAndEquipmentDTO reservationReadBySelectedDayAndEquipmentDTO) {
+        ArrayList<SelectedDayReservationDTO> list=new ArrayList<SelectedDayReservationDTO>();
+        List<Reservation> reservationList=null;
 
+        reservationList=reservationRepository.readReservationByEquipmentAndDay(reservationReadBySelectedDayAndEquipmentDTO.getEquipmentID(),reservationReadBySelectedDayAndEquipmentDTO.getYear(),reservationReadBySelectedDayAndEquipmentDTO.getMonth(),reservationReadBySelectedDayAndEquipmentDTO.getDay());
+
+        for(Reservation r:reservationList){
+            SelectedDayReservationDTO selectedDayReservationDTO=new SelectedDayReservationDTO();
+            selectedDayReservationDTO.setReservationID(r.getReservationID());
+            selectedDayReservationDTO.setEquipmentID(r.getEquipmentID().getEquipmentID());
+            selectedDayReservationDTO.setEquipmentName(r.getEquipmentID().getEquipmentName());
+            selectedDayReservationDTO.setEquipmentNameNth(r.getEquipmentID().getEquipmentNameNth());
+            selectedDayReservationDTO.setStartTime(r.getStartTime());
+            selectedDayReservationDTO.setEndTime(r.getEndTime());
+            list.add(selectedDayReservationDTO);
+        }
         return list;
     }
 
     @Override
     public List<ReturnReservationReadByEquipmentDTO> reservationReadByEquipment(ReservationReadByEquipmentDTO reservationReadByEquipmentDTO) {
         return reservationRepository.reservationReadByEquipment(reservationReadByEquipmentDTO.getEquipmentID());
+    }
+
+    @Override
+    public Boolean cancleReservation(ReservationCancleDTO reservationCancleDTO) {
+        Reservation reservation=null;
+        reservation=reservationRepository.findByID(reservationCancleDTO.getReservationID());
+        equipmentRepository.findByID(reservation.getEquipmentID().getEquipmentID()).setEquipmentAvailable(2);
+        return reservationRepository.delete(reservationCancleDTO.getReservationID());
+    }
+
+    @Override
+    public ReservationReadOperatingTimeDTO readOperatingTime() {
+        SimpleDateFormat format1 = new SimpleDateFormat("HH:mm");
+        ReservationReadOperatingTimeDTO reservationReadOperatingTimeDTO=new ReservationReadOperatingTimeDTO();
+        reservationReadOperatingTimeDTO.setGymOperationInfoOperatingStartTime(format1.format(gymOperationInfoRepository.readGymOperationInfo().getGymOperationInfoOperatingStartTime()));
+        reservationReadOperatingTimeDTO.setGymOperationInfoOperatingEndTime(format1.format(gymOperationInfoRepository.readGymOperationInfo().getGymOperationInfoOperatingEndTime()));
+        return reservationReadOperatingTimeDTO;
     }
 }

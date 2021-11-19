@@ -1,9 +1,6 @@
 package capstone2021.smartGym_backend.controller;
 
-import capstone2021.smartGym_backend.DTO.Reservation.CalHolidayDateDTO;
-import capstone2021.smartGym_backend.DTO.Reservation.ReservationCreateDTO;
-import capstone2021.smartGym_backend.DTO.Reservation.ReservationReadSelectedDayDTO;
-import capstone2021.smartGym_backend.DTO.Reservation.ReservationReadByEquipmentDTO;
+import capstone2021.smartGym_backend.DTO.Reservation.*;
 import capstone2021.smartGym_backend.DTO.Return.*;
 import capstone2021.smartGym_backend.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +31,13 @@ public class ReservationController {
     @CrossOrigin("*")
     @GetMapping("/reservation/calRegularHolidayDate") //예약- 정기 휴무일 계산
     @ResponseBody
-    public ReturnIntegerListDTO calRegularHolidayDate(@RequestBody CalHolidayDateDTO calHolidayDateDTO) {
+    public ReturnIntegerListDTO calRegularHolidayDate(@RequestParam( value="year",required = false)int year,@RequestParam( value="month",required = false)int month) {
         ReturnIntegerListDTO returnIntegerListDTO =new ReturnIntegerListDTO();
+        CalHolidayDateDTO calHolidayDateDTO=new CalHolidayDateDTO();
+
+        calHolidayDateDTO.setYear(year);
+        calHolidayDateDTO.setMonth(month);
+
         if(calHolidayDateDTO==null){
             returnIntegerListDTO.setSuccess(false);
         }
@@ -48,8 +50,14 @@ public class ReservationController {
     @CrossOrigin("*")
     @GetMapping("/reservation/calHolidayDate") //예약- 휴무일 계산
     @ResponseBody
-    public ReturnIntegerListDTO calHolidayDate(@RequestBody CalHolidayDateDTO calHolidayDateDTO) {
+    public ReturnIntegerListDTO calHolidayDate(@RequestParam( value="year",required = false)int year,@RequestParam( value="month",required = false)int month) {
         ReturnIntegerListDTO returnIntegerListDTO =new ReturnIntegerListDTO();
+
+        CalHolidayDateDTO calHolidayDateDTO=new CalHolidayDateDTO();
+
+        calHolidayDateDTO.setYear(year);
+        calHolidayDateDTO.setMonth(month);
+        
         if(calHolidayDateDTO==null){
             returnIntegerListDTO.setSuccess(false);
         }
@@ -83,6 +91,20 @@ public class ReservationController {
     }
 
     @CrossOrigin("*")
+    @PostMapping("/reservation/cancleReservation") //예약 - 운동기구 예약취소하기
+    @ResponseBody
+    public ReturnBooleanDTO cancleReservation(@RequestBody ReservationCancleDTO reservationCancleDTO) {
+        ReturnBooleanDTO returnBooleanDTO =new ReturnBooleanDTO();
+        if(reservationCancleDTO==null){
+            returnBooleanDTO.setSuccess(false);
+        }
+        else {
+            returnBooleanDTO.setData(reservationService.cancleReservation(reservationCancleDTO));
+        }
+        return returnBooleanDTO;
+    }
+
+    @CrossOrigin("*")
     @PostMapping("/reservation/readByEquipment") //운동기구 별 예약 조회
     @ResponseBody
     public List<ReturnReservationReadByEquipmentDTO> reservationReadByEquipment(@RequestBody ReservationReadByEquipmentDTO reservationReadByEquipmentDTO){
@@ -102,4 +124,29 @@ public class ReservationController {
         }
         return returnReservationListDTO;
     }
+
+    @CrossOrigin("*")
+    @PostMapping("/reservation/readEquipmentReservationOfSeletedDay") //예약 - 선택한날짜 운동기구별 예약 조회
+    @ResponseBody
+    public ReturnReservationListDTO readEquipmentReservationOfSeletedDay(@RequestBody ReservationReadBySelectedDayAndEquipmentDTO reservationReadBySelectedDayAndEquipmentDTO) {
+        ReturnReservationListDTO returnReservationListDTO =new ReturnReservationListDTO();
+        if(reservationReadBySelectedDayAndEquipmentDTO==null){
+            returnReservationListDTO.setSuccess(false);
+        }
+        else {
+            returnReservationListDTO.setData(reservationService.readEquipmentReservationOfSeletedDay(reservationReadBySelectedDayAndEquipmentDTO));
+        }
+        return returnReservationListDTO;
+    }
+
+    @CrossOrigin("*")
+    @GetMapping("/reservation/readOperatingTime") //예약 - 운영 시작시간, 마감시간 조회
+    @ResponseBody
+    public ReturnOperationTimeDTO readOperatingTime() {
+        ReturnOperationTimeDTO returnOperationTimeDTO =new ReturnOperationTimeDTO();
+        returnOperationTimeDTO.setData(reservationService.readOperatingTime());
+        return returnOperationTimeDTO;
+    }
+
+
 }

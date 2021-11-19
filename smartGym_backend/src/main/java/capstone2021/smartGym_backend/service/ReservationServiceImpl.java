@@ -200,4 +200,13 @@ public class ReservationServiceImpl implements ReservationService{
         equipmentRepository.findByID(reservation.getEquipmentID().getEquipmentID()).setEquipmentAvailable(1);
         return reservationRepository.delete(reservationCancleDTO.getReservationID());
     }
+
+    @Override
+    public ReservationReadOperatingTimeDTO readOperatingTime() {
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+        ReservationReadOperatingTimeDTO reservationReadOperatingTimeDTO=new ReservationReadOperatingTimeDTO();
+        reservationReadOperatingTimeDTO.setGymOperationInfoOperatingStartTime(format.format(gymOperationInfoRepository.readGymOperationInfo().getGymOperationInfoOperatingStartTime()));
+        reservationReadOperatingTimeDTO.setGymOperationInfoOperatingStartTime(format.format(gymOperationInfoRepository.readGymOperationInfo().getGymOperationInfoOperatingEndTime()));
+        return reservationReadOperatingTimeDTO;
+    }
 }

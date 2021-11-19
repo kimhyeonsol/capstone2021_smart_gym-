@@ -113,4 +113,15 @@ public class ReservationController {
         }
         return returnReservationListDTO;
     }
+
+    @CrossOrigin("*")
+    @GetMapping("/reservation/readOperatingTime") //예약 - 운영 시작시간, 마감시간 조회
+    @ResponseBody
+    public ReturnOperationTimeDTO readOperatingTime() {
+        ReturnOperationTimeDTO returnOperationTimeDTO =new ReturnOperationTimeDTO();
+        returnOperationTimeDTO.setData(reservationService.readOperatingTime());
+        return returnOperationTimeDTO;
+    }
+
+
 }

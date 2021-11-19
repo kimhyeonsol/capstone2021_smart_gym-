@@ -50,6 +50,12 @@ public class DBGymOperationInfoRepository implements GymOperationInfoRepository{
     }
 
     @Override
+    public GymOperationInfo readGymOperationInfo() {
+        GymOperationInfo gymOperationInfoFind = em.find(GymOperationInfo.class, 1);
+        return gymOperationInfoFind;
+    }
+
+    @Override
     public boolean createHoliday(GymHoliday gymHoliday) {
         List<GymHoliday> gymHolidays = em.createQuery("SELECT gh FROM GymHoliday gh WHERE gh.gymHolidayDate = :gymHoliday", GymHoliday.class)
                 .setParameter("gymHoliday", gymHoliday.getGymHolidayDate()).getResultList();

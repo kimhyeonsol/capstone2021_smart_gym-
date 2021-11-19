@@ -16,5 +16,6 @@ public interface ReservationService {
     List<SelectedDayReservationDTO> readMyReservationOfSelectedDay(ReservationReadSelectedDayDTO reservationReadSelectedDayDTO);
     List<ReturnReservationReadByEquipmentDTO> reservationReadByEquipment(ReservationReadByEquipmentDTO reservationReadByEquipmentDTO); //운동기구 별 예약 이력 조회
     Boolean cancleReservation(ReservationCancleDTO reservationCancleDTO);
+    ReservationReadOperatingTimeDTO readOperatingTime();
 
 }

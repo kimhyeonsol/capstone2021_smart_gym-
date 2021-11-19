@@ -160,6 +160,7 @@ public class ReservationServiceImpl implements ReservationService{
         reservation.setEndTime(reservationCreateDTO.getEndTime());
 
         reservationRepository.reservationCreate(reservation);
+
         equipmentRepository.findByID(reservationCreateDTO.getEquipmentID()).setEquipmentAvailable(1);
 
         return 0;
@@ -171,7 +172,6 @@ public class ReservationServiceImpl implements ReservationService{
         ArrayList<SelectedDayReservationDTO> list=new ArrayList<SelectedDayReservationDTO>();
         List<Reservation> reservationList=null;
 
-        Equipment equipment=null;
         reservationList=reservationRepository.readReservationByUserIDAndDay(reservationReadSelectedDayDTO.getUserID(),reservationReadSelectedDayDTO.getYear(),reservationReadSelectedDayDTO.getMonth(),reservationReadSelectedDayDTO.getDay());
 
         for(Reservation r:reservationList){
@@ -189,6 +189,26 @@ public class ReservationServiceImpl implements ReservationService{
     }
 
     @Override
+    public List<SelectedDayReservationDTO> readEquipmentReservationOfSeletedDay(ReservationReadBySelectedDayAndEquipmentDTO reservationReadBySelectedDayAndEquipmentDTO) {
+        ArrayList<SelectedDayReservationDTO> list=new ArrayList<SelectedDayReservationDTO>();
+        List<Reservation> reservationList=null;
+
+        reservationList=reservationRepository.readReservationByEquipmentAndDay(reservationReadBySelectedDayAndEquipmentDTO.getEquipmentID(),reservationReadBySelectedDayAndEquipmentDTO.getYear(),reservationReadBySelectedDayAndEquipmentDTO.getMonth(),reservationReadBySelectedDayAndEquipmentDTO.getDay());
+
+        for(Reservation r:reservationList){
+            SelectedDayReservationDTO selectedDayReservationDTO=new SelectedDayReservationDTO();
+            selectedDayReservationDTO.setReservationID(r.getReservationID());
+            selectedDayReservationDTO.setEquipmentID(r.getEquipmentID().getEquipmentID());
+            selectedDayReservationDTO.setEquipmentName(r.getEquipmentID().getEquipmentName());
+            selectedDayReservationDTO.setEquipmentNameNth(r.getEquipmentID().getEquipmentNameNth());
+            selectedDayReservationDTO.setStartTime(r.getStartTime());
+            selectedDayReservationDTO.setEndTime(r.getEndTime());
+            list.add(selectedDayReservationDTO);
+        }
+        return list;
+    }
+
+    @Override
     public List<ReturnReservationReadByEquipmentDTO> reservationReadByEquipment(ReservationReadByEquipmentDTO reservationReadByEquipmentDTO) {
         return reservationRepository.reservationReadByEquipment(reservationReadByEquipmentDTO.getEquipmentID());
     }
@@ -197,7 +217,7 @@ public class ReservationServiceImpl implements ReservationService{
     public Boolean cancleReservation(ReservationCancleDTO reservationCancleDTO) {
         Reservation reservation=null;
         reservation=reservationRepository.findByID(reservationCancleDTO.getReservationID());
-        equipmentRepository.findByID(reservation.getEquipmentID().getEquipmentID()).setEquipmentAvailable(1);
+        equipmentRepository.findByID(reservation.getEquipmentID().getEquipmentID()).setEquipmentAvailable(2);
         return reservationRepository.delete(reservationCancleDTO.getReservationID());
     }
 

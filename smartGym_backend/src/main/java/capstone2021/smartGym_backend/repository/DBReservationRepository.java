@@ -80,4 +80,18 @@ public class DBReservationRepository implements ReservationRepository{
                 .getResultList();
     }
 
+    @Override
+    public List<Reservation> readReservationByEquipmentAndDay(Long equipmentID, int year, int month, int day) {
+
+        LocalDateTime selectedDate=LocalDateTime.of(year,month,day,0,0,0);
+        LocalDateTime nextDate=LocalDateTime.of(year,month,day+1,0,0,0);
+
+
+        return em.createQuery("SELECT r FROM Reservation r WHERE (r.startTime BETWEEN :selectedDate AND :nextDate)AND(r.equipmentID.equipmentID=:equipmentID)")
+                .setParameter("selectedDate", selectedDate)
+                .setParameter("nextDate", nextDate)
+                .setParameter("equipmentID", equipmentID )
+                .getResultList();
+    }
+
 }

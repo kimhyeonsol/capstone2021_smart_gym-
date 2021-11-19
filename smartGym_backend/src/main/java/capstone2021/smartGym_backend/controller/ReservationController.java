@@ -115,6 +115,20 @@ public class ReservationController {
     }
 
     @CrossOrigin("*")
+    @PostMapping("/reservation/readEquipmentReservationOfSeletedDay") //예약 - 선택한날짜 운동기구별 예약 조회
+    @ResponseBody
+    public ReturnReservationListDTO readEquipmentReservationOfSeletedDay(@RequestBody ReservationReadBySelectedDayAndEquipmentDTO reservationReadBySelectedDayAndEquipmentDTO) {
+        ReturnReservationListDTO returnReservationListDTO =new ReturnReservationListDTO();
+        if(reservationReadBySelectedDayAndEquipmentDTO==null){
+            returnReservationListDTO.setSuccess(false);
+        }
+        else {
+            returnReservationListDTO.setData(reservationService.readEquipmentReservationOfSeletedDay(reservationReadBySelectedDayAndEquipmentDTO));
+        }
+        return returnReservationListDTO;
+    }
+
+    @CrossOrigin("*")
     @GetMapping("/reservation/readOperatingTime") //예약 - 운영 시작시간, 마감시간 조회
     @ResponseBody
     public ReturnOperationTimeDTO readOperatingTime() {

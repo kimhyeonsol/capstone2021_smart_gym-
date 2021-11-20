@@ -4,10 +4,12 @@ import capstone2021.smartGym_backend.DTO.Reservation.*;
 import capstone2021.smartGym_backend.DTO.Return.*;
 import capstone2021.smartGym_backend.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 
 @Controller
 public class ReservationController {
@@ -147,6 +149,15 @@ public class ReservationController {
         returnOperationTimeDTO.setData(reservationService.readOperatingTime());
         return returnOperationTimeDTO;
     }
+
+    @CrossOrigin("*")
+    @PostMapping("/reservation/isInUse") //예약 - 운영 시작시간, 마감시간 조회
+    @ResponseBody
+    public Boolean isInUse(@RequestBody IsInUseDTO isInUseDTO) {
+        return reservationService.equipmentIsinUseCurrently(isInUseDTO.getEquipmentID());
+    }
+
+
 
 
 }

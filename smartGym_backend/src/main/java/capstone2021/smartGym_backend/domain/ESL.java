@@ -7,10 +7,6 @@ import javax.persistence.*;
 @Entity
 public class ESL {
     @Id //식별자
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //자동으로 올라가게 설정
-    @Column(name="ESL_id") //크기
-    private Long ESLID;
-
     @OneToOne
     @JoinColumn(name="equipment_id") //크기
     @NotNull //널 허용 X
@@ -21,8 +17,19 @@ public class ESL {
     @NotNull //널 허용 X
     private Reservation reservationID;
 
-    @OneToOne
-    @JoinColumn(name="gymInfo_id") //크기
-    @NotNull //널 허용 X
-    private GymInfo gymInfoID;
+    public Equipment getEquipmentID() {
+        return equipmentID;
+    }
+
+    public void setEquipmentID(Equipment equipmentID) {
+        this.equipmentID = equipmentID;
+    }
+
+    public Reservation getReservationID() {
+        return reservationID;
+    }
+
+    public void setReservationID(Reservation reservationID) {
+        this.reservationID = reservationID;
+    }
 }

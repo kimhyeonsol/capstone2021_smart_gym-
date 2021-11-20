@@ -202,6 +202,12 @@ public class DBEquipmentRepository implements EquipmentRepository{
     }
 
     @Override
+    public int readOfEquipmentAvailable(Long equipmentID) { //운동기구 상태 조회
+        Equipment findEquipment = findByID(equipmentID);
+        return findEquipment.getEquipmentAvailable();
+    }
+
+    @Override
     public Equipment findByID(long id) {
         return em.find(Equipment.class, id);
     }

@@ -161,7 +161,7 @@ public class ReservationServiceImpl implements ReservationService{
 
         reservationRepository.reservationCreate(reservation);
 
-        equipmentRepository.findByID(reservationCreateDTO.getEquipmentID()).setEquipmentAvailable(1);
+
 
         return 0;
 
@@ -217,7 +217,6 @@ public class ReservationServiceImpl implements ReservationService{
     public Boolean cancleReservation(ReservationCancleDTO reservationCancleDTO) {
         Reservation reservation=null;
         reservation=reservationRepository.findByID(reservationCancleDTO.getReservationID());
-        equipmentRepository.findByID(reservation.getEquipmentID().getEquipmentID()).setEquipmentAvailable(2);
         return reservationRepository.delete(reservationCancleDTO.getReservationID());
     }
 

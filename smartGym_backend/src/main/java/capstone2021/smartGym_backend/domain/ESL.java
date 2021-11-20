@@ -4,7 +4,7 @@ import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 
-@Entity
+//@Entity
 public class ESL {
     @Id //식별자
     @OneToOne

@@ -11,6 +11,7 @@ public interface EquipmentRepository{
     int create(Equipment equipment);
     int update(Equipment equipment);
     boolean delete(Equipment equipment);
+    int readOfEquipmentAvailable(Long equipmentID); //운동기구 상태 조회
     Equipment findByID(long id);
     List<Equipment> readAll();
     List<Equipment> readByCategory(String equipmentCategorySelect);

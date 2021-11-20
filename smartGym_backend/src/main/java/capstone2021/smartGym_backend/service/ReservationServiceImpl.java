@@ -12,6 +12,8 @@ import capstone2021.smartGym_backend.repository.EquipmentRepository;
 import capstone2021.smartGym_backend.repository.GymOperationInfoRepository;
 import capstone2021.smartGym_backend.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -20,6 +22,7 @@ import java.util.*;
 
 @Service
 @Transactional
+@EnableScheduling
 public class ReservationServiceImpl implements ReservationService{
 
     private final ReservationRepository reservationRepository;
@@ -228,4 +231,32 @@ public class ReservationServiceImpl implements ReservationService{
         reservationReadOperatingTimeDTO.setGymOperationInfoOperatingEndTime(format1.format(gymOperationInfoRepository.readGymOperationInfo().getGymOperationInfoOperatingEndTime()));
         return reservationReadOperatingTimeDTO;
     }
+
+    @Override
+    public Boolean equipmentIsinUseCurrently(Long equipmentID) {
+        return reservationRepository.isInUse(equipmentID);
+    }
+
+    @Scheduled(fixedDelay = 60000)//1분마다 체크
+    @Override
+    public void equipmentAvailableCheck() {
+        List<Equipment> equipmentList;
+        equipmentList=equipmentRepository.readAll();
+        for(Equipment e:equipmentList){
+            if(e.getEquipmentAvailable()==0) continue;
+            else{
+                if(equipmentIsinUseCurrently(e.getEquipmentID())==true){
+                    e.setEquipmentAvailable(1);
+                    equipmentRepository.update(e);
+                    continue;
+                }
+                else{
+                    e.setEquipmentAvailable(2);
+                    equipmentRepository.update(e);
+                    continue;
+                }
+            }
+        }
+    }
+
 }

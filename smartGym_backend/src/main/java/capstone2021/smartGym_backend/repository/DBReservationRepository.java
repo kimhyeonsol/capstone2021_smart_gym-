@@ -6,6 +6,7 @@ import capstone2021.smartGym_backend.domain.GymHoliday;
 import capstone2021.smartGym_backend.DTO.Return.ReturnReservationReadByEquipmentDTO;
 import capstone2021.smartGym_backend.domain.Equipment;
 import capstone2021.smartGym_backend.domain.Reservation;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -65,6 +66,17 @@ public class DBReservationRepository implements ReservationRepository{
         Reservation findReservation=null;
         findReservation=em.find(Reservation.class,reservationID);
         return findReservation;
+    }
+
+    @Override
+    public Boolean isInUse(Long equipmentID) {
+        LocalDateTime now= LocalDateTime.now();
+        List<Reservation> findReservation;
+        findReservation = em.createQuery("SELECT r FROM Reservation r WHERE function('date_format', :now, '%Y-%m-%d %H:%i:%s') >= r.startTime AND function('date_format', :now, '%Y-%m-%d %H:%i:%s') <= r.endTime AND r.equipmentID.equipmentID = :equipment", Reservation.class)
+                .setParameter("now", now).setParameter("equipment", equipmentID).getResultList();
+        if(findReservation.isEmpty())
+            return false;
+        return true;
     }
 
     @Override

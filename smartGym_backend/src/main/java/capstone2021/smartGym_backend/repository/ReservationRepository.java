@@ -16,4 +16,6 @@ public interface ReservationRepository {
     Reservation findByID(Long reservationID);
     boolean deleteWhenEquipmentDelete(Equipment equipment); //운동기구 삭제 시 예약 삭제
     int deleteWhenEquipmentUpdate(Equipment equipment); //운동기구 고장 시 예약 삭제
+    Boolean isInUse(Long equipmentID);
+
 }

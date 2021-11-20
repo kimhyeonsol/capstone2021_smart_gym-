@@ -8,6 +8,7 @@ import capstone2021.smartGym_backend.DTO.Equipment.EquipmentUpdateDTO;
 import capstone2021.smartGym_backend.domain.Equipment;
 import capstone2021.smartGym_backend.domain.EquipmentCategory;
 import capstone2021.smartGym_backend.repository.EquipmentRepository;
+import capstone2021.smartGym_backend.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,10 +22,12 @@ import java.util.List;
 public class EquipmentServiceImpl extends ImageService implements EquipmentService{
     private static final java.util.UUID UUID = null;
     private final EquipmentRepository equipmentRepository;
+    private final ReservationRepository reservationRepository;
 
     @Autowired
-    public EquipmentServiceImpl(EquipmentRepository equipmentRepository) {
+    public EquipmentServiceImpl(EquipmentRepository equipmentRepository, ReservationRepository reservationRepository) {
         this.equipmentRepository = equipmentRepository;
+        this.reservationRepository = reservationRepository;
     }
 
     @Override
@@ -82,6 +85,12 @@ public class EquipmentServiceImpl extends ImageService implements EquipmentServi
         }
 
         Equipment findEquipment = findByID(equipmentUpdateDTO.getEquipmentInfoUpdateDTO().getEquipmentID());
+        if(equipmentUpdateDTO.getEquipmentInfoUpdateDTO().getEquipmentAvailable() == 0){
+            int result = reservationRepository.deleteWhenEquipmentUpdate(findEquipment); //예약 삭제
+            if(result == 3){ //예약 삭제 실패 시
+                return 3;
+            }
+        }
 
         Equipment equipment = new Equipment();
         equipment.setEquipmentID(equipmentUpdateDTO.getEquipmentInfoUpdateDTO().getEquipmentID());
@@ -115,8 +124,13 @@ public class EquipmentServiceImpl extends ImageService implements EquipmentServi
         Equipment equipment = new Equipment();
         equipment.setEquipmentID(equipmentDeleteDetailedReadDTO.getEquipmentID());
 
-        Equipment findEquipment = findByID(equipmentDeleteDetailedReadDTO.getEquipmentID()); //S3에서 이미지 삭제
-        String oldFile = findEquipment.getEquipmentImage();
+        Equipment findEquipment = findByID(equipmentDeleteDetailedReadDTO.getEquipmentID());
+        boolean result = reservationRepository.deleteWhenEquipmentDelete(findEquipment); //예약 삭제
+        if(result == false){ //예약 삭제 실패 시
+            return false;
+        }
+
+        String oldFile = findEquipment.getEquipmentImage(); //S3에서 이미지 삭제
         oldFile = URLDecoder.decode(oldFile.replace("https://smartgym-bucket.s3.ap-northeast-2.amazonaws.com//", ""), "UTF-8");
         deleteS3(oldFile);
 

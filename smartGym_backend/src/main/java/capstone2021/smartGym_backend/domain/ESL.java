@@ -9,15 +9,12 @@ import java.io.Serializable;
 public class ESL{
     @Id //식별자
     @GeneratedValue(strategy = GenerationType.IDENTITY) //자동으로 올라가게 설정
-    @Column(name="esl_id",length = 2000) //크기
+    @Column(name="esl_id") //크기
     private Long ESLID;
 
-    @NotNull //널 허용 X
     @Column(name="equipment_id")
     private Long equipmentID;
 
-
-    @NotNull //널 허용 X
     @Column(name="reservation_id")
     private Long reservationID;
 

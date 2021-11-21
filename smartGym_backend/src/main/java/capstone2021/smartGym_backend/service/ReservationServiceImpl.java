@@ -262,4 +262,10 @@ public class ReservationServiceImpl implements ReservationService{
         }
     }
 
+    @Override
+    public String recentReservation(long equipmentID) {
+        
+        return null;
+    }
+
 }

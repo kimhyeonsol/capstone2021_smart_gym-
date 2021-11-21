@@ -1,26 +1,15 @@
 package capstone2021.smartGym_backend.service;
 
 import capstone2021.smartGym_backend.DTO.ESL.ESLDeleteDTO;
-import capstone2021.smartGym_backend.DTO.ESL.ESLUpdateDTO;
+import capstone2021.smartGym_backend.DTO.ESL.ESLEquipmentMatchingDTO;
 import capstone2021.smartGym_backend.domain.ESL;
-import capstone2021.smartGym_backend.domain.GymInfo;
-import capstone2021.smartGym_backend.DTO.ESL.ESLDTO;
-import capstone2021.smartGym_backend.domain.Equipment;
 
-import capstone2021.smartGym_backend.domain.Reservation;
 import capstone2021.smartGym_backend.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.*;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -45,7 +34,7 @@ public class ESLServiceImpl implements ESLService {
     }
 
     @Override
-    public boolean ESLCreate() {
+    public boolean eslCreate() {
         ESL esl = new ESL();
         esl.setEquipmentID(null);
         esl.setReservationID(null);
@@ -54,26 +43,26 @@ public class ESLServiceImpl implements ESLService {
     }
 
     @Override
-    public boolean ESLUpdate(ESLUpdateDTO eslUpdateDTO) {
+    public boolean eslUpdate(ESLEquipmentMatchingDTO eslEquipmentMatchingDTO) {
         ESL esl = new ESL();
-        esl.setESLID(eslUpdateDTO.getEslID());
-        esl.setEquipmentID(eslUpdateDTO.getEquipmentID());
+        esl.setEslID(eslEquipmentMatchingDTO.getEslID());
+        esl.setEquipmentID(eslEquipmentMatchingDTO.getEquipmentID());
 
-        ESL findESL = eslRepository.findByID(eslUpdateDTO.getEslID());
+        ESL findESL = eslRepository.findByID(eslEquipmentMatchingDTO.getEslID());
         esl.setReservationID(findESL.getReservationID());
 
         return eslRepository.update(esl);
     }
 
     @Override
-    public boolean ESLDelete(ESLDeleteDTO eslDeleteDTO) {
+    public boolean eslDelete(ESLDeleteDTO eslDeleteDTO) {
         ESL findESL = eslRepository.findByID(eslDeleteDTO.getEslID());
 
         return eslRepository.delete(findESL);
     }
 
     @Override
-    public List<ESL> ESLRead() {
+    public List<ESL> eslRead() {
         return eslRepository.read();
     }
 

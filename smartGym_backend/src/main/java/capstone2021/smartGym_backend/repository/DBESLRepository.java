@@ -14,7 +14,6 @@ import java.util.List;
 @Repository
 @Transactional
 public class DBESLRepository implements ESLRepository {
-
     @PersistenceContext// EntityManagerFactory가 DI 할 수 있도록 어노테이션 설정
     private final EntityManager em;
 
@@ -24,9 +23,9 @@ public class DBESLRepository implements ESLRepository {
     }
 
     @Override
-    public boolean create(ESL ESL) {
+    public boolean create(ESL esl) {
         try {
-            em.persist(ESL);
+            em.persist(esl);
             return true;
         }catch(PersistenceException | IllegalStateException e){
             return false;
@@ -34,12 +33,11 @@ public class DBESLRepository implements ESLRepository {
     }
 
     @Override
-    public boolean update(ESL ESL) {
+    public boolean update(ESL esl) {
         try {
-            ESL findESL = findByID(ESL.getESLID());
-            findESL.setEquipmentID(ESL.getEquipmentID());
-            findESL.setReservationID(ESL.getReservationID());
-            em.persist(findESL);
+            ESL findESL = findByID(esl.getEslID());
+            findESL.setEquipmentID(esl.getEquipmentID());
+            findESL.setReservationID(esl.getReservationID());
             return true;
         }catch(PersistenceException | IllegalStateException e) {
             return false;
@@ -47,9 +45,9 @@ public class DBESLRepository implements ESLRepository {
     }
 
     @Override
-    public boolean delete(ESL ESL) {
+    public boolean delete(ESL esl) {
         try {
-            em.remove(ESL);
+            em.remove(esl);
             return true;
         } catch (PersistenceException | IllegalStateException e) {
             return false;

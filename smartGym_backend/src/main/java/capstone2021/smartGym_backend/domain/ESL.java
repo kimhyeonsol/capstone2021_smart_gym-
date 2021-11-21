@@ -10,7 +10,7 @@ public class ESL{
     @Id //식별자
     @GeneratedValue(strategy = GenerationType.IDENTITY) //자동으로 올라가게 설정
     @Column(name="esl_id") //크기
-    private Long ESLID;
+    private Long eslID;
 
     @Column(name="equipment_id")
     private Long equipmentID;
@@ -18,12 +18,12 @@ public class ESL{
     @Column(name="reservation_id")
     private Long reservationID;
 
-    public Long getESLID() {
-        return ESLID;
+    public Long getEslID() {
+        return eslID;
     }
 
-    public void setESLID(Long ESLID) {
-        this.ESLID = ESLID;
+    public void setEslID(Long eslID) {
+        this.eslID = eslID;
     }
 
     public Long getEquipmentID() {

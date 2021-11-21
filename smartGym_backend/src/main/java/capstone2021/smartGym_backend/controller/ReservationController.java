@@ -2,6 +2,7 @@ package capstone2021.smartGym_backend.controller;
 
 import capstone2021.smartGym_backend.DTO.Reservation.*;
 import capstone2021.smartGym_backend.DTO.Return.*;
+import capstone2021.smartGym_backend.domain.Reservation;
 import capstone2021.smartGym_backend.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -154,7 +155,12 @@ public class ReservationController {
     @PostMapping("/reservation/isInUse") //예약 - 운영 시작시간, 마감시간 조회
     @ResponseBody
     public Boolean isInUse(@RequestBody IsInUseDTO isInUseDTO) {
-        return reservationService.equipmentIsinUseCurrently(isInUseDTO.getEquipmentID());
+        List<Reservation>list= reservationService.equipmentIsinUseCurrently(isInUseDTO.getEquipmentID());
+
+        if(list.isEmpty())
+            return false;
+        else
+            return true;
     }
 
 

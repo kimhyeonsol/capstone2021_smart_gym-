@@ -11,5 +11,6 @@ public interface ESLRepository {
     List<ESL> read();
     ESL findByID(long id);
     ESL readByEquipmentID(Long equipmentID);
+    ESL findByID(long id);
 }
 

@@ -69,14 +69,12 @@ public class DBReservationRepository implements ReservationRepository{
     }
 
     @Override
-    public Boolean isInUse(Long equipmentID) {
+    public List<Reservation> isInUse(Long equipmentID) {
         LocalDateTime now= LocalDateTime.now();
         List<Reservation> findReservation;
         findReservation = em.createQuery("SELECT r FROM Reservation r WHERE function('date_format', :now, '%Y-%m-%d %H:%i:%s') >= r.startTime AND function('date_format', :now, '%Y-%m-%d %H:%i:%s') <= r.endTime AND r.equipmentID.equipmentID = :equipment", Reservation.class)
                 .setParameter("now", now).setParameter("equipment", equipmentID).getResultList();
-        if(findReservation.isEmpty())
-            return false;
-        return true;
+        return findReservation;
     }
 
     @Override

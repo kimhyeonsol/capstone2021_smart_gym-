@@ -72,7 +72,29 @@ public class ESLServiceImpl implements ESLService {
 
         return false;
     }
+
+    @Override
+    @Scheduled(fixedDelay = 60000)//1분마다 체크
+    public void eslReservationUpdate() {
+        List<ESL> eslList = eslRepository.read();
+        List<Reservation> reservationList;
+        for (ESL esl : eslList) {
+
+            ESL newEsl = new ESL();
+            newEsl.setESLID(esl.getESLID());
+            newEsl.setEquipmentID(esl.getEquipmentID());
+
+            reservationList = reservationRepository.isInUse(esl.getEquipmentID());
+            if (reservationList.isEmpty()) {
+                newEsl.setReservationID(null);
+            } else
+                newEsl.setReservationID(reservationList.get(0).getReservationID());
+
+            eslRepository.update(newEsl);
+        }
+    }
 }
+
 //    public void writeCSV() {
 //        File csv = new File("./src/main/resources/import_20211111.csv");
 //        BufferedWriter bw = null; // 출력 스트림 생성

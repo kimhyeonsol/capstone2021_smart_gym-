@@ -26,23 +26,22 @@ import java.util.List;
 @Service
 @EnableScheduling
 @Transactional
-public class ESLServiceImpl implements ESLService{
-    private final ESLRepository eslRepository;
+public class ESLServiceImpl implements ESLService {
     private final ReservationRepository reservationRepository;
     private final GymOperationInfoRepository gymOperationInfoRepository;
     private final EquipmentRepository equipmentRepository;
     private final AllowedUserRepository allowedUserRepository;
     private final GymInfoRepository gymInfoRepository;
     private final ESLRepository eslRepository;
+
     @Autowired
-    public ESLServiceImpl(ESLRepository eslRepository, ReservationRepository reservationRepository, GymOperationInfoRepository gymOperationInfoRepository, EquipmentRepository equipmentRepository, AllowedUserRepository allowedUserRepository) {
-    public ESLServiceImpl(ReservationRepository reservationRepository, GymOperationInfoRepository gymOperationInfoRepository, EquipmentRepository equipmentRepository, AllowedUserRepository allowedUserRepository,GymInfoRepository gymInfoRepository,ESLRepository eslRepository) {
+    public ESLServiceImpl(ReservationRepository reservationRepository, GymOperationInfoRepository gymOperationInfoRepository, EquipmentRepository equipmentRepository, AllowedUserRepository allowedUserRepository, GymInfoRepository gymInfoRepository, ESLRepository eslRepository) {
         this.reservationRepository = reservationRepository;
-        this.gymOperationInfoRepository=gymOperationInfoRepository;
-        this.equipmentRepository=equipmentRepository;
-        this.allowedUserRepository=allowedUserRepository;
-        this.gymInfoRepository=gymInfoRepository;
-        this.eslRepository=eslRepository;
+        this.gymOperationInfoRepository = gymOperationInfoRepository;
+        this.equipmentRepository = equipmentRepository;
+        this.allowedUserRepository = allowedUserRepository;
+        this.gymInfoRepository = gymInfoRepository;
+        this.eslRepository = eslRepository;
     }
 
     @Override
@@ -84,12 +83,12 @@ public class ESLServiceImpl implements ESLService{
 
         return false;
     }
-
-    public void writeCSV() {
-        File csv = new File("./src/main/resources/import_20211111.csv");
-        BufferedWriter bw = null; // 출력 스트림 생성
-        try {
-            bw = new BufferedWriter(new FileWriter(csv, true));
+}
+//    public void writeCSV() {
+//        File csv = new File("./src/main/resources/import_20211111.csv");
+//        BufferedWriter bw = null; // 출력 스트림 생성
+//        try {
+            //bw = new BufferedWriter(new FileWriter(csv, true));
             // csv파일의 기존 값에 이어쓰려면 위처럼 true를 지정하고, 기존 값을 덮어쓰려면 true를 삭제한다
 
 //            GymInfo gymInfo = gymInfoRepository.read();
@@ -219,4 +218,4 @@ public class ESLServiceImpl implements ESLService{
 //        }
 //    }
 
-}
+//}

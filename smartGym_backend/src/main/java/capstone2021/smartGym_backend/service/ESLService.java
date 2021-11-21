@@ -15,7 +15,7 @@ public interface ESLService {
     boolean ESLDelete(ESLDeleteDTO eslDeleteDTO); //ESL 삭제
     List<ESL> ESLRead(); //ESL 조회
     boolean currentlyChecking(); //현재 시간 기준으로 ESL 정보 갱신
-    void writeCSV();
+    //void writeCSV();
 }//csv 파일
 //    boolean equipmentAdd();//기구(esl)추가
 //    boolean equipmentRemove();//기구(esl)삭제
@@ -23,4 +23,4 @@ public interface ESLService {
     //void currentlyChecking();//현재
     //boolean ESLTableUpdate(ESL ESL);
     //void writeCSV();
-}
+//}

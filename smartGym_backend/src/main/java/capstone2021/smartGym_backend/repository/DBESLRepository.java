@@ -36,11 +36,15 @@ public class DBESLRepository implements ESLRepository {
     @Override
     public boolean update(ESL ESL) {
         try {
-            ESL findESL = findByID(ESL.getESLID());
-            findESL.setEquipmentID(ESL.getEquipmentID());
-            findESL.setReservationID(ESL.getReservationID());
-            em.persist(findESL);
-            return true;
+            ESL findESL=null;
+            findESL = findByID(ESL.getESLID());
+            if(findESL!=null) {
+                findESL.setEquipmentID(ESL.getEquipmentID());
+                findESL.setReservationID(ESL.getReservationID());
+                return true;
+            }
+            else
+                return false;
         }catch(PersistenceException | IllegalStateException e) {
             return false;
         }

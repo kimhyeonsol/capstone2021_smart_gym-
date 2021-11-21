@@ -3,9 +3,10 @@ package capstone2021.smartGym_backend.domain;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
-//@Entity
-public class ESL {
+@Entity
+public class ESL implements Serializable {
     @Id //식별자
     @OneToOne
     @JoinColumn(name="equipment_id") //크기

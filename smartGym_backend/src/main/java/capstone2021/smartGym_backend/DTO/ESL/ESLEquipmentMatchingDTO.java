@@ -1,6 +1,6 @@
 package capstone2021.smartGym_backend.DTO.ESL;
 
-public class ESLUpdateDTO {
+public class ESLEquipmentMatchingDTO {
     private Long eslID;
     private Long equipmentID;
 

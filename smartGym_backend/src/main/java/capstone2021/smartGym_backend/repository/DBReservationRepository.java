@@ -14,6 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import javax.persistence.TemporalType;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
@@ -75,6 +76,32 @@ public class DBReservationRepository implements ReservationRepository{
         findReservation = em.createQuery("SELECT r FROM Reservation r WHERE function('date_format', :now, '%Y-%m-%d %H:%i:%s') >= r.startTime AND function('date_format', :now, '%Y-%m-%d %H:%i:%s') <= r.endTime AND r.equipmentID.equipmentID = :equipment", Reservation.class)
                 .setParameter("now", now).setParameter("equipment", equipmentID).getResultList();
         return findReservation;
+    }
+
+    @Override
+    public Reservation recentReservation(Equipment equipment) {
+        LocalDateTime now= LocalDateTime.now();
+        long smallTimeDifference = -1;
+        Reservation resultReservation = null;
+
+        List<Reservation> reservations = em.createQuery("SELECT r FROM Reservation r WHERE r.equipmentID = :equipment AND :now <= r.startTime", Reservation.class)
+                .setParameter("now", now).setParameter("equipment", equipment).getResultList();
+
+        for(Reservation reservation:reservations) {
+            Duration duration = Duration.between(now, reservation.getStartTime());
+            long timeDifference = duration.getSeconds();
+
+            if(smallTimeDifference < 0){
+                smallTimeDifference = timeDifference;
+                resultReservation = reservation;
+            }
+            else if(smallTimeDifference > timeDifference){
+                smallTimeDifference = timeDifference;
+                resultReservation = reservation;
+            }
+        }
+
+        return resultReservation;
     }
 
     @Override

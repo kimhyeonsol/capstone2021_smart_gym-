@@ -263,9 +263,13 @@ public class ReservationServiceImpl implements ReservationService{
     }
 
     @Override
-    public String recentReservation(long equipmentID) {
-        
-        return null;
+    public String recentReservation(Equipment equipment) {
+        Reservation reservation = reservationRepository.recentReservation(equipment);
+
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+        String recentStartTime = format.format(java.sql.Timestamp.valueOf(reservation.getStartTime()));
+
+        return recentStartTime;
     }
 
 }

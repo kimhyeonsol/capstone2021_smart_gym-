@@ -4,9 +4,11 @@ import capstone2021.smartGym_backend.DTO.ESL.ESLDeleteDTO;
 import capstone2021.smartGym_backend.DTO.ESL.ESLEquipmentMatchingDTO;
 import capstone2021.smartGym_backend.domain.ESL;
 
+import capstone2021.smartGym_backend.domain.Reservation;
 import capstone2021.smartGym_backend.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -81,7 +83,7 @@ public class ESLServiceImpl implements ESLService {
         for (ESL esl : eslList) {
 
             ESL newEsl = new ESL();
-            newEsl.setESLID(esl.getESLID());
+            newEsl.setEslID(esl.getEslID());
             newEsl.setEquipmentID(esl.getEquipmentID());
 
             reservationList = reservationRepository.isInUse(esl.getEquipmentID());

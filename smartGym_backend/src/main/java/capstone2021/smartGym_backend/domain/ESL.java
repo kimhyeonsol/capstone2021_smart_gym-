@@ -3,33 +3,45 @@ package capstone2021.smartGym_backend.domain;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
-//@Entity
-public class ESL {
+@Entity
+public class ESL{
     @Id //식별자
-    @OneToOne
-    @JoinColumn(name="equipment_id") //크기
-    @NotNull //널 허용 X
-    private Equipment equipmentID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //자동으로 올라가게 설정
+    @Column(name="esl_id",length = 2000) //크기
+    private Long ESLID;
 
-    @OneToOne
-    @JoinColumn(name="reservation_id") //크기
     @NotNull //널 허용 X
-    private Reservation reservationID;
+    @Column(name="equipment_id")
+    private Long equipmentID;
 
-    public Equipment getEquipmentID() {
+
+    @NotNull //널 허용 X
+    @Column(name="reservation_id")
+    private Long reservationID;
+
+    public Long getESLID() {
+        return ESLID;
+    }
+
+    public void setESLID(Long ESLID) {
+        this.ESLID = ESLID;
+    }
+
+    public Long getEquipmentID() {
         return equipmentID;
     }
 
-    public void setEquipmentID(Equipment equipmentID) {
+    public void setEquipmentID(Long equipmentID) {
         this.equipmentID = equipmentID;
     }
 
-    public Reservation getReservationID() {
+    public Long getReservationID() {
         return reservationID;
     }
 
-    public void setReservationID(Reservation reservationID) {
+    public void setReservationID(Long reservationID) {
         this.reservationID = reservationID;
     }
 }

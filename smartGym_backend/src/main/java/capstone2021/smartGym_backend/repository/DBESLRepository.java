@@ -35,7 +35,8 @@ public class DBESLRepository implements ESLRepository {
     public boolean update(ESL ESL) {
         try {
             ESL findESL=new ESL();
-            findESL= em.find(ESL.class,ESL.getEquipmentID());
+            findESL= em.find(ESL.class,ESL.getESLID());
+            findESL.setEquipmentID(ESL.getEquipmentID());
             findESL.setReservationID(ESL.getReservationID());
             return true;
         }catch(PersistenceException | IllegalStateException e) {

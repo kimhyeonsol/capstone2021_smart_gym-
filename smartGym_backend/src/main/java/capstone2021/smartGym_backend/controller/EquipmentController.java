@@ -29,7 +29,7 @@ public class EquipmentController {
     }
 
     @CrossOrigin("*")
-    @PostMapping("/equipment/update") //운동기구 수정 
+    @PostMapping("/equipment/update") //운동기구 수정
     @ResponseBody
     public int equipmentUpdate(@ModelAttribute final EquipmentUpdateDTO equipmentUpdateDTO, BindingResult bindingResult) throws IOException {
         return equipmentService.update(equipmentUpdateDTO);

@@ -1,15 +1,16 @@
 package capstone2021.smartGym_backend.service;
 
+import capstone2021.smartGym_backend.DTO.ESL.ESLDeleteDTO;
+import capstone2021.smartGym_backend.DTO.ESL.ESLUpdateDTO;
+import capstone2021.smartGym_backend.domain.ESL;
 import capstone2021.smartGym_backend.domain.GymInfo;
 import capstone2021.smartGym_backend.domain.Reservation;
-import capstone2021.smartGym_backend.repository.AllowedUserRepository;
-import capstone2021.smartGym_backend.repository.EquipmentRepository;
-import capstone2021.smartGym_backend.repository.GymOperationInfoRepository;
-import capstone2021.smartGym_backend.repository.ReservationRepository;
+import capstone2021.smartGym_backend.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -17,19 +18,61 @@ import java.util.Date;
 import java.util.List;
 
 @Service
+@Transactional
 public class ESLServiceImpl implements ESLService{
-
+    private final ESLRepository eslRepository;
     private final ReservationRepository reservationRepository;
     private final GymOperationInfoRepository gymOperationInfoRepository;
     private final EquipmentRepository equipmentRepository;
     private final AllowedUserRepository allowedUserRepository;
 
     @Autowired
-    public ESLServiceImpl(ReservationRepository reservationRepository, GymOperationInfoRepository gymOperationInfoRepository, EquipmentRepository equipmentRepository, AllowedUserRepository allowedUserRepository) {
+    public ESLServiceImpl(ESLRepository eslRepository, ReservationRepository reservationRepository, GymOperationInfoRepository gymOperationInfoRepository, EquipmentRepository equipmentRepository, AllowedUserRepository allowedUserRepository) {
+        this.eslRepository = eslRepository;
         this.reservationRepository = reservationRepository;
         this.gymOperationInfoRepository=gymOperationInfoRepository;
         this.equipmentRepository=equipmentRepository;
         this.allowedUserRepository=allowedUserRepository;
+    }
+
+    @Override
+    public boolean ESLCreate() {
+        ESL esl = new ESL();
+        esl.setEquipmentID(null);
+        esl.setReservationID(null);
+
+        return eslRepository.create(esl);
+    }
+
+    @Override
+    public boolean ESLUpdate(ESLUpdateDTO eslUpdateDTO) {
+        ESL esl = new ESL();
+        esl.setESLID(eslUpdateDTO.getEslID());
+        esl.setEquipmentID(eslUpdateDTO.getEquipmentID());
+
+        ESL findESL = eslRepository.findByID(eslUpdateDTO.getEslID());
+        esl.setReservationID(findESL.getReservationID());
+
+        return eslRepository.update(esl);
+    }
+
+    @Override
+    public boolean ESLDelete(ESLDeleteDTO eslDeleteDTO) {
+        ESL findESL = eslRepository.findByID(eslDeleteDTO.getEslID());
+
+        return eslRepository.delete(findESL);
+    }
+
+    @Override
+    public List<ESL> ESLRead() {
+        return eslRepository.read();
+    }
+
+    @Override
+    public boolean currentlyChecking() {
+
+
+        return false;
     }
 
     public void writeCSV() {

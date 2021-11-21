@@ -1,6 +1,7 @@
 package capstone2021.smartGym_backend.repository;
 
 import capstone2021.smartGym_backend.domain.ESL;
+import capstone2021.smartGym_backend.domain.Equipment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -8,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Repository
 @Transactional
@@ -22,7 +24,7 @@ public class DBESLRepository implements ESLRepository {
     }
 
     @Override
-    public boolean save(ESL ESL) {
+    public boolean create(ESL ESL) {
         try {
             em.persist(ESL);
             return true;
@@ -34,10 +36,10 @@ public class DBESLRepository implements ESLRepository {
     @Override
     public boolean update(ESL ESL) {
         try {
-            ESL findESL=new ESL();
-            findESL= em.find(ESL.class,ESL.getESLID());
+            ESL findESL = findByID(ESL.getESLID());
             findESL.setEquipmentID(ESL.getEquipmentID());
             findESL.setReservationID(ESL.getReservationID());
+            em.persist(findESL);
             return true;
         }catch(PersistenceException | IllegalStateException e) {
             return false;
@@ -52,6 +54,17 @@ public class DBESLRepository implements ESLRepository {
         } catch (PersistenceException | IllegalStateException e) {
             return false;
         }
+    }
+
+    @Override
+    public List<ESL> read() {
+        return em.createQuery("SELECT esl FROM ESL esl", ESL.class)
+                .getResultList();
+    }
+
+    @Override
+    public ESL findByID(long id) {
+        return em.find(ESL.class, id);
     }
 
     @Override

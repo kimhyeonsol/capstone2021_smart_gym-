@@ -238,7 +238,7 @@ public class ReservationServiceImpl implements ReservationService{
         return list;
     }
 
-    @Scheduled(fixedDelay = 60000)//1분마다 체크
+    @Scheduled(fixedDelay = 30000)//1분마다 체크
     @Override
     public void equipmentAvailableCheck() {
         List<Equipment> equipmentList;

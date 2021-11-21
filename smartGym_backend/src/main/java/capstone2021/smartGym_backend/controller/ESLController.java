@@ -30,7 +30,7 @@ public class ESLController {
     @PostMapping("/esl/update") //ESL 수정
     @ResponseBody
     public boolean eslUpdate(@RequestBody final ESLEquipmentMatchingDTO eslEquipmentMatchingDTO) {
-        return eslService.eslUpdate(eslEquipmentMatchingDTO);
+        return eslService.eslEquipmentUpdate(eslEquipmentMatchingDTO);
     }
 
     @CrossOrigin("*")

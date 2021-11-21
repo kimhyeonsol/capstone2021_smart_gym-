@@ -28,9 +28,9 @@ public class GymInfo {
     @NotNull //널 허용 X
     private String gymInfoEquipmentLayout = "";
 
-    @Column(name="gym_info_congestion")
-    @NotNull //널 허용 X
-    private double gymInfoCongestion=0.0;
+//    @Column(name="gym_info_congestion")
+//    @NotNull //널 허용 X
+//    private double gymInfoCongestion=0.0;
 
     public int getGymInfoID() {
         return gymInfoID;

@@ -233,19 +233,22 @@ public class ReservationServiceImpl implements ReservationService{
     }
 
     @Override
-    public Boolean equipmentIsinUseCurrently(Long equipmentID) {
-        return reservationRepository.isInUse(equipmentID);
+    public List<Reservation> equipmentIsinUseCurrently(Long equipmentID) {
+        List<Reservation> list= reservationRepository.isInUse(equipmentID);
+        return list;
     }
 
     @Scheduled(fixedDelay = 60000)//1분마다 체크
     @Override
     public void equipmentAvailableCheck() {
         List<Equipment> equipmentList;
+        List<Reservation> list;
         equipmentList=equipmentRepository.readAll();
         for(Equipment e:equipmentList){
             if(e.getEquipmentAvailable()==0) continue;
             else{
-                if(equipmentIsinUseCurrently(e.getEquipmentID())==true){
+                list=equipmentIsinUseCurrently(e.getEquipmentID());
+                if(!list.isEmpty()){
                     e.setEquipmentAvailable(1);
                     equipmentRepository.update(e);
                     continue;

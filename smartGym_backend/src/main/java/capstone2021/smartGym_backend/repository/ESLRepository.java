@@ -7,5 +7,6 @@ public interface ESLRepository {
     boolean update(ESL ESL);
     boolean delete(ESL ESL);
     ESL readByEquipmentID(Long equipmentID);
+    ESL findByID(long id);
 }
 

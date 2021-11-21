@@ -64,4 +64,9 @@ public class DBESLRepository implements ESLRepository {
         }
         return findESL;
     }
+
+    @Override
+    public ESL findByID(long id) {
+        return em.find(ESL.class,id);
+    }
 }

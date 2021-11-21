@@ -115,11 +115,15 @@ public class ESLServiceImpl implements ESLService {
                 if (esl.getReservationID() == null)
                     return;
                 else {
+
                     newEsl.setReservationID(null);
                     eslRepository.update(newEsl);
                     Equipment equipment=equipmentRepository.findByID(esl.getEquipmentID());
 
-                    csvString=csvString+esl.getEslID()+','+equipment.getEquipmentName()+' '+equipment.getEquipmentNameNth()+','+" "+','+" "+','+" "+','+gymInfoRepository.read().getGymInfoName()+','+equipment.getEquipmentQRCode()+','+equipment.getEquipmentAvailable()+"\n";
+                    if(equipment.getEquipmentAvailable()==0)
+                        csvString=csvString+esl.getEslID()+','+equipment.getEquipmentName()+' '+equipment.getEquipmentNameNth()+','+" "+','+" "+','+" "+','+gymInfoRepository.read().getGymInfoName()+','+equipment.getEquipmentQRCode()+','+equipment.getEquipmentAvailable()+"\n";
+                    else if(equipment.getEquipmentAvailable()==2)
+                        csvString=csvString+esl.getEslID()+','+equipment.getEquipmentName()+' '+equipment.getEquipmentNameNth()+','+" "+','+" "+','+recentReservation(equipment)+','+gymInfoRepository.read().getGymInfoName()+','+equipment.getEquipmentQRCode()+','+equipment.getEquipmentAvailable()+"\n";
                 }
             }
         }
@@ -164,5 +168,13 @@ public class ESLServiceImpl implements ESLService {
 
         oldFile=nowFile;
     }
+    @Override
+    public String recentReservation(Equipment equipment) {
+        Reservation reservation = reservationRepository.recentReservation(equipment);
 
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+        String recentStartTime = format.format(java.sql.Timestamp.valueOf(reservation.getStartTime()));
+
+        return recentStartTime;
+    }
 }

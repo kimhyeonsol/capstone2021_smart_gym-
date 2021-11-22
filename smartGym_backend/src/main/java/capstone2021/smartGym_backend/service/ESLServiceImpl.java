@@ -9,7 +9,13 @@ import capstone2021.smartGym_backend.domain.Equipment;
 import capstone2021.smartGym_backend.domain.GymInfo;
 import capstone2021.smartGym_backend.domain.Reservation;
 import capstone2021.smartGym_backend.repository.*;
+import org.apache.commons.net.PrintCommandListener;
+import org.apache.commons.net.ftp.FTP;
+import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPReply;
 import org.apache.tomcat.jni.Local;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -35,6 +41,9 @@ public class ESLServiceImpl implements ESLService {
     private final GymInfoRepository gymInfoRepository;
     private final ESLRepository eslRepository;
     private String oldFile=null;
+
+    FTPClient ftpClient = null; //FTP 관련 변수들
+    private static final Logger log = LoggerFactory.getLogger(ESLServiceImpl.class);
 
     @Autowired
     public ESLServiceImpl(ReservationRepository reservationRepository, GymOperationInfoRepository gymOperationInfoRepository, EquipmentRepository equipmentRepository, AllowedUserRepository allowedUserRepository, GymInfoRepository gymInfoRepository, ESLRepository eslRepository) {
@@ -163,6 +172,41 @@ public class ESLServiceImpl implements ESLService {
         }
 
         oldFile=nowFile;
+    }
+
+    // param( host server ip, username, password ) 생성자
+    public void FTPUploader(String host, String user, String pwd) throws Exception {
+        ftpClient = new FTPClient();
+        ftpClient.setDefaultPort(2121);
+        ftpClient.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out)));
+        int reply;
+        ftpClient.connect(host);// 호스트 연결
+        reply = ftpClient.getReplyCode();
+        if (!FTPReply.isPositiveCompletion(reply)) {
+            ftpClient.disconnect();
+            throw new Exception("Exception in connecting to FTP Server");
+        }
+        ftpClient.login(user, pwd);// 로그인
+        ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+        ftpClient.enterLocalPassiveMode();
+    }
+
+    // param( 보낼파일경로+파일명, 호스트에서 받을 파일 이름, 호스트 디렉토리 )
+    public void uploadFile(String localFileFullName, String fileName, String hostDir) throws Exception {
+        try (InputStream input = new FileInputStream(new File(localFileFullName))) {
+            this.ftpClient.storeFile(hostDir + fileName, input);
+        }
+    }
+
+    public void disconnect() {
+        if (this.ftpClient.isConnected()) {
+            try {
+                this.ftpClient.logout();
+                this.ftpClient.disconnect();
+            } catch (IOException f) {
+                f.printStackTrace();
+            }
+        }
     }
 
 }

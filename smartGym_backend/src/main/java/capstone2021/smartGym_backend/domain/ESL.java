@@ -13,10 +13,10 @@ public class ESL{
     private Long eslID;
 
     @Column(name="equipment_id")
-    private Long equipmentID;
+    private Long equipmentID=null;
 
     @Column(name="reservation_id")
-    private Long reservationID;
+    private Long reservationID=null;
 
     public Long getEslID() {
         return eslID;

@@ -1,5 +1,6 @@
 package capstone2021.smartGym_backend.repository;
 
+import capstone2021.smartGym_backend.DTO.Return.ReturnESLDetailedRead;
 import capstone2021.smartGym_backend.domain.ESL;
 import capstone2021.smartGym_backend.domain.Equipment;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -172,6 +172,24 @@ public class DBEquipmentRepository implements EquipmentRepository{
     }
 
     @Override
+    public boolean eslDelete(long id) {
+        List<Equipment> findEquipments = em.createQuery("SELECT e FROM Equipment e WHERE e.ESLID = :id", Equipment.class)
+                .setParameter("id", id).getResultList();
+
+        try {
+            for (Equipment findEquipment : findEquipments) {
+                findEquipment.setESLID(null);
+                em.merge(findEquipment);
+            }
+        } catch (PersistenceException | IllegalStateException e){
+            System.out.println("esl delete 오류");
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
     public int readOfEquipmentAvailable(Long equipmentID) { //운동기구 상태 조회
         Equipment findEquipment = findByID(equipmentID);
         return findEquipment.getEquipmentAvailable();

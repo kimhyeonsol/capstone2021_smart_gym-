@@ -1,8 +1,8 @@
 package capstone2021.smartGym_backend.service;
 
-import capstone2021.smartGym_backend.DTO.ESL.ESLDTO;
-import capstone2021.smartGym_backend.DTO.ESL.ESLDeleteDTO;
+import capstone2021.smartGym_backend.DTO.ESL.ESLDeleteDetailedReadDTO;
 import capstone2021.smartGym_backend.DTO.ESL.ESLEquipmentMatchingDTO;
+import capstone2021.smartGym_backend.DTO.Return.ReturnESLDetailedRead;
 import capstone2021.smartGym_backend.domain.ESL;
 
 import capstone2021.smartGym_backend.domain.Equipment;
@@ -13,7 +13,6 @@ import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
-import org.apache.tomcat.jni.Local;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +22,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.*;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -77,15 +75,72 @@ public class ESLServiceImpl implements ESLService {
     }
 
     @Override
-    public boolean eslDelete(ESLDeleteDTO eslDeleteDTO) {
-        ESL findESL = eslRepository.findByID(eslDeleteDTO.getEslID());
+    public boolean eslDelete(ESLDeleteDetailedReadDTO eslDeleteDetailedReadDTO) {
+        ESL findESL = eslRepository.findByID(eslDeleteDetailedReadDTO.getEslID());
+        if(equipmentRepository.eslDelete(eslDeleteDetailedReadDTO.getEslID())){
+            return eslRepository.delete(findESL);
+        }
 
-        return eslRepository.delete(findESL);
+        return false;
     }
 
     @Override
     public List<ESL> eslRead() {
         return eslRepository.read();
+    }
+
+    @Override
+    public ReturnESLDetailedRead eslDetailedRead(ESLDeleteDetailedReadDTO eslDeleteDetailedReadDTO) {
+        ReturnESLDetailedRead returnESLDetailedRead = new ReturnESLDetailedRead();
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+
+        ESL findESL = eslRepository.findByID(eslDeleteDetailedReadDTO.getEslID());
+        if(findESL.getEquipmentID() == null){
+            returnESLDetailedRead.setEquipmentAvailable(4);
+            return returnESLDetailedRead;
+        }
+        Equipment findEquipment = equipmentRepository.findByID(findESL.getEquipmentID());
+        GymInfo findGymInfo = gymInfoRepository.read();
+
+        returnESLDetailedRead.setGymInfoName(findGymInfo.getGymInfoName());
+        returnESLDetailedRead.setEquipmentName(findEquipment.getEquipmentName());
+        returnESLDetailedRead.setEquipmentNameNth(findEquipment.getEquipmentNameNth());
+        returnESLDetailedRead.setEquipmentQRCode(findEquipment.getEquipmentQRCode());
+
+        if(findEquipment.getEquipmentAvailable() == 0){
+            returnESLDetailedRead.setUserName("");
+            returnESLDetailedRead.setStartTime("");
+            returnESLDetailedRead.setEndTime("");
+            returnESLDetailedRead.setEquipmentAvailable(0);
+        }
+        else if(findEquipment.getEquipmentAvailable() == 1){
+            Reservation findReservaton = reservationRepository.findByID(findESL.getReservationID());
+
+            returnESLDetailedRead.setUserName(findReservaton.getUserID().getUserName());
+
+            String startTime = format.format(findReservaton.getStartTime());
+            String endTime = format.format(findReservaton.getEndTime());
+
+            returnESLDetailedRead.setStartTime(startTime);
+            returnESLDetailedRead.setEndTime(endTime);
+            returnESLDetailedRead.setEquipmentAvailable(1);
+        }
+        else {
+            returnESLDetailedRead.setUserName("");
+            if(reservationRepository.recentReservation(findEquipment) == null){
+                returnESLDetailedRead.setStartTime("다음 예약 생성");
+            }
+            else{
+                LocalDateTime startTime = reservationRepository.recentReservation(findEquipment).getStartTime();
+                String startTimeString = format.format(startTime);
+
+                returnESLDetailedRead.setStartTime(startTimeString);
+            }
+            returnESLDetailedRead.setEndTime("");
+            returnESLDetailedRead.setEquipmentAvailable(2);
+        }
+
+        return returnESLDetailedRead;
     }
 
 

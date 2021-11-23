@@ -16,6 +16,7 @@ public class DBGymInfoRepository implements GymInfoRepository{
 
     @Override
     public int update(GymInfo gymInfo) {
+        gymInfo.setGymInfoCongestion(read().getGymInfoCongestion());
         try{
             em.merge(gymInfo);
             return 0;
@@ -25,6 +26,16 @@ public class DBGymInfoRepository implements GymInfoRepository{
             return 2;
         }
     }
+
+    @Override
+    public void updateCongestion(float congestion){
+        GymInfo gymInfo=new GymInfo();
+        gymInfo=read();
+        gymInfo.setGymInfoCongestion(congestion);
+        update(gymInfo);
+    }
+
+
 
     @Override
     public GymInfo read() {

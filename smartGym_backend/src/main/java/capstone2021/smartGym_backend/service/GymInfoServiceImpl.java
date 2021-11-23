@@ -48,6 +48,11 @@ public class GymInfoServiceImpl extends ImageService implements GymInfoService{
     }
 
     @Override
+    public float readCongestion() {
+        return read().getGymInfoCongestion();
+    }
+
+    @Override
     public boolean equipmentLayoutUpdate(GymInfoEquipmentLayoutDTO gymInfoEquipmentLayoutDTO) throws IOException {
         GymInfo findGymInfo = read();
 

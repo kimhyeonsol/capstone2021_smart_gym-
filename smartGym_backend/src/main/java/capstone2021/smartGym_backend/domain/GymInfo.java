@@ -28,9 +28,9 @@ public class GymInfo {
     @NotNull //널 허용 X
     private String gymInfoEquipmentLayout = "";
 
-//    @Column(name="gym_info_congestion")
-//    @NotNull //널 허용 X
-//    private double gymInfoCongestion=0.0;
+    @Column(name="gym_info_congestion", length = 5,columnDefinition = "float default 0.0f")
+    @NotNull //널 허용 X
+    private float gymInfoCongestion;
 
     public int getGymInfoID() {
         return gymInfoID;
@@ -70,5 +70,13 @@ public class GymInfo {
 
     public void setGymInfoEquipmentLayout(String gymInfoEquipmentLayout) {
         this.gymInfoEquipmentLayout = gymInfoEquipmentLayout;
+    }
+
+    public float getGymInfoCongestion() {
+        return gymInfoCongestion;
+    }
+
+    public void setGymInfoCongestion(float gymInfoCongestion) {
+        this.gymInfoCongestion = gymInfoCongestion;
     }
 }

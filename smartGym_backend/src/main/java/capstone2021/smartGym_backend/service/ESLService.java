@@ -13,7 +13,8 @@ public interface ESLService {
     boolean eslDelete(ESLDeleteDTO eslDeleteDTO); //ESL 삭제
     List<ESL> eslRead(); //ESL 조회
     void eslReservationUpdate();
-    //void currentlyChecking(); //현재 시간 기준으로 ESL 테이블 정보 갱신
+    String makeCsvStringAndReservationMatching(Equipment equipment, ESL esl,ESL newEsl);
+    void writeCSV(String csvString);
     String recentReservation(Equipment equipment); //현재 시간 기준 가장 최근 예약 조회(모두 사용 가능 상태일 경우)
 
 

@@ -57,20 +57,54 @@ public class ESLServiceImpl implements ESLService {
 
     @Override
     public boolean eslEquipmentUpdate(ESLEquipmentMatchingDTO eslEquipmentMatchingDTO) {
-        ESL esl = new ESL();
-        esl.setEslID(eslEquipmentMatchingDTO.getEslID());
-        esl.setEquipmentID(eslEquipmentMatchingDTO.getEquipmentID());
+        ESL newEsl = new ESL();
+        String csvString=new String();
+        csvString="esl_id,equipment_name,user_name,reservation_start_time,reservation_end_time,gym_info_name,equipment_QR_code,equipment_available\n";
 
-        ESL findESL = eslRepository.findByID(eslEquipmentMatchingDTO.getEslID());
-        esl.setReservationID(findESL.getReservationID());
+        try {
+            ESL esl = eslRepository.findByID(eslEquipmentMatchingDTO.getEslID());
+            newEsl.setEslID(eslEquipmentMatchingDTO.getEslID());
+            newEsl.setEquipmentID(eslEquipmentMatchingDTO.getEquipmentID());
+            Equipment equipment = equipmentRepository.findByID(eslEquipmentMatchingDTO.getEquipmentID());
+            csvString+= makeCsvStringAndEquipmentMatching(equipment, newEsl);//새로 매칭된 운동기구,원래 esl,새로운 esl
+            writeCSV(csvString);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
 
-        return eslRepository.update(esl);
+    public String makeCsvStringAndEquipmentMatching(Equipment equipment,ESL newEsl){//매칭된 equipment 객체, 현재 esl객체, 새로 update할 esl 객체
+
+        String csvString=new String();
+        List<Reservation> reservationList;
+        Reservation reservation;
+
+        if(equipment.getEquipmentAvailable()==0){
+            newEsl.setReservationID(null);
+            eslRepository.update(newEsl);
+            csvString=newEsl.getEslID()+','+equipment.getEquipmentName()+' '+equipment.getEquipmentNameNth()+','+" "+','+" "+','+" "+','+gymInfoRepository.read().getGymInfoName()+','+equipment.getEquipmentQRCode()+','+equipment.getEquipmentAvailable()+"\n";
+        }
+        else if(equipment.getEquipmentAvailable()==1){
+            reservationList=reservationRepository.isInUse(equipment.getEquipmentID());
+            newEsl.setReservationID(reservationList.get(0).getReservationID());
+            eslRepository.update(newEsl);
+            reservation=reservationRepository.findByID(newEsl.getReservationID());
+            csvString=csvString+newEsl.getEslID()+','+equipment.getEquipmentName()+' '+equipment.getEquipmentNameNth()+','+reservation.getUserID().getUserName()+','+reservation.getStartTime().format(DateTimeFormatter.ofPattern("HH:mm"))+','+reservation.getEndTime().format(DateTimeFormatter.ofPattern("HH:mm"))+','+gymInfoRepository.read().getGymInfoName()+','+equipment.getEquipmentQRCode()+','+equipment.getEquipmentAvailable()+"\n";
+        }
+        else if(equipment.getEquipmentAvailable()==2){
+            newEsl.setReservationID(null);
+            eslRepository.update(newEsl);
+            csvString=csvString+newEsl.getEslID()+','+equipment.getEquipmentName()+' '+equipment.getEquipmentNameNth()+','+" "+','+" "+','+recentReservation(equipment)+','+gymInfoRepository.read().getGymInfoName()+','+equipment.getEquipmentQRCode()+','+equipment.getEquipmentAvailable()+"\n";
+        }
+
+        equipment.setESLID(newEsl.getEslID());
+        return csvString;
     }
 
     @Override
     public boolean eslDelete(ESLDeleteDTO eslDeleteDTO) {
         ESL findESL = eslRepository.findByID(eslDeleteDTO.getEslID());
-
         return eslRepository.delete(findESL);
     }
 
@@ -81,51 +115,23 @@ public class ESLServiceImpl implements ESLService {
 
 
     @Override
-    @Scheduled(fixedDelay = 60000)//30초마다 체크
+    @Scheduled(fixedDelay = 30000)//30초마다 체크
     public void eslReservationUpdate() {
+
         List<ESL> eslList = eslRepository.read();
-        List<Reservation> reservationList;
-        SimpleDateFormat format1=new SimpleDateFormat("HH:mm");
+
+        ESL newEsl = new ESL();
 
         String csvString=new String();
+        String makeCsvString;
         csvString="esl_id,equipment_name,user_name,reservation_start_time,reservation_end_time,gym_info_name,equipment_QR_code,equipment_available\n";
         int initStringlength=csvString.length();
-
         for (ESL esl : eslList) {
-
-            ESL newEsl = new ESL();
             newEsl.setEslID(esl.getEslID());
             newEsl.setEquipmentID(esl.getEquipmentID());
-
-            reservationList = reservationRepository.isInUse(esl.getEquipmentID());
-
-            if(!reservationList.isEmpty()){//현재 운동기구 사용 중
-                if(esl.getReservationID()==reservationList.get(0).getReservationID())
-                    return;
-                else {
-                    newEsl.setReservationID(reservationList.get(0).getReservationID());
-                    eslRepository.update(newEsl);
-                    Equipment equipment=equipmentRepository.findByID(esl.getEquipmentID());
-                    Reservation reservation=reservationRepository.findByID(esl.getReservationID());
-
-                    csvString=csvString+esl.getEslID()+','+equipment.getEquipmentName()+' '+equipment.getEquipmentNameNth()+','+reservation.getUserID().getUserName()+','+reservation.getStartTime().format(DateTimeFormatter.ofPattern("HH:mm"))+','+reservation.getEndTime().format(DateTimeFormatter.ofPattern("HH:mm"))+','+gymInfoRepository.read().getGymInfoName()+','+equipment.getEquipmentQRCode()+','+equipment.getEquipmentAvailable()+"\n";
-                }
-            }
-            else if (reservationList.isEmpty() && esl.getReservationID() != null) {//현재 운동기구 미사용
-                if (esl.getReservationID() == null)
-                    return;
-                else {
-
-                    newEsl.setReservationID(null);
-                    eslRepository.update(newEsl);
-                    Equipment equipment=equipmentRepository.findByID(esl.getEquipmentID());
-
-                    if(equipment.getEquipmentAvailable()==0)
-                        csvString=csvString+esl.getEslID()+','+equipment.getEquipmentName()+' '+equipment.getEquipmentNameNth()+','+" "+','+" "+','+" "+','+gymInfoRepository.read().getGymInfoName()+','+equipment.getEquipmentQRCode()+','+equipment.getEquipmentAvailable()+"\n";
-                    else if(equipment.getEquipmentAvailable()==2)
-                        csvString=csvString+esl.getEslID()+','+equipment.getEquipmentName()+' '+equipment.getEquipmentNameNth()+','+" "+','+" "+','+recentReservation(equipment)+','+gymInfoRepository.read().getGymInfoName()+','+equipment.getEquipmentQRCode()+','+equipment.getEquipmentAvailable()+"\n";
-                }
-            }
+            Equipment equipment=equipmentRepository.findByID(esl.getEquipmentID());
+            makeCsvString=makeCsvStringAndReservationMatching(equipment,esl,newEsl);
+            csvString+=makeCsvString;
         }
         if(csvString.length()>initStringlength){
             writeCSV(csvString);
@@ -133,12 +139,47 @@ public class ESLServiceImpl implements ESLService {
     }
 
 
+    public String makeCsvStringAndReservationMatching(Equipment equipment, ESL esl,ESL newEsl){//매칭된 equipment 객체, 현재 esl객체, 새로 update할 esl 객체
+
+        String csvString=new String();
+        List<Reservation> reservationList;
+        Reservation reservation;
+
+        if(equipment.getEquipmentAvailable()==0){
+            if (esl.getReservationID() == null)
+                return null;
+            newEsl.setReservationID(null);
+            eslRepository.update(newEsl);
+            csvString=csvString+esl.getEslID()+','+equipment.getEquipmentName()+' '+equipment.getEquipmentNameNth()+','+" "+','+" "+','+" "+','+gymInfoRepository.read().getGymInfoName()+','+equipment.getEquipmentQRCode()+','+equipment.getEquipmentAvailable()+"\n";
+        }
+
+        else if(equipment.getEquipmentAvailable()==1){
+            reservationList=reservationRepository.isInUse(equipment.getEquipmentID());
+            if(esl.getReservationID()==reservationList.get(0).getReservationID())
+                return null;
+            else {
+                newEsl.setReservationID(reservationList.get(0).getReservationID());
+                eslRepository.update(newEsl);
+                reservation=reservationRepository.findByID(esl.getReservationID());
+                csvString=csvString+esl.getEslID()+','+equipment.getEquipmentName()+' '+equipment.getEquipmentNameNth()+','+reservation.getUserID().getUserName()+','+reservation.getStartTime().format(DateTimeFormatter.ofPattern("HH:mm"))+','+reservation.getEndTime().format(DateTimeFormatter.ofPattern("HH:mm"))+','+gymInfoRepository.read().getGymInfoName()+','+equipment.getEquipmentQRCode()+','+equipment.getEquipmentAvailable()+"\n";
+            }
+        }
+        else if(equipment.getEquipmentAvailable()==2){
+            if (esl.getReservationID() == null)
+                return null;
+            newEsl.setReservationID(null);
+            eslRepository.update(newEsl);
+            csvString=csvString+esl.getEslID()+','+equipment.getEquipmentName()+' '+equipment.getEquipmentNameNth()+','+" "+','+" "+','+recentReservation(equipment)+','+gymInfoRepository.read().getGymInfoName()+','+equipment.getEquipmentQRCode()+','+equipment.getEquipmentAvailable()+"\n";
+        }
+        return csvString;
+    }
+
     public void writeCSV(String csvString) {
         LocalDateTime now=LocalDateTime.now();
         String nowFile=now.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
-        File newCsv = new File("./src/main/resources/import"+nowFile+".csv");
+        File newCsv = new File("./src/main/resources/import_"+nowFile+".csv");
         if(oldFile!=null) {
-            File oldCsv = new File("./src/main/resources/import" + oldFile + ".csv");
+            File oldCsv = new File("./src/main/resources/import_" + oldFile + ".csv");
             oldCsv.renameTo(newCsv);
         }
 
@@ -148,9 +189,8 @@ public class ESLServiceImpl implements ESLService {
             // csv파일의 기존 값에 이어쓰려면 위처럼 true를 지정하고, 기존 값을 덮어쓰려면 true를 삭제한다
             bw.write(csvString);
             // 작성한 데이터를 파일에 넣는다
+
             bw.newLine(); // 개행
-
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -165,13 +205,15 @@ public class ESLServiceImpl implements ESLService {
                 e.printStackTrace();
             }
         }
-
         oldFile=nowFile;
     }
+    
     @Override
     public String recentReservation(Equipment equipment) {
         Reservation reservation = reservationRepository.recentReservation(equipment);
-
+        if(reservation == null){
+            return "다음 예약 생성";
+        }
         SimpleDateFormat format = new SimpleDateFormat("HH:mm");
         String recentStartTime = format.format(java.sql.Timestamp.valueOf(reservation.getStartTime()));
 

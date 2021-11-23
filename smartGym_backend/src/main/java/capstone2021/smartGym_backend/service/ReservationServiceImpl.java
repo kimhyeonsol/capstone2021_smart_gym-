@@ -7,10 +7,7 @@ import capstone2021.smartGym_backend.domain.AllowedUser;
 import capstone2021.smartGym_backend.domain.Equipment;
 import capstone2021.smartGym_backend.domain.GymHoliday;
 import capstone2021.smartGym_backend.domain.Reservation;
-import capstone2021.smartGym_backend.repository.AllowedUserRepository;
-import capstone2021.smartGym_backend.repository.EquipmentRepository;
-import capstone2021.smartGym_backend.repository.GymOperationInfoRepository;
-import capstone2021.smartGym_backend.repository.ReservationRepository;
+import capstone2021.smartGym_backend.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -29,14 +26,16 @@ public class ReservationServiceImpl implements ReservationService{
     private final GymOperationInfoRepository gymOperationInfoRepository;
     private final EquipmentRepository equipmentRepository;
     private final AllowedUserRepository allowedUserRepository;
+    private final GymInfoRepository gymInfoRepository;
 
     @Autowired
 
-    public ReservationServiceImpl(ReservationRepository reservationRepository,GymOperationInfoRepository gymOperationInfoRepository,EquipmentRepository equipmentRepository,AllowedUserRepository allowedUserRepository) {
+    public ReservationServiceImpl(ReservationRepository reservationRepository,GymOperationInfoRepository gymOperationInfoRepository,EquipmentRepository equipmentRepository,AllowedUserRepository allowedUserRepository,GymInfoRepository gymInfoRepository) {
         this.reservationRepository = reservationRepository;
         this.gymOperationInfoRepository=gymOperationInfoRepository;
         this.equipmentRepository=equipmentRepository;
         this.allowedUserRepository=allowedUserRepository;
+        this.gymInfoRepository=gymInfoRepository;
     }
 
 
@@ -164,8 +163,6 @@ public class ReservationServiceImpl implements ReservationService{
 
         reservationRepository.reservationCreate(reservation);
 
-
-
         return 0;
 
     }
@@ -244,6 +241,9 @@ public class ReservationServiceImpl implements ReservationService{
         List<Equipment> equipmentList;
         List<Reservation> list;
         equipmentList=equipmentRepository.readAll();
+        int equipmentInUseCnt=0;
+        float congestion;
+
         for(Equipment e:equipmentList){
             if(e.getEquipmentAvailable()==0) continue;
             else{
@@ -251,6 +251,7 @@ public class ReservationServiceImpl implements ReservationService{
                 if(!list.isEmpty()){
                     e.setEquipmentAvailable(1);
                     equipmentRepository.update(e);
+                    equipmentInUseCnt++;
                     continue;
                 }
                 else{
@@ -260,8 +261,14 @@ public class ReservationServiceImpl implements ReservationService{
                 }
             }
         }
-    }
 
+        congestion=(float)equipmentInUseCnt/equipmentList.size()*100;
+        String num=String.format("%.5f",congestion);
+        congestion=Float.parseFloat(num);
+        if(gymInfoRepository.read().getGymInfoCongestion()!=congestion) {
+            gymInfoRepository.updateCongestion(congestion);
+        }
+    }
 
 
 }

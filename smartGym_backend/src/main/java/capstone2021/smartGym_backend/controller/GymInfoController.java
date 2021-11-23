@@ -1,6 +1,7 @@
 package capstone2021.smartGym_backend.controller;
 
 import capstone2021.smartGym_backend.DTO.GymInfo.*;
+import capstone2021.smartGym_backend.DTO.Return.ReturnFloatDTO;
 import capstone2021.smartGym_backend.domain.GymHoliday;
 import capstone2021.smartGym_backend.domain.GymInfo;
 import capstone2021.smartGym_backend.service.GymInfoService;
@@ -84,5 +85,14 @@ public class GymInfoController {
     @ResponseBody
     public List<GymHoliday> gymOperationInfoHolidayRead(){
         return gymOperationInfoService.readHoliday();
+    }
+
+    @CrossOrigin("*")
+    @GetMapping("/gymOperationInfo/holiday/readCongestion") //헬스장 운영정보 휴무일 조회
+    @ResponseBody
+    public ReturnFloatDTO readCongestion(){
+        ReturnFloatDTO returnFloatDTO=new ReturnFloatDTO();
+        returnFloatDTO.setData(gymInfoService.readCongestion());
+        return returnFloatDTO;
     }
 }

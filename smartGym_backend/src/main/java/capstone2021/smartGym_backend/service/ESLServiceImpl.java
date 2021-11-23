@@ -75,6 +75,11 @@ public class ESLServiceImpl implements ESLService {
             Equipment equipment = equipmentRepository.findByID(eslEquipmentMatchingDTO.getEquipmentID());
             csvString+= makeCsvStringAndEquipmentMatching(equipment, newEsl);//새로 매칭된 운동기구,원래 esl,새로운 esl
             writeCSV(csvString);
+            FTPUploader("192.168.1.15", "cgESLUser", "cgESLPassword");
+            File fileTest = new File("./src/main/resources/import_" + oldFile + ".csv");
+            String fileName = fileTest.getName();
+            uploadFile("./src/main/resources/import_" + oldFile + ".csv",fileName,"/Import/");
+            disconnect();
             return true;
         }catch (Exception e){
             return false;
@@ -181,7 +186,7 @@ public class ESLServiceImpl implements ESLService {
 
     @Override
     @Scheduled(fixedDelay = 30000)//30초마다 체크
-    public void eslReservationUpdate() {
+    public void eslReservationUpdate() throws Exception {
 
         List<ESL> eslList = eslRepository.read();
 
@@ -196,10 +201,17 @@ public class ESLServiceImpl implements ESLService {
             newEsl.setEquipmentID(esl.getEquipmentID());
             Equipment equipment=equipmentRepository.findByID(esl.getEquipmentID());
             makeCsvString=makeCsvStringAndReservationMatching(equipment,esl,newEsl);
-            csvString+=makeCsvString;
+            if(makeCsvString!=null) {
+                csvString += makeCsvString;
+            }
         }
         if(csvString.length()>initStringlength){
             writeCSV(csvString);
+            FTPUploader("192.168.1.15", "cgESLUser", "cgESLPassword");
+            File fileTest = new File("./src/main/resources/import_" + oldFile + ".csv");
+            String fileName = fileTest.getName();
+            uploadFile("./src/main/resources/import_" + oldFile + ".csv",fileName,"/Import/");
+            disconnect();
         }
     }
 
@@ -277,13 +289,14 @@ public class ESLServiceImpl implements ESLService {
     public String recentReservation(Equipment equipment) {
         Reservation reservation = reservationRepository.recentReservation(equipment);
         if(reservation == null){
-            return "다음 예약 생성";
+            return "-";
         }
         SimpleDateFormat format = new SimpleDateFormat("HH:mm");
         String recentStartTime = format.format(java.sql.Timestamp.valueOf(reservation.getStartTime()));
 
         return recentStartTime;
     }
+
     // param( host server ip, username, password ) 생성자
     public void FTPUploader(String host, String user, String pwd) throws Exception {
         ftpClient = new FTPClient();

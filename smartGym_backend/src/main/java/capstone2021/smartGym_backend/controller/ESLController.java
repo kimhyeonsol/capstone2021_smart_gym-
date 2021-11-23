@@ -55,11 +55,6 @@ public class ESLController {
         return eslService.eslDetailedRead(eslDeleteDetailedReadDTO);
     }
 
-    @CrossOrigin("*")
-    @GetMapping("/esl/csv")
-    @ResponseBody
-    public void eslCSV(){
-        //eslService.currentlyChecking();
-    }
+
 }
 

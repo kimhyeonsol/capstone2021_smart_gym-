@@ -36,7 +36,6 @@ public class Equipment {
     private String equipmentQRCode;
 
     @Column(name="esl_id") //ESL 아이디
-    @NotNull
     private Long ESLID;
 
 

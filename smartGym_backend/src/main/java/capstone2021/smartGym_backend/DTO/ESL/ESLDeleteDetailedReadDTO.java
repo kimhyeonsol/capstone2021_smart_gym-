@@ -1,6 +1,6 @@
 package capstone2021.smartGym_backend.DTO.ESL;
 
-public class ESLDeleteDTO {
+public class ESLDeleteDetailedReadDTO {
     private Long eslID;
 
     public Long getEslID() {

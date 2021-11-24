@@ -88,7 +88,7 @@ public class GymInfoController {
     }
 
     @CrossOrigin("*")
-    @GetMapping("/gymOperationInfo/holiday/readCongestion") //헬스장 운영정보 휴무일 조회
+    @GetMapping("/gymInfo/readCongestion") //현재 헬스장 혼잡도 조회
     @ResponseBody
     public ReturnFloatDTO readCongestion(){
         ReturnFloatDTO returnFloatDTO=new ReturnFloatDTO();

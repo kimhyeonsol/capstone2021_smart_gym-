@@ -28,7 +28,7 @@ public class GymInfo {
     @NotNull //널 허용 X
     private String gymInfoEquipmentLayout = "";
 
-    @Column(name="gym_info_congestion", length = 5,columnDefinition = "float default 0.0f")
+    @Column(name="gym_info_congestion", length = 5,columnDefinition = "float default 0")
     @NotNull //널 허용 X
     private float gymInfoCongestion;
 

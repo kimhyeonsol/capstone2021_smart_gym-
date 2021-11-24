@@ -1,6 +1,7 @@
 package capstone2021.smartGym_backend.DTO.Return;
 
 public class ReturnESLDetailedRead {
+    private Long eslID;
     private String gymInfoName;
     private String userName;
     private String startTime;
@@ -9,6 +10,14 @@ public class ReturnESLDetailedRead {
     private String equipmentNameNth;
     private String equipmentQRCode;
     private int equipmentAvailable;
+
+    public Long getEslID() {
+        return eslID;
+    }
+
+    public void setEslID(Long eslID) {
+        this.eslID = eslID;
+    }
 
     public String getGymInfoName() {
         return gymInfoName;

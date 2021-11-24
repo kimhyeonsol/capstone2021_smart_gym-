@@ -135,25 +135,31 @@ public class ESLServiceImpl implements ESLService {
         SimpleDateFormat format = new SimpleDateFormat("HH:mm");
 
         ESL findESL = eslRepository.findByID(eslDeleteDetailedReadDTO.getEslID());
-        if(findESL.getEquipmentID() == null){
+        if(findESL == null){ //없는 ESL일 경우
+            returnESLDetailedRead.setEquipmentAvailable(3);
+            return returnESLDetailedRead;
+        }
+        
+        if(findESL.getEquipmentID() == null){ //매칭된 운동기구가 없는 경우
             returnESLDetailedRead.setEquipmentAvailable(4);
             return returnESLDetailedRead;
         }
         Equipment findEquipment = equipmentRepository.findByID(findESL.getEquipmentID());
         GymInfo findGymInfo = gymInfoRepository.read();
 
+        returnESLDetailedRead.setEslID(findESL.getEslID());
         returnESLDetailedRead.setGymInfoName(findGymInfo.getGymInfoName());
         returnESLDetailedRead.setEquipmentName(findEquipment.getEquipmentName());
         returnESLDetailedRead.setEquipmentNameNth(findEquipment.getEquipmentNameNth());
         returnESLDetailedRead.setEquipmentQRCode(findEquipment.getEquipmentQRCode());
 
-        if(findEquipment.getEquipmentAvailable() == 0){
+        if(findEquipment.getEquipmentAvailable() == 0){ //기구 고장
             returnESLDetailedRead.setUserName("");
             returnESLDetailedRead.setStartTime("");
             returnESLDetailedRead.setEndTime("");
             returnESLDetailedRead.setEquipmentAvailable(0);
         }
-        else if(findEquipment.getEquipmentAvailable() == 1){
+        else if(findEquipment.getEquipmentAvailable() == 1){ //예약 상태
             Reservation findReservaton = reservationRepository.findByID(findESL.getReservationID());
 
             returnESLDetailedRead.setUserName(findReservaton.getUserID().getUserName());
@@ -165,10 +171,10 @@ public class ESLServiceImpl implements ESLService {
             returnESLDetailedRead.setEndTime(endTime);
             returnESLDetailedRead.setEquipmentAvailable(1);
         }
-        else {
+        else { //모두 사용 가능
             returnESLDetailedRead.setUserName("");
-            if(reservationRepository.recentReservation(findEquipment) == null){
-                returnESLDetailedRead.setStartTime("다음 예약 생성");
+            if(reservationRepository.recentReservation(findEquipment) == null){ //최근 예약 없는 경우
+                returnESLDetailedRead.setStartTime("");
             }
             else{
                 LocalDateTime startTime = reservationRepository.recentReservation(findEquipment).getStartTime();

@@ -1,10 +1,7 @@
 package capstone2021.smartGym_backend.controller;
 
 import capstone2021.smartGym_backend.DTO.AllowedUser.*;
-import capstone2021.smartGym_backend.DTO.Return.ReturnAllowedUserDTO;
-import capstone2021.smartGym_backend.DTO.Return.ReturnAllowedUserListDTO;
-import capstone2021.smartGym_backend.DTO.Return.ReturnIntDTO;
-import capstone2021.smartGym_backend.DTO.Return.ReturnStringDTO;
+import capstone2021.smartGym_backend.DTO.Return.*;
 import capstone2021.smartGym_backend.DTO.UnAllowedUser.UnAllowedUserReadByIDDTO;
 import capstone2021.smartGym_backend.DTO.UnAllowedUser.UnAllowedUserReadByNameDTO;
 import capstone2021.smartGym_backend.domain.AllowedUser;
@@ -42,15 +39,15 @@ public class AllowedUserController {
     @CrossOrigin("*")
     @PostMapping("/allowedUser/readUserInfo") //가입승인- 회원정보 조회
     @ResponseBody
-    public ReturnAllowedUserDTO allowedUserLogin(@RequestBody final AllowedUserReadUserInfoDTO allowedUserReadUserInfoDTO)  {
-        ReturnAllowedUserDTO returnAllowedUserDTO =new ReturnAllowedUserDTO();
+    public ReturnAllowedUserInfoDTO allowedUserLogin(@RequestBody final AllowedUserReadUserInfoDTO allowedUserReadUserInfoDTO)  {
+        ReturnAllowedUserInfoDTO returnAllowedUserInfoDTO =new ReturnAllowedUserInfoDTO();
         if(allowedUserReadUserInfoDTO.getUserID().equals("")||allowedUserReadUserInfoDTO==null){
-            returnAllowedUserDTO.setSuccess(false);
+            returnAllowedUserInfoDTO.setSuccess(false);
         }
         else {
-            returnAllowedUserDTO.setData(allowedUserService.readUserInfo(allowedUserReadUserInfoDTO));
+            returnAllowedUserInfoDTO.setData(allowedUserService.readUserInfo(allowedUserReadUserInfoDTO));
         }
-        return returnAllowedUserDTO;
+        return returnAllowedUserInfoDTO;
     }
 
     @CrossOrigin("*")

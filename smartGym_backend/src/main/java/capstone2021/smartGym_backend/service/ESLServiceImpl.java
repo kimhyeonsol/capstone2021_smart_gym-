@@ -191,7 +191,7 @@ public class ESLServiceImpl implements ESLService {
 
 
     @Override
-    @Scheduled(fixedDelay = 30000)//30초마다 체크
+    @Scheduled(fixedDelay = 1000)//30초마다 체크
     public void eslReservationUpdate() throws Exception {
 
         List<ESL> eslList = eslRepository.read();
@@ -261,6 +261,7 @@ public class ESLServiceImpl implements ESLService {
         LocalDateTime now=LocalDateTime.now();
         String nowFile=now.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
         File newCsv = new File("./src/main/resources/import_"+nowFile+".csv");
+        newCsv.deleteOnExit();
         if(oldFile!=null) {
             File oldCsv = new File("./src/main/resources/import_" + oldFile + ".csv");
             oldCsv.renameTo(newCsv);
@@ -289,6 +290,7 @@ public class ESLServiceImpl implements ESLService {
             }
         }
         oldFile=nowFile;
+
     }
     
     @Override

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Service
@@ -50,12 +51,23 @@ public class AllowedUserServiceImpl implements AllowedUserService {
     }
 
     @Override
-    public AllowedUser readUserInfo(AllowedUserReadUserInfoDTO allowedUserReadUserInfoDT) {
+    public AllowedUserInfoDTO readUserInfo(AllowedUserReadUserInfoDTO allowedUserReadUserInfoDT) {
         AllowedUser findAllowedUser = null;
+
         findAllowedUser = allowedUserRepository.findByAllowedUserID(allowedUserReadUserInfoDT.getUserID());
 
         if (findAllowedUser != null) {
-            return findAllowedUser;
+            AllowedUserInfoDTO allowedUserInfoDTO=new AllowedUserInfoDTO();
+            allowedUserInfoDTO.setUserID(findAllowedUser.getUserID());
+            allowedUserInfoDTO.setUserPW(findAllowedUser.getUserPW());
+            allowedUserInfoDTO.setUserName(findAllowedUser.getUserName());
+            allowedUserInfoDTO.setUserSex(findAllowedUser.getUserSex());
+            allowedUserInfoDTO.setUserPhone(findAllowedUser.getUserPhone());
+            allowedUserInfoDTO.setUserEmail(findAllowedUser.getUserEmail());
+            allowedUserInfoDTO.setUserRegisterDate(findAllowedUser.getUserRegisterDate());
+            allowedUserInfoDTO.setAllowedUserReservationAuthority(findAllowedUser.getAllowedUserReservationAuthority());
+            allowedUserInfoDTO.setAllowedUserApprovalDate(findAllowedUser.getAllowedUserApprovalDate());
+            return allowedUserInfoDTO;
         }
         return null;
     }

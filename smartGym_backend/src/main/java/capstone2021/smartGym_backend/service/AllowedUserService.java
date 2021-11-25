@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface AllowedUserService extends UserService{
     int allowedUserLogin(AllowedUserLoginDTO allowedUserLoginDTO); //로그인
-    AllowedUser readUserInfo(AllowedUserReadUserInfoDTO allowedUserReadUserInfoDTO);
+    AllowedUserInfoDTO readUserInfo(AllowedUserReadUserInfoDTO allowedUserReadUserInfoDTO);
     String allowedUserFindID(AllowedUserFindIDDTO allowedUserFindIDDTO); //아이디찾기
     String allowedUserFindPW(AllowedUserFindPWDTO allowedUserFindPWDTO); //비밀번호찾기
     boolean allowedUserReservationAuthorityUpdate(AllowedUserReservationAuthorityDTO allowedUserReservationAuthorityDTO); //예약 권한 변경

@@ -1,13 +1,11 @@
 package capstone2021.smartGym_backend.DTO.Return;
 
-import capstone2021.smartGym_backend.DTO.Equipment.EquipmentSearchByCategoryDTO;
+import capstone2021.smartGym_backend.DTO.AllowedUser.AllowedUserInfoDTO;
 import capstone2021.smartGym_backend.domain.AllowedUser;
 
-import java.text.SimpleDateFormat;
-
-public class ReturnAllowedUserDTO {
+public class ReturnAllowedUserInfoDTO {
     Boolean success=true;
-    AllowedUser data;
+    AllowedUserInfoDTO data;
 
     public Boolean getSuccess() {
         return success;
@@ -17,11 +15,11 @@ public class ReturnAllowedUserDTO {
         this.success = success;
     }
 
-    public AllowedUser getData() {
+    public AllowedUserInfoDTO getData() {
         return data;
     }
 
-    public void setData(AllowedUser data) {
+    public void setData(AllowedUserInfoDTO data) {
         this.data = data;
     }
 }

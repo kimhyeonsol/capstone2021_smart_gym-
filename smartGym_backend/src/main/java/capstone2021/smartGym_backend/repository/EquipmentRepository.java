@@ -11,7 +11,7 @@ public interface EquipmentRepository{
     int create(Equipment equipment);
     int update(Equipment equipment);
     boolean delete(Equipment equipment);
-    boolean eslDelete(long id); //ESL 속성값 삭제
+    boolean eslDelete(String id); //ESL 속성값 삭제
     int readOfEquipmentAvailable(Long equipmentID); //운동기구 상태 조회
     Equipment findByID(long id);
     List<Equipment> readAll(int select);

@@ -1,5 +1,6 @@
 package capstone2021.smartGym_backend.controller;
 
+import capstone2021.smartGym_backend.DTO.ESL.ESLCreateDTO;
 import capstone2021.smartGym_backend.DTO.ESL.ESLDeleteDetailedReadDTO;
 import capstone2021.smartGym_backend.DTO.ESL.ESLEquipmentMatchingDTO;
 import capstone2021.smartGym_backend.DTO.Return.ReturnESLDetailedRead;
@@ -21,10 +22,10 @@ public class ESLController {
     }
 
     @CrossOrigin("*")
-    @GetMapping("/esl/create") //ESL 생성
+    @PostMapping("/esl/create") //ESL 생성
     @ResponseBody
-    public boolean eslCreate() {
-        return eslService.eslCreate();
+    public int eslCreate(@RequestBody final ESLCreateDTO eslCreateDTO) {
+        return eslService.eslCreate(eslCreateDTO);
     }
 
     @CrossOrigin("*")

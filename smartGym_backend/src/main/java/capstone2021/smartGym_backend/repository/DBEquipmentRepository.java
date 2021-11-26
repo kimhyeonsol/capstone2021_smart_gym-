@@ -172,13 +172,13 @@ public class DBEquipmentRepository implements EquipmentRepository{
     }
 
     @Override
-    public boolean eslDelete(long id) {
-        List<Equipment> findEquipments = em.createQuery("SELECT e FROM Equipment e WHERE e.ESLID = :id", Equipment.class)
+    public boolean eslDelete(String id) {
+        List<Equipment> findEquipments = em.createQuery("SELECT e FROM Equipment e WHERE e.eslID = :id", Equipment.class)
                 .setParameter("id", id).getResultList();
 
         try {
             for (Equipment findEquipment : findEquipments) {
-                findEquipment.setESLID(null);
+                findEquipment.setEslID(null);
                 em.merge(findEquipment);
             }
         } catch (PersistenceException | IllegalStateException e){

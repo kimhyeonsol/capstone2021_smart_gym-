@@ -1,5 +1,6 @@
 package capstone2021.smartGym_backend.service;
 
+import capstone2021.smartGym_backend.DTO.ESL.ESLCreateDTO;
 import capstone2021.smartGym_backend.DTO.ESL.ESLDeleteDetailedReadDTO;
 import capstone2021.smartGym_backend.DTO.ESL.ESLEquipmentMatchingDTO;
 import capstone2021.smartGym_backend.DTO.Return.ReturnESLDetailedRead;
@@ -9,7 +10,7 @@ import capstone2021.smartGym_backend.domain.Equipment;
 import java.util.List;
 
 public interface ESLService {
-    boolean eslCreate(); //ESL 생성
+    int eslCreate(ESLCreateDTO eslCreateDTO); //ESL 생성
     boolean eslEquipmentUpdate(ESLEquipmentMatchingDTO eslEquipmentMatchingDTO); //ESL 수정
     boolean eslDelete(ESLDeleteDetailedReadDTO eslDeleteDetailedReadDTO); //ESL 삭제
     List<ESL> eslRead(); //ESL 조회

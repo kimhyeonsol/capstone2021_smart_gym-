@@ -24,12 +24,12 @@ public class DBESLRepository implements ESLRepository {
     }
 
     @Override
-    public boolean create(ESL esl) {
+    public int create(ESL esl) {
         try {
             em.persist(esl);
-            return true;
+            return 0;
         }catch(PersistenceException | IllegalStateException e){
-            return false;
+            return 3;
         }
     }
 
@@ -67,7 +67,7 @@ public class DBESLRepository implements ESLRepository {
     }
 
     @Override
-    public ESL findByID(long id) {
+    public ESL findByID(String id) {
         return em.find(ESL.class, id);
     }
 

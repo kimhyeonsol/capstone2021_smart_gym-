@@ -1,14 +1,14 @@
 package capstone2021.smartGym_backend.DTO.ESL;
 
 public class ESLEquipmentMatchingDTO {
-    private Long eslID;
+    private String eslID;
     private Long equipmentID;
 
-    public Long getEslID() {
+    public String getEslID() {
         return eslID;
     }
 
-    public void setEslID(Long eslID) {
+    public void setEslID(String eslID) {
         this.eslID = eslID;
     }
 

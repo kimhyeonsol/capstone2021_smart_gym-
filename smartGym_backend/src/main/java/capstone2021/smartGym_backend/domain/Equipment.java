@@ -35,8 +35,8 @@ public class Equipment {
     @NotNull
     private String equipmentQRCode;
 
-    @Column(name="esl_id") //ESL 아이디
-    private Long ESLID;
+    @Column(name="esl_id", length = 200) //ESL 아이디
+    private String eslID;
 
 
     public Long getEquipmentID() {
@@ -95,11 +95,11 @@ public class Equipment {
         this.equipmentQRCode = equipmentQRCode;
     }
 
-    public Long getESLID() {
-        return ESLID;
+    public String getEslID() {
+        return eslID;
     }
 
-    public void setESLID(Long ESLID) {
-        this.ESLID = ESLID;
+    public void setEslID(String eslID) {
+        this.eslID = eslID;
     }
 }

@@ -4,6 +4,7 @@ import capstone2021.smartGym_backend.domain.Manager;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceException;
 
 @Repository
 public class DBManagerRepository implements ManagerRepository{
@@ -11,6 +12,11 @@ public class DBManagerRepository implements ManagerRepository{
 
     public DBManagerRepository(EntityManager em) {
         this.em = em;
+    }
+
+    @Override
+    public Manager read() {
+        return em.find(Manager.class, "0000");
     }
 
     @Override
@@ -22,5 +28,28 @@ public class DBManagerRepository implements ManagerRepository{
         }
 
         return 0;
+    }
+
+    @Override
+    public boolean managerCheckLogin(Manager manager) {
+        try{
+            em.merge(manager);
+            return true;
+
+        } catch (PersistenceException | IllegalStateException e){
+            System.out.println("update 오류");
+            return false;
+        }
+    }
+
+    @Override
+    public boolean managerIsLogin() {
+        Manager findManager = read();
+
+        if(findManager.getManagerCheckLogin().equals("true")){
+            return true;
+        }
+
+        return false;
     }
 }

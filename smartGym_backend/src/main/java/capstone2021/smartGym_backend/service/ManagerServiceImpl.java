@@ -1,5 +1,6 @@
 package capstone2021.smartGym_backend.service;
 
+import capstone2021.smartGym_backend.DTO.Manager.ManagerCheckLoginDTO;
 import capstone2021.smartGym_backend.DTO.Manager.ManagerLoginDTO;
 import capstone2021.smartGym_backend.domain.Manager;
 import capstone2021.smartGym_backend.repository.ManagerRepository;
@@ -26,5 +27,18 @@ public class ManagerServiceImpl implements ManagerService{
         manager.setManagerPassword(managerLoginDTO.getManagerPassword());
 
         return managerRepository.managerLogin(manager);
+    }
+
+    @Override
+    public boolean managerCheckLogin(ManagerCheckLoginDTO managerCheckLoginDTO) {
+        Manager findManager = managerRepository.read();
+        findManager.setManagerCheckLogin(managerCheckLoginDTO.getManagerCheckLogin());
+
+        return managerRepository.managerCheckLogin(findManager);
+    }
+
+    @Override
+    public boolean managerIsLogin() {
+        return managerRepository.managerIsLogin();
     }
 }

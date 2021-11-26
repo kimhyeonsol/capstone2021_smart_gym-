@@ -134,6 +134,7 @@ public class ESLServiceImpl implements ESLService {
         ReturnESLDetailedRead returnESLDetailedRead = new ReturnESLDetailedRead();
         SimpleDateFormat format = new SimpleDateFormat("HH:mm");
 
+        // 해당 아이디 esl 객체 찾기
         ESL findESL = eslRepository.findByID(eslDeleteDetailedReadDTO.getEslID());
         if(findESL == null){ //없는 ESL일 경우
             returnESLDetailedRead.setEquipmentAvailable(3);
@@ -144,13 +145,22 @@ public class ESLServiceImpl implements ESLService {
             returnESLDetailedRead.setEquipmentAvailable(4);
             return returnESLDetailedRead;
         }
+
+        //해당 equipment 찾기
         Equipment findEquipment = equipmentRepository.findByID(findESL.getEquipmentID());
+        //헬스장 정보
         GymInfo findGymInfo = gymInfoRepository.read();
 
+
+        //띄워줄 아이디
         returnESLDetailedRead.setEslID(findESL.getEslID());
+        //헬스장 이름
         returnESLDetailedRead.setGymInfoName(findGymInfo.getGymInfoName());
+        //운동기구 이름
         returnESLDetailedRead.setEquipmentName(findEquipment.getEquipmentName());
+        //운동기구 순서
         returnESLDetailedRead.setEquipmentNameNth(findEquipment.getEquipmentNameNth());
+        //운동기구 qr코드세팅
         returnESLDetailedRead.setEquipmentQRCode(findEquipment.getEquipmentQRCode());
 
         if(findEquipment.getEquipmentAvailable() == 0){ //기구 고장
@@ -159,31 +169,42 @@ public class ESLServiceImpl implements ESLService {
             returnESLDetailedRead.setEndTime("");
             returnESLDetailedRead.setEquipmentAvailable(0);
         }
-        else if(findEquipment.getEquipmentAvailable() == 1){ //예약 상태
-            Reservation findReservaton = reservationRepository.findByID(findESL.getReservationID());
 
-            returnESLDetailedRead.setUserName(findReservaton.getUserID().getUserName());
+        // 기존에 구현된
+        // available 값이 1초마다 변동되는 메소드를 그냥 이용하여, 단순히 db에 접근해 값을 설정해주기에는
+        // 관리자의 api 호출시간을 고려했을 때 값이 처리 되기 전 일 수 있음.
+        // 따라서 본 메소드에서 따로 현재 예약 조회 따로 계산
+        else { //예약 상태
 
-            String startTime = format.format(findReservaton.getStartTime());
-            String endTime = format.format(findReservaton.getEndTime());
+            List<Reservation> findReservaton = reservationRepository.isInUse(findESL.getEquipmentID());
+            //모두 사용 가능한 경우
+            if(findReservaton.isEmpty()){
+                returnESLDetailedRead.setUserName("");
+                if(reservationRepository.recentReservation(findEquipment) == null){ //최근 예약 없는 경우
+                    returnESLDetailedRead.setStartTime("");
+                }
+                else{
+                    LocalDateTime startTime = reservationRepository.recentReservation(findEquipment).getStartTime();
+                    String startTimeString = format.format(startTime);
 
-            returnESLDetailedRead.setStartTime(startTime);
-            returnESLDetailedRead.setEndTime(endTime);
-            returnESLDetailedRead.setEquipmentAvailable(1);
-        }
-        else { //모두 사용 가능
-            returnESLDetailedRead.setUserName("");
-            if(reservationRepository.recentReservation(findEquipment) == null){ //최근 예약 없는 경우
-                returnESLDetailedRead.setStartTime("");
+                    returnESLDetailedRead.setStartTime(startTimeString);
+                }
+                returnESLDetailedRead.setEndTime("");
+                returnESLDetailedRead.setEquipmentAvailable(2);
+
             }
-            else{
-                LocalDateTime startTime = reservationRepository.recentReservation(findEquipment).getStartTime();
-                String startTimeString = format.format(startTime);
+            //예약 있음
+            else {
+                Reservation reservation=findReservaton.get(0);
+                returnESLDetailedRead.setUserName(reservation.getUserID().getUserName());
 
-                returnESLDetailedRead.setStartTime(startTimeString);
+                String startTime = format.format(reservation.getStartTime());
+                String endTime = format.format(reservation.getEndTime());
+
+                returnESLDetailedRead.setStartTime(startTime);
+                returnESLDetailedRead.setEndTime(endTime);
+                returnESLDetailedRead.setEquipmentAvailable(1);
             }
-            returnESLDetailedRead.setEndTime("");
-            returnESLDetailedRead.setEquipmentAvailable(2);
         }
 
         return returnESLDetailedRead;

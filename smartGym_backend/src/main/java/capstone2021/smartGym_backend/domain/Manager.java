@@ -12,9 +12,9 @@ public class Manager {
     @Column(name="manager_password", length = 20, columnDefinition = "VARCHAR(20) default '0000'")
     private String managerPassword = "0000";
 
-    @Column(name="manager_check_login", length = 20)
+    @Column(name="manager_login_status", length = 20)
     @NotNull //널 허용 X
-    private String managerCheckLogin;
+    private String managerLoginStatus;
 
     public String getManagerPassword() {
         return managerPassword;
@@ -24,11 +24,11 @@ public class Manager {
         this.managerPassword = managerPassword;
     }
 
-    public String getManagerCheckLogin() {
-        return managerCheckLogin;
+    public String getManagerLoginStatus() {
+        return managerLoginStatus;
     }
 
-    public void setManagerCheckLogin(String managerCheckLogin) {
-        this.managerCheckLogin = managerCheckLogin;
+    public void setManagerLoginStatus(String managerLoginStatus) {
+        this.managerLoginStatus = managerLoginStatus;
     }
 }

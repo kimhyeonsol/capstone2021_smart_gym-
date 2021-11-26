@@ -8,6 +8,7 @@ import capstone2021.smartGym_backend.domain.UnAllowedUser;
 import capstone2021.smartGym_backend.domain.User;
 import capstone2021.smartGym_backend.repository.AllowedUserRepository;
 import capstone2021.smartGym_backend.repository.UnAllowedUserRepository;
+import capstone2021.smartGym_backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,14 +19,17 @@ import java.util.List;
 @Service
 @Transactional
 
-public class AllowedUserServiceImpl implements AllowedUserService {
+public class AllowedUserServiceImpl extends UserServiceImpl implements AllowedUserService {
     AllowedUserRepository allowedUserRepository;
     UnAllowedUserRepository unAllowedUserRepository;
+    UserRepository userRepository;
 
     @Autowired
-    public AllowedUserServiceImpl(AllowedUserRepository allowedUserRepository, UnAllowedUserRepository unAllowedUserRepository) {
+    public AllowedUserServiceImpl(AllowedUserRepository allowedUserRepository, UnAllowedUserRepository unAllowedUserRepository,UserRepository userRepository) {
+        super(userRepository);
         this.allowedUserRepository = allowedUserRepository;
         this.unAllowedUserRepository = unAllowedUserRepository;
+        this.userRepository=userRepository;
     }
 
     @Override

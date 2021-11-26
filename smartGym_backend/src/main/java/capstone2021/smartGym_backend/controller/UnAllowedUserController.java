@@ -2,13 +2,14 @@ package capstone2021.smartGym_backend.controller;
 
 import capstone2021.smartGym_backend.DTO.Return.ReturnBooleanDTO;
 import capstone2021.smartGym_backend.DTO.UnAllowedUser.*;
+import capstone2021.smartGym_backend.DTO.User.UserEmailDuplDTO;
+import capstone2021.smartGym_backend.DTO.User.UserPhoneDuplDTO;
 import capstone2021.smartGym_backend.domain.UnAllowedUser;
 import capstone2021.smartGym_backend.service.UnAllowedUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -47,31 +48,6 @@ public class UnAllowedUserController {
         return returnBooleanDTO;
     }
 
-    @CrossOrigin("*")
-    @PostMapping("/unAllowedUser/phoneDuplicateCheck") //가입대기- 핸드폰 번호 중복 체크
-    @ResponseBody
-    public ReturnBooleanDTO unAllowedUserPhoneDuplicateCheck(@RequestBody final UnAllowedUserPhoneDuplDTO unAllowedUserPhoneDuplDTO){
-        ReturnBooleanDTO returnBooleanDTO=new ReturnBooleanDTO();
-        if(unAllowedUserPhoneDuplDTO.getUserPhone().equals(""))
-            returnBooleanDTO.setSuccess(false);
-        else {
-            returnBooleanDTO.setData(unAllowedUserService.unAllowedUserPhoneDuplicateCheck(unAllowedUserPhoneDuplDTO));
-        }
-        return returnBooleanDTO;
-    }
-
-    @CrossOrigin("*")
-    @PostMapping("/unAllowedUser/emailDuplicateCheck") //가입대기- 이메일 중복 체크
-    @ResponseBody
-    public ReturnBooleanDTO unAllowedUserEmailDuplicateCheck(@RequestBody final UnAllowedUserEmailDuplDTO unAllowedUserEmailDuplDTO){
-        ReturnBooleanDTO returnBooleanDTO=new ReturnBooleanDTO();
-        if(unAllowedUserEmailDuplDTO.getUserEmail().equals(""))
-            returnBooleanDTO.setSuccess(false);
-        else {
-            returnBooleanDTO.setData(unAllowedUserService.unAllowedUserEmailDuplicateCheck(unAllowedUserEmailDuplDTO));
-        }
-        return returnBooleanDTO;
-    }
 
     @CrossOrigin("*")
     @PostMapping("/unAllowedUser/approve") //가입대기- 가입대기자 승인

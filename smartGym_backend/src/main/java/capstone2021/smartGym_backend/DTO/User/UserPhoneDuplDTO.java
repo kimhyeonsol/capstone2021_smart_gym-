@@ -1,6 +1,6 @@
-package capstone2021.smartGym_backend.DTO.UnAllowedUser;
+package capstone2021.smartGym_backend.DTO.User;
 
-public class UnAllowedUserPhoneDuplDTO {
+public class UserPhoneDuplDTO {
     private String userPhone;
 
     public String getUserPhone() {

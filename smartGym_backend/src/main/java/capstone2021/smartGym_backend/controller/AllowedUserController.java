@@ -149,7 +149,7 @@ public class AllowedUserController {
     }
 
     @CrossOrigin("*")
-    @PostMapping("/allowedUser/updateUser") //가입승인- 사용자 이름 조회
+    @PostMapping("/allowedUser/updateUser") //가입승인- 사용자 수정
     @ResponseBody
     public ReturnAllowedUserDTO updateUser(@RequestBody final AllowedUserUpdateDTO allowedUserUpdateDTO) {
         ReturnAllowedUserDTO returnAllowedUserDTO=new ReturnAllowedUserDTO();

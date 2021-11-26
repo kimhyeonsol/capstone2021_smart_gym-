@@ -9,7 +9,7 @@ import capstone2021.smartGym_backend.domain.UnAllowedUser;
 
 import java.util.List;
 
-public interface AllowedUserService extends UserService{
+public interface AllowedUserService {
     int allowedUserLogin(AllowedUserLoginDTO allowedUserLoginDTO); //로그인
     AllowedUserInfoDTO readUserInfo(AllowedUserReadUserInfoDTO allowedUserReadUserInfoDTO);
     String allowedUserFindID(AllowedUserFindIDDTO allowedUserFindIDDTO); //아이디찾기

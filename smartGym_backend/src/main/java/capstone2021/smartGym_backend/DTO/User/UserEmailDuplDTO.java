@@ -1,6 +1,6 @@
-package capstone2021.smartGym_backend.DTO.UnAllowedUser;
+package capstone2021.smartGym_backend.DTO.User;
 
-public class UnAllowedUserEmailDuplDTO {
+public class UserEmailDuplDTO {
     private String userEmail;
 
     public String getUserEmail() {

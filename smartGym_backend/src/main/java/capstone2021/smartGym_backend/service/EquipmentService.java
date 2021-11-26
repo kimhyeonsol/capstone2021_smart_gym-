@@ -1,6 +1,7 @@
 package capstone2021.smartGym_backend.service;
 
 import capstone2021.smartGym_backend.DTO.Equipment.*;
+import capstone2021.smartGym_backend.DTO.Return.ReturnEquipmentDetailedReadOnlyNameDTO;
 import capstone2021.smartGym_backend.domain.Equipment;
 import capstone2021.smartGym_backend.domain.EquipmentCategory;
 
@@ -15,4 +16,5 @@ public interface EquipmentService {
     List<Equipment> readAll(EquipmentReadAllDTO equipmentReadAllDTO); //운동기구 전체 조회
     List<Equipment> readByCategory(EquipmentReadByCategoryDTO equipmentReadByCategoryDTO); //운동기구 카테고리별 조회
     List<EquipmentCategory> detailedRead(EquipmentDeleteDetailedReadDTO equipmentdetailedReadDTO); //운동기구 상세조회
+    ReturnEquipmentDetailedReadOnlyNameDTO detailedReadOnlyName(EquipmentDeleteDetailedReadDTO equipmentdetailedReadDTO); //운동기구 상세조회(이름만)
 }

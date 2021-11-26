@@ -3,7 +3,7 @@ package capstone2021.smartGym_backend.service;
 import capstone2021.smartGym_backend.DTO.ESL.ESLCreateDTO;
 import capstone2021.smartGym_backend.DTO.ESL.ESLDeleteDetailedReadDTO;
 import capstone2021.smartGym_backend.DTO.ESL.ESLEquipmentMatchingDTO;
-import capstone2021.smartGym_backend.DTO.Return.ReturnESLDetailedRead;
+import capstone2021.smartGym_backend.DTO.Return.ReturnESLDetailedReadDTO;
 import capstone2021.smartGym_backend.domain.ESL;
 
 import capstone2021.smartGym_backend.domain.Equipment;
@@ -23,7 +23,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.*;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -141,19 +140,19 @@ public class ESLServiceImpl implements ESLService {
     }
 
     @Override
-    public ReturnESLDetailedRead eslDetailedRead(ESLDeleteDetailedReadDTO eslDeleteDetailedReadDTO) {
-        ReturnESLDetailedRead returnESLDetailedRead = new ReturnESLDetailedRead();
+    public ReturnESLDetailedReadDTO eslDetailedRead(ESLDeleteDetailedReadDTO eslDeleteDetailedReadDTO) {
+        ReturnESLDetailedReadDTO returnESLDetailedReadDTO = new ReturnESLDetailedReadDTO();
 
         // 해당 아이디 esl 객체 찾기
         ESL findESL = eslRepository.findByID(eslDeleteDetailedReadDTO.getEslID());
         if(findESL == null){ //없는 ESL일 경우
-            returnESLDetailedRead.setEquipmentAvailable(3);
-            return returnESLDetailedRead;
+            returnESLDetailedReadDTO.setEquipmentAvailable(3);
+            return returnESLDetailedReadDTO;
         }
         
         if(findESL.getEquipmentID() == null){ //매칭된 운동기구가 없는 경우
-            returnESLDetailedRead.setEquipmentAvailable(4);
-            return returnESLDetailedRead;
+            returnESLDetailedReadDTO.setEquipmentAvailable(4);
+            return returnESLDetailedReadDTO;
         }
 
         //해당 equipment 찾기
@@ -163,21 +162,21 @@ public class ESLServiceImpl implements ESLService {
 
 
         //띄워줄 아이디
-        returnESLDetailedRead.setEslID(findESL.getEslID());
+        returnESLDetailedReadDTO.setEslID(findESL.getEslID());
         //헬스장 이름
-        returnESLDetailedRead.setGymInfoName(findGymInfo.getGymInfoName());
+        returnESLDetailedReadDTO.setGymInfoName(findGymInfo.getGymInfoName());
         //운동기구 이름
-        returnESLDetailedRead.setEquipmentName(findEquipment.getEquipmentName());
+        returnESLDetailedReadDTO.setEquipmentName(findEquipment.getEquipmentName());
         //운동기구 순서
-        returnESLDetailedRead.setEquipmentNameNth(findEquipment.getEquipmentNameNth());
+        returnESLDetailedReadDTO.setEquipmentNameNth(findEquipment.getEquipmentNameNth());
         //운동기구 qr코드세팅
-        returnESLDetailedRead.setEquipmentQRCode(findEquipment.getEquipmentQRCode());
+        returnESLDetailedReadDTO.setEquipmentQRCode(findEquipment.getEquipmentQRCode());
 
         if(findEquipment.getEquipmentAvailable() == 0){ //기구 고장
-            returnESLDetailedRead.setUserName("");
-            returnESLDetailedRead.setStartTime("");
-            returnESLDetailedRead.setEndTime("");
-            returnESLDetailedRead.setEquipmentAvailable(0);
+            returnESLDetailedReadDTO.setUserName("");
+            returnESLDetailedReadDTO.setStartTime("");
+            returnESLDetailedReadDTO.setEndTime("");
+            returnESLDetailedReadDTO.setEquipmentAvailable(0);
         }
 
         // 기존에 구현된
@@ -189,35 +188,35 @@ public class ESLServiceImpl implements ESLService {
             List<Reservation> findReservaton = reservationRepository.isInUse(findESL.getEquipmentID());
             //모두 사용 가능한 경우
             if(findReservaton.isEmpty()){
-                returnESLDetailedRead.setUserName("");
+                returnESLDetailedReadDTO.setUserName("");
                 if(reservationRepository.recentReservation(findEquipment) == null){ //최근 예약 없는 경우
-                    returnESLDetailedRead.setStartTime("");
+                    returnESLDetailedReadDTO.setStartTime("");
                 }
                 else{
                     LocalDateTime startTime = reservationRepository.recentReservation(findEquipment).getStartTime();
                     String startTimeString = startTime.format(DateTimeFormatter.ofPattern("HH:mm"));
 
-                    returnESLDetailedRead.setStartTime(startTimeString);
+                    returnESLDetailedReadDTO.setStartTime(startTimeString);
                 }
-                returnESLDetailedRead.setEndTime("");
-                returnESLDetailedRead.setEquipmentAvailable(2);
+                returnESLDetailedReadDTO.setEndTime("");
+                returnESLDetailedReadDTO.setEquipmentAvailable(2);
 
             }
             //예약 있음
             else {
                 Reservation reservation=findReservaton.get(0);
-                returnESLDetailedRead.setUserName(reservation.getUserID().getUserName());
+                returnESLDetailedReadDTO.setUserName(reservation.getUserID().getUserName());
 
                 String startTime = reservation.getStartTime().format(DateTimeFormatter.ofPattern("HH:mm"));
                 String endTime = reservation.getEndTime().format(DateTimeFormatter.ofPattern("HH:mm"));
 
-                returnESLDetailedRead.setStartTime(startTime);
-                returnESLDetailedRead.setEndTime(endTime);
-                returnESLDetailedRead.setEquipmentAvailable(1);
+                returnESLDetailedReadDTO.setStartTime(startTime);
+                returnESLDetailedReadDTO.setEndTime(endTime);
+                returnESLDetailedReadDTO.setEquipmentAvailable(1);
             }
         }
 
-        return returnESLDetailedRead;
+        return returnESLDetailedReadDTO;
     }
 
 

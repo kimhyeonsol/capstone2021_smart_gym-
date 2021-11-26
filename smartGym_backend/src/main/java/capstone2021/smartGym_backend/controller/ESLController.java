@@ -3,7 +3,7 @@ package capstone2021.smartGym_backend.controller;
 import capstone2021.smartGym_backend.DTO.ESL.ESLCreateDTO;
 import capstone2021.smartGym_backend.DTO.ESL.ESLDeleteDetailedReadDTO;
 import capstone2021.smartGym_backend.DTO.ESL.ESLEquipmentMatchingDTO;
-import capstone2021.smartGym_backend.DTO.Return.ReturnESLDetailedRead;
+import capstone2021.smartGym_backend.DTO.Return.ReturnESLDetailedReadDTO;
 import capstone2021.smartGym_backend.domain.ESL;
 import capstone2021.smartGym_backend.service.ESLService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +52,7 @@ public class ESLController {
     @CrossOrigin("*")
     @PostMapping("/esl/detailedRead") //ESL 상세조회
     @ResponseBody
-    public ReturnESLDetailedRead eslDetailedRead(@RequestBody final ESLDeleteDetailedReadDTO eslDeleteDetailedReadDTO) {
+    public ReturnESLDetailedReadDTO eslDetailedRead(@RequestBody final ESLDeleteDetailedReadDTO eslDeleteDetailedReadDTO) {
         return eslService.eslDetailedRead(eslDeleteDetailedReadDTO);
     }
 

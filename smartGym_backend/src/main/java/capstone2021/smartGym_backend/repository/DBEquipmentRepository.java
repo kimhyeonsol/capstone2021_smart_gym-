@@ -1,5 +1,7 @@
 package capstone2021.smartGym_backend.repository;
 
+import capstone2021.smartGym_backend.DTO.Return.ReturnEquipmentDetailedReadOnlyNameDTO;
+import capstone2021.smartGym_backend.DTO.Return.ReturnReservationReadByEquipmentDTO;
 import capstone2021.smartGym_backend.domain.Equipment;
 import capstone2021.smartGym_backend.domain.EquipmentCategory;
 import capstone2021.smartGym_backend.domain.Reservation;
@@ -281,5 +283,11 @@ public class DBEquipmentRepository implements EquipmentRepository{
     public List<EquipmentCategory> detailedRead(Equipment equipment) {
         return em.createQuery("SELECT ec FROM EquipmentCategory ec WHERE ec.equipmentCategoryID = :equipment")
                 .setParameter("equipment", equipment).getResultList();
+    }
+
+    @Override
+    public ReturnEquipmentDetailedReadOnlyNameDTO detailedReadOnlyName(long id) {
+        return em.createQuery("SELECT new capstone2021.smartGym_backend.DTO.Return.ReturnEquipmentDetailedReadOnlyNameDTO(e.equipmentName, e.equipmentNameNth) FROM Equipment e WHERE e.equipmentID = :id", ReturnEquipmentDetailedReadOnlyNameDTO.class)
+                .setParameter("id", id).getSingleResult();
     }
 }

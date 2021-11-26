@@ -1,6 +1,7 @@
 package capstone2021.smartGym_backend.controller;
 
 import capstone2021.smartGym_backend.DTO.Equipment.*;
+import capstone2021.smartGym_backend.DTO.Return.ReturnEquipmentDetailedReadOnlyNameDTO;
 import capstone2021.smartGym_backend.domain.Equipment;
 import capstone2021.smartGym_backend.domain.EquipmentCategory;
 import capstone2021.smartGym_backend.service.EquipmentService;
@@ -61,5 +62,12 @@ public class EquipmentController {
     @ResponseBody
     public List<EquipmentCategory> equipmentDetailedRead(@RequestBody final EquipmentDeleteDetailedReadDTO equipmentdetailedReadDTO){
         return equipmentService.detailedRead(equipmentdetailedReadDTO);
+    }
+
+    @CrossOrigin("*")
+    @PostMapping("/equipment/detailedReadOnlyName") //운동기구 상세조회(이름+nth만)
+    @ResponseBody
+    public ReturnEquipmentDetailedReadOnlyNameDTO equipmentDetailedReadOnlyName(@RequestBody final EquipmentDeleteDetailedReadDTO equipmentdetailedReadDTO){
+        return equipmentService.detailedReadOnlyName(equipmentdetailedReadDTO);
     }
 }

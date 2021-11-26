@@ -1,6 +1,6 @@
 package capstone2021.smartGym_backend.DTO.Return;
 
-public class ReturnESLDetailedRead {
+public class ReturnESLDetailedReadDTO {
     private String eslID;
     private String gymInfoName;
     private String userName;

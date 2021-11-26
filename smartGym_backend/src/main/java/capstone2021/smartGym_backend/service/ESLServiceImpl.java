@@ -1,5 +1,6 @@
 package capstone2021.smartGym_backend.service;
 
+import capstone2021.smartGym_backend.DTO.ESL.ESLCreateDTO;
 import capstone2021.smartGym_backend.DTO.ESL.ESLDeleteDetailedReadDTO;
 import capstone2021.smartGym_backend.DTO.ESL.ESLEquipmentMatchingDTO;
 import capstone2021.smartGym_backend.DTO.Return.ReturnESLDetailedRead;
@@ -54,8 +55,18 @@ public class ESLServiceImpl implements ESLService {
     }
 
     @Override
-    public boolean eslCreate() {
+    public int eslCreate(ESLCreateDTO eslCreateDTO) {
+        if(eslCreateDTO.getEslID().isBlank() || eslCreateDTO.getEslID() == null){
+            return 1;
+        }
+
+        ESL findESL = eslRepository.findByID(eslCreateDTO.getEslID());
+        if(findESL != null){
+            return 2;
+        }
+
         ESL esl = new ESL();
+        esl.setEslID(eslCreateDTO.getEslID());
         esl.setEquipmentID(null);
         esl.setReservationID(null);
 
@@ -110,7 +121,7 @@ public class ESLServiceImpl implements ESLService {
             csvString=csvString+newEsl.getEslID()+','+equipment.getEquipmentName()+' '+equipment.getEquipmentNameNth()+','+" "+','+" "+','+recentReservation(equipment)+','+gymInfoRepository.read().getGymInfoName()+','+equipment.getEquipmentQRCode()+','+equipment.getEquipmentAvailable()+"\n";
         }
 
-        equipment.setESLID(newEsl.getEslID());
+        equipment.setEslID(newEsl.getEslID());
         return csvString;
     }
 
@@ -132,7 +143,6 @@ public class ESLServiceImpl implements ESLService {
     @Override
     public ReturnESLDetailedRead eslDetailedRead(ESLDeleteDetailedReadDTO eslDeleteDetailedReadDTO) {
         ReturnESLDetailedRead returnESLDetailedRead = new ReturnESLDetailedRead();
-        SimpleDateFormat format = new SimpleDateFormat("HH:mm");
 
         // 해당 아이디 esl 객체 찾기
         ESL findESL = eslRepository.findByID(eslDeleteDetailedReadDTO.getEslID());
@@ -185,7 +195,7 @@ public class ESLServiceImpl implements ESLService {
                 }
                 else{
                     LocalDateTime startTime = reservationRepository.recentReservation(findEquipment).getStartTime();
-                    String startTimeString = format.format(startTime);
+                    String startTimeString = startTime.format(DateTimeFormatter.ofPattern("HH:mm"));
 
                     returnESLDetailedRead.setStartTime(startTimeString);
                 }
@@ -198,8 +208,8 @@ public class ESLServiceImpl implements ESLService {
                 Reservation reservation=findReservaton.get(0);
                 returnESLDetailedRead.setUserName(reservation.getUserID().getUserName());
 
-                String startTime = format.format(reservation.getStartTime());
-                String endTime = format.format(reservation.getEndTime());
+                String startTime = reservation.getStartTime().format(DateTimeFormatter.ofPattern("HH:mm"));
+                String endTime = reservation.getEndTime().format(DateTimeFormatter.ofPattern("HH:mm"));
 
                 returnESLDetailedRead.setStartTime(startTime);
                 returnESLDetailedRead.setEndTime(endTime);

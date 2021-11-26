@@ -1,16 +1,12 @@
 package capstone2021.smartGym_backend.domain;
 
-import com.sun.istack.NotNull;
-
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 public class ESL{
     @Id //식별자
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //자동으로 올라가게 설정
-    @Column(name="esl_id") //크기
-    private Long eslID;
+    @Column(name="esl_id", length = 200)
+    private String eslID;
 
     @Column(name="equipment_id")
     private Long equipmentID=null;
@@ -18,11 +14,11 @@ public class ESL{
     @Column(name="reservation_id")
     private Long reservationID=null;
 
-    public Long getEslID() {
+    public String getEslID() {
         return eslID;
     }
 
-    public void setEslID(Long eslID) {
+    public void setEslID(String eslID) {
         this.eslID = eslID;
     }
 

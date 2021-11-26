@@ -10,6 +10,7 @@ public class SelectedDayReservationDTO {
     private String equipmentNameNth;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
+    private String equipmentImage;
 
     public Long getReservationID() {
         return reservationID;
@@ -57,5 +58,13 @@ public class SelectedDayReservationDTO {
 
     public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
+    }
+
+    public String getEquipmentImage() {
+        return equipmentImage;
+    }
+
+    public void setEquipmentImage(String equipmentImage) {
+        this.equipmentImage = equipmentImage;
     }
 }

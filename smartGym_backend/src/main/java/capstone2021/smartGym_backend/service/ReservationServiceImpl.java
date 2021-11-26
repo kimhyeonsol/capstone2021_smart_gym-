@@ -182,9 +182,9 @@ public class ReservationServiceImpl implements ReservationService{
             selectedDayReservationDTO.setEquipmentNameNth(r.getEquipmentID().getEquipmentNameNth());
             selectedDayReservationDTO.setStartTime(r.getStartTime());
             selectedDayReservationDTO.setEndTime(r.getEndTime());
+            selectedDayReservationDTO.setEquipmentImage(r.getEquipmentID().getEquipmentImage());
             list.add(selectedDayReservationDTO);
         }
-
         return list;
     }
 

@@ -173,6 +173,11 @@ public class EquipmentServiceImpl extends ImageService implements EquipmentServi
         if(equipmentdetailedReadDTO.getEquipmentID() == null){
             return null;
         }
+        if(equipmentdetailedReadDTO.getEquipmentID() == -1){
+            ReturnEquipmentDetailedReadOnlyNameDTO returnEquipmentDetailedReadOnlyNameDTO = new ReturnEquipmentDetailedReadOnlyNameDTO(" ", " ");
+
+            return returnEquipmentDetailedReadOnlyNameDTO;
+        }
 
         return equipmentRepository.detailedReadOnlyName(equipmentdetailedReadDTO.getEquipmentID());
     }

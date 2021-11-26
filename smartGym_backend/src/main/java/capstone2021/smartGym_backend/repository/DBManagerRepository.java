@@ -31,7 +31,7 @@ public class DBManagerRepository implements ManagerRepository{
     }
 
     @Override
-    public boolean managerCheckLogin(Manager manager) {
+    public boolean managerSaveLoginStatus(Manager manager) {
         try{
             em.merge(manager);
             return true;

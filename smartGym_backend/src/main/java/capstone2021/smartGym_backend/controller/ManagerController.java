@@ -1,6 +1,6 @@
 package capstone2021.smartGym_backend.controller;
 
-import capstone2021.smartGym_backend.DTO.Manager.ManagerCheckLoginDTO;
+import capstone2021.smartGym_backend.DTO.Manager.ManagerSaveLoginStatusDTO;
 import capstone2021.smartGym_backend.DTO.Manager.ManagerLoginDTO;
 import capstone2021.smartGym_backend.service.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,14 +24,14 @@ public class ManagerController {
     }
 
     @CrossOrigin("*")
-    @PostMapping("/manager/loginAndlogout") //로그인&로그아웃
+    @PostMapping("/manager/saveLoginStatus") //로그인&로그아웃 상태 저장
     @ResponseBody
-    public boolean managerLoginAndLogout(@RequestBody final ManagerCheckLoginDTO managerCheckLoginDTO){
-        return managerService.managerCheckLogin(managerCheckLoginDTO);
+    public boolean managerSaveLoginStatus(@RequestBody final ManagerSaveLoginStatusDTO managerSaveLoginStatusDTO){
+        return managerService.managerSaveLoginStatus(managerSaveLoginStatusDTO);
     }
 
     @CrossOrigin("*")
-    @GetMapping("/manager/isLogin") //로그인 여부
+    @GetMapping("/manager/isLogin") //로그인 여부 조회
     @ResponseBody
     public boolean managerIsLogin(){
         return managerService.managerIsLogin();

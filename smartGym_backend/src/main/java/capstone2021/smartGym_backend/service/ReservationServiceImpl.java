@@ -147,22 +147,35 @@ public class ReservationServiceImpl implements ReservationService{
     @Override
     public int makeReservation(ReservationCreateDTO reservationCreateDTO) {
         Reservation reservation= new Reservation();
+        List<Reservation> reservationList=null;
 
+        //예약하는 사용자 객체 찾기
         AllowedUser allowedUser= allowedUserRepository.findByAllowedUserID(reservationCreateDTO.getUserID());
 
+        //만약 사용자에게 예약 권한이 없다면 1반환
         if(allowedUser.getAllowedUserReservationAuthority().equals("X")) return 1;
+        //만약 사용자 정보가 없다면 2반환
         if(allowedUser==null) return 2;
+
         reservation.setUserID(allowedUser);
 
+        //만약 운동기구 정보가 없다면 3 반환
         Equipment equipment=equipmentRepository.findByID(reservationCreateDTO.getEquipmentID());
         if(equipment==null) return 3;
-        reservation.setEquipmentID(equipment);
 
+        //만약 운동기구 예약이 겹치는 시간이면 4 반환
+        reservationList=reservationRepository.reservationDuplCheck(reservationCreateDTO);
+        if(!reservationList.isEmpty())
+            return 4;
+
+
+        reservation.setEquipmentID(equipment);
         reservation.setStartTime(reservationCreateDTO.getStartTime());
         reservation.setEndTime(reservationCreateDTO.getEndTime());
 
         reservationRepository.reservationCreate(reservation);
 
+        //예약 됐으면
         return 0;
 
     }

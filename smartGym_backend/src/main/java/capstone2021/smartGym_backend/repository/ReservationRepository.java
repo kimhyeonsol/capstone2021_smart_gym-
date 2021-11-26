@@ -18,4 +18,5 @@ public interface ReservationRepository {
     int deleteWhenEquipmentUpdate(Equipment equipment); //운동기구 고장 시 예약 삭제
     List<Reservation> isInUse(Long equipmentID);
     Reservation recentReservation(Equipment equipment);
+    List<Reservation> reservationDuplCheck(ReservationCreateDTO reservationCreateDTO);
 }

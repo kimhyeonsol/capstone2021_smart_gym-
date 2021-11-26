@@ -32,7 +32,7 @@ public class ManagerServiceImpl implements ManagerService{
     @Override
     public boolean managerSaveLoginStatus(ManagerSaveLoginStatusDTO managerSaveLoginStatusDTO) {
         Manager findManager = managerRepository.read();
-        findManager.setManagerCheckLogin(managerSaveLoginStatusDTO.getManagerLoginStatus());
+        findManager.setManagerLoginStatus(managerSaveLoginStatusDTO.getManagerLoginStatus());
 
         return managerRepository.managerSaveLoginStatus(findManager);
     }

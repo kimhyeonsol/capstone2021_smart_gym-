@@ -46,7 +46,7 @@ public class DBManagerRepository implements ManagerRepository{
     public boolean managerIsLogin() {
         Manager findManager = read();
 
-        if(findManager.getManagerCheckLogin().equals("true")){
+        if(findManager.getManagerLoginStatus().equals("true")){
             return true;
         }
 

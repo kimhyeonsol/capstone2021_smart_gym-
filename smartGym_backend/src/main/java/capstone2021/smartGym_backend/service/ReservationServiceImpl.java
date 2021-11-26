@@ -240,7 +240,7 @@ public class ReservationServiceImpl implements ReservationService{
     public void equipmentAvailableCheck() {
         List<Equipment> equipmentList;
         List<Reservation> list;
-        equipmentList=equipmentRepository.readAll();
+        equipmentList=equipmentRepository.readAll(0);
         int equipmentInUseCnt=0;
         float congestion;
 

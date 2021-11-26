@@ -201,9 +201,15 @@ public class DBEquipmentRepository implements EquipmentRepository{
     }
 
     @Override
-    public List<Equipment> readAll() {
-        return em.createQuery("SELECT e FROM Equipment e ORDER BY e.equipmentName, e.equipmentNameNth", Equipment.class)
-                .getResultList();
+    public List<Equipment> readAll(int select) {
+        if(select == 0){ //ID로 정렬
+            return em.createQuery("SELECT e FROM Equipment e", Equipment.class)
+                    .getResultList();
+        }
+        else { //이름으로 정렬
+            return em.createQuery("SELECT e FROM Equipment e ORDER BY e.equipmentName, e.equipmentNameNth", Equipment.class)
+                    .getResultList();
+        }
     }
 
     @Override

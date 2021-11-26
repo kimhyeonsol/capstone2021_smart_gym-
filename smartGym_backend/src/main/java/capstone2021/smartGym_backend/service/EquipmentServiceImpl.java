@@ -1,10 +1,7 @@
 package capstone2021.smartGym_backend.service;
 
 
-import capstone2021.smartGym_backend.DTO.Equipment.EquipmentCreateDTO;
-import capstone2021.smartGym_backend.DTO.Equipment.EquipmentDeleteDetailedReadDTO;
-import capstone2021.smartGym_backend.DTO.Equipment.EquipmentReadByCategoryDTO;
-import capstone2021.smartGym_backend.DTO.Equipment.EquipmentUpdateDTO;
+import capstone2021.smartGym_backend.DTO.Equipment.*;
 import capstone2021.smartGym_backend.domain.Equipment;
 import capstone2021.smartGym_backend.domain.EquipmentCategory;
 import capstone2021.smartGym_backend.repository.EquipmentRepository;
@@ -143,8 +140,8 @@ public class EquipmentServiceImpl extends ImageService implements EquipmentServi
     }
 
     @Override
-    public List<Equipment> readAll() {
-        return equipmentRepository.readAll();
+    public List<Equipment> readAll(EquipmentReadAllDTO equipmentReadAllDTO) {
+        return equipmentRepository.readAll(equipmentReadAllDTO.getSelect());
     }
 
     @Override

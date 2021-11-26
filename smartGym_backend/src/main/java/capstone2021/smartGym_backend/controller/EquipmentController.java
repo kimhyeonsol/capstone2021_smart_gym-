@@ -43,10 +43,10 @@ public class EquipmentController {
     }
 
     @CrossOrigin("*")
-    @GetMapping("/equipment/readAll") //운동기구 전체 조회
+    @PostMapping("/equipment/readAll") //운동기구 전체 조회
     @ResponseBody
-    public List<Equipment> equipmentReadAll(){
-        return equipmentService.readAll();
+    public List<Equipment> equipmentReadAll(@RequestBody final EquipmentReadAllDTO equipmentReadAllDTO){
+        return equipmentService.readAll(equipmentReadAllDTO);
     }
 
     @CrossOrigin("*")

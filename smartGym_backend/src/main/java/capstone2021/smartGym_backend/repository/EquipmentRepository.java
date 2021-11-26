@@ -14,7 +14,7 @@ public interface EquipmentRepository{
     boolean eslDelete(long id); //ESL 속성값 삭제
     int readOfEquipmentAvailable(Long equipmentID); //운동기구 상태 조회
     Equipment findByID(long id);
-    List<Equipment> readAll();
+    List<Equipment> readAll(int select);
     List<Equipment> readByCategory(String equipmentCategorySelect);
     List<EquipmentCategory> detailedRead(Equipment equipment);
 }

@@ -2,12 +2,15 @@ package capstone2021.smartGym_backend.service;
 
 import capstone2021.smartGym_backend.DTO.UnAllowedUser.*;
 import capstone2021.smartGym_backend.DTO.User.UserDeleteDTO;
+import capstone2021.smartGym_backend.DTO.User.UserEmailDuplDTO;
+import capstone2021.smartGym_backend.DTO.User.UserPhoneDuplDTO;
 import capstone2021.smartGym_backend.DTO.User.UserUpdateDTO;
 import capstone2021.smartGym_backend.domain.AllowedUser;
 import capstone2021.smartGym_backend.domain.UnAllowedUser;
 import capstone2021.smartGym_backend.domain.User;
 import capstone2021.smartGym_backend.repository.AllowedUserRepository;
 import capstone2021.smartGym_backend.repository.UnAllowedUserRepository;
+import capstone2021.smartGym_backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,16 +20,19 @@ import java.util.List;
 
 @Service
 @Transactional
-public class UnAllowedUserServiceImpl implements UnAllowedUserService {
+public class UnAllowedUserServiceImpl extends UserServiceImpl implements UnAllowedUserService{
 
     UnAllowedUserRepository unAllowedUserRepository;
     AllowedUserRepository allowedUserRepository;
+    UserRepository userRepository;
 
 
     @Autowired
-    public UnAllowedUserServiceImpl(UnAllowedUserRepository unAllowedUserRepository,AllowedUserRepository allowedUserRepository) {
+    public UnAllowedUserServiceImpl(UnAllowedUserRepository unAllowedUserRepository,AllowedUserRepository allowedUserRepository,UserRepository userRepository) {
+        super(userRepository);
         this.unAllowedUserRepository = unAllowedUserRepository;
         this.allowedUserRepository=allowedUserRepository;
+        this.userRepository=userRepository;
     }
 
     @Override
@@ -51,26 +57,6 @@ public class UnAllowedUserServiceImpl implements UnAllowedUserService {
         UnAllowedUser findUserByID = null;
         findUserByID = unAllowedUserRepository.findByUnAllowedUserID(unAllowedUserIdDuplDTO.getUserID());
         if (findUserByID == null) {
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean unAllowedUserPhoneDuplicateCheck(UnAllowedUserPhoneDuplDTO unAllowedUserPhoneDuplDTO) {
-        UnAllowedUser findUserByPhone = null;
-        findUserByPhone = unAllowedUserRepository.findByUnAllowedUserPhone(unAllowedUserPhoneDuplDTO.getUserPhone());
-        if (findUserByPhone == null) {
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean unAllowedUserEmailDuplicateCheck(UnAllowedUserEmailDuplDTO unAllowedUserEmailDuplDTO) {
-        UnAllowedUser findUserByEmail = null;
-        findUserByEmail = unAllowedUserRepository.findByUnAllowedUserEmail(unAllowedUserEmailDuplDTO.getUserEmail());
-        if (findUserByEmail == null) {
             return true;
         }
         return false;
@@ -128,6 +114,7 @@ public class UnAllowedUserServiceImpl implements UnAllowedUserService {
 
         return unAllowedUserRepository.unAllowedUserReadByName(unAllowedUser);
     }
+
 
 
 }

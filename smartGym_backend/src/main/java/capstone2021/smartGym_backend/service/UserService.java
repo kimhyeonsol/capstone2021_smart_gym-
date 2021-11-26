@@ -1,9 +1,10 @@
 package capstone2021.smartGym_backend.service;
 
-import capstone2021.smartGym_backend.DTO.User.UserDeleteDTO;
-import capstone2021.smartGym_backend.DTO.User.UserUpdateDTO;
+import capstone2021.smartGym_backend.DTO.User.UserEmailDuplDTO;
+import capstone2021.smartGym_backend.DTO.User.UserPhoneDuplDTO;
 
 
 public interface UserService {
-
+    boolean userPhoneDuplicateCheck(UserPhoneDuplDTO userPhoneDuplDTO);//전화번호 중복 체크
+    boolean userEmailDuplicateCheck(UserEmailDuplDTO unAllowedUserEmailDuplDTO);//이메일 중복 체크
 }

@@ -43,19 +43,7 @@ public class DBUnAllowedUserRepository implements UnAllowedUserRepository {
         return findUnAllowedUser;
     }
 
-    @Override
-    public UnAllowedUser findByUnAllowedUserPhone(String userPhone) {
-        UnAllowedUser findUnAllowedUser=null;
-        findUnAllowedUser=em.find(UnAllowedUser.class,userPhone);
-        return findUnAllowedUser;
-    }
 
-    @Override
-    public UnAllowedUser findByUnAllowedUserEmail(String userEmail) {
-        UnAllowedUser findUnAllowedUser=null;
-        findUnAllowedUser=em.find(UnAllowedUser.class,userEmail);
-        return findUnAllowedUser;
-    }
 
     @Override
     public UnAllowedUser deleteByID(String userID) {
@@ -95,14 +83,5 @@ public class DBUnAllowedUserRepository implements UnAllowedUserRepository {
         return findUser;
     }
 
-//    @Override
-//    public List<User> findByEmail(String userEmail) {
-//        List<User> findUserByEmail=null;
-//
-//        if(userEmail != null){
-//            findUserByEmail = em.createQuery("SELECT u FROM User u WHERE userEmail = :userEmail",User.class)
-//                    .setParameter("userEmail", userEmail).getResultList();
-//        }
-//        return findUserByEmail;
-//    }
+
 }

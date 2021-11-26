@@ -1,8 +1,8 @@
 package capstone2021.smartGym_backend;
 
-import capstone2021.smartGym_backend.DTO.UnAllowedUser.UnAllowedUserEmailDuplDTO;
+import capstone2021.smartGym_backend.DTO.User.UserEmailDuplDTO;
 import capstone2021.smartGym_backend.DTO.UnAllowedUser.UnAllowedUserIdDuplDTO;
-import capstone2021.smartGym_backend.DTO.UnAllowedUser.UnAllowedUserPhoneDuplDTO;
+import capstone2021.smartGym_backend.DTO.User.UserPhoneDuplDTO;
 import capstone2021.smartGym_backend.DTO.UnAllowedUser.UnAllowedUserRegisterDTO;
 import capstone2021.smartGym_backend.service.UnAllowedUserService;
 import org.junit.jupiter.api.Test;
@@ -92,21 +92,21 @@ public class UnAllowedUserApplicationTests extends SmartGymBackendApplicationTes
         System.out.println(unAllowedUserService.unAllowedUserIdDuplicateCheck(unAllowedUserIdDuplDTO));
     }
 
-    @Test
-    @Commit
-    void 전화번호_중복_테스트() {
-        UnAllowedUserPhoneDuplDTO unAllowedUserPhoneDuplDTO= new UnAllowedUserPhoneDuplDTO();
-        unAllowedUserPhoneDuplDTO.setUserPhone("7");
-
-        System.out.println(unAllowedUserService.unAllowedUserPhoneDuplicateCheck(unAllowedUserPhoneDuplDTO));
-    }
-
-    @Test
-    @Commit
-    void 이메일_중복_테스트() {
-        UnAllowedUserEmailDuplDTO unAllowedUserEmailDuplDTO= new UnAllowedUserEmailDuplDTO();
-        unAllowedUserEmailDuplDTO.setUserEmail("7");
-
-        System.out.println(unAllowedUserService.unAllowedUserEmailDuplicateCheck(unAllowedUserEmailDuplDTO));
-    }
+//    @Test
+//    @Commit
+//    void 전화번호_중복_테스트() {
+//        UserPhoneDuplDTO userPhoneDuplDTO = new UserPhoneDuplDTO();
+//        userPhoneDuplDTO.setUserPhone("7");
+//
+//        System.out.println(unAllowedUserService.unAllowedUserPhoneDuplicateCheck(userPhoneDuplDTO));
+//    }
+//
+//    @Test
+//    @Commit
+//    void 이메일_중복_테스트() {
+//        UserEmailDuplDTO unAllowedUserEmailDuplDTO= new UserEmailDuplDTO();
+//        unAllowedUserEmailDuplDTO.setUserEmail("7");
+//
+//        System.out.println(unAllowedUserService.unAllowedUserEmailDuplicateCheck(unAllowedUserEmailDuplDTO));
+//    }
 }

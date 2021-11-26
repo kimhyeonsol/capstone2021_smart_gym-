@@ -3,7 +3,7 @@ package capstone2021.smartGym_backend.service;
 import capstone2021.smartGym_backend.DTO.ESL.ESLCreateDTO;
 import capstone2021.smartGym_backend.DTO.ESL.ESLDeleteDetailedReadDTO;
 import capstone2021.smartGym_backend.DTO.ESL.ESLEquipmentMatchingDTO;
-import capstone2021.smartGym_backend.DTO.Return.ReturnESLDetailedRead;
+import capstone2021.smartGym_backend.DTO.Return.ReturnESLDetailedReadDTO;
 import capstone2021.smartGym_backend.domain.ESL;
 import capstone2021.smartGym_backend.domain.Equipment;
 
@@ -14,7 +14,7 @@ public interface ESLService {
     boolean eslEquipmentUpdate(ESLEquipmentMatchingDTO eslEquipmentMatchingDTO); //ESL 수정
     boolean eslDelete(ESLDeleteDetailedReadDTO eslDeleteDetailedReadDTO); //ESL 삭제
     List<ESL> eslRead(); //ESL 조회
-    ReturnESLDetailedRead eslDetailedRead(ESLDeleteDetailedReadDTO eslDeleteDetailedReadDTO); //ESL 상세조회
+    ReturnESLDetailedReadDTO eslDetailedRead(ESLDeleteDetailedReadDTO eslDeleteDetailedReadDTO); //ESL 상세조회
     void eslReservationUpdate() throws Exception;
     String makeCsvStringAndReservationMatching(Equipment equipment, ESL esl,ESL newEsl);
     void writeCSV(String csvString);

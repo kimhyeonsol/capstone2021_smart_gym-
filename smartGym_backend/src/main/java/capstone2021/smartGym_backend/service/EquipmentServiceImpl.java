@@ -2,6 +2,7 @@ package capstone2021.smartGym_backend.service;
 
 
 import capstone2021.smartGym_backend.DTO.Equipment.*;
+import capstone2021.smartGym_backend.DTO.Return.ReturnEquipmentDetailedReadOnlyNameDTO;
 import capstone2021.smartGym_backend.domain.Equipment;
 import capstone2021.smartGym_backend.domain.EquipmentCategory;
 import capstone2021.smartGym_backend.repository.EquipmentRepository;
@@ -165,5 +166,14 @@ public class EquipmentServiceImpl extends ImageService implements EquipmentServi
         equipment.setEquipmentID(equipmentdetailedReadDTO.getEquipmentID());
 
         return equipmentRepository.detailedRead(equipment);
+    }
+
+    @Override
+    public ReturnEquipmentDetailedReadOnlyNameDTO detailedReadOnlyName(EquipmentDeleteDetailedReadDTO equipmentdetailedReadDTO) {
+        if(equipmentdetailedReadDTO.getEquipmentID() == null){
+            return null;
+        }
+
+        return equipmentRepository.detailedReadOnlyName(equipmentdetailedReadDTO.getEquipmentID());
     }
 }

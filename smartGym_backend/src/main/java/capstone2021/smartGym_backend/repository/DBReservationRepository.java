@@ -105,6 +105,18 @@ public class DBReservationRepository implements ReservationRepository{
     }
 
     @Override
+    public List<Reservation> reservationDuplCheck(ReservationCreateDTO reservationCreateDTO) {
+        List<Reservation> reservations=null;
+        reservations = em.createQuery("SELECT r FROM Reservation r WHERE function('date_format', :startTime, '%Y-%m-%d %H:%i:%s') <= r.endTime AND function('date_format', :endTime, '%Y-%m-%d %H:%i:%s') >= r.startTime AND :equipmentID=r.equipmentID.equipmentID", Reservation.class)
+                .setParameter("startTime", reservationCreateDTO.getStartTime())
+                .setParameter("endTime", reservationCreateDTO.getEndTime())
+                .setParameter("equipmentID",reservationCreateDTO.getEquipmentID())
+                .getResultList();
+
+        return reservations;
+    }
+
+    @Override
     public boolean deleteWhenEquipmentDelete(Equipment equipment) {
         List<Reservation> reservations;
 

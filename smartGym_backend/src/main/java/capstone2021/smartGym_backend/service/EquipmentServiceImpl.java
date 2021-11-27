@@ -89,7 +89,7 @@ public class EquipmentServiceImpl extends ImageService implements EquipmentServi
                 return 3;
             }
         }
-
+        
         Equipment equipment = new Equipment();
         equipment.setEquipmentID(equipmentUpdateDTO.getEquipmentInfoUpdateDTO().getEquipmentID());
         equipment.setEquipmentName(equipmentUpdateDTO.getEquipmentInfoUpdateDTO().getEquipmentName());
@@ -98,6 +98,7 @@ public class EquipmentServiceImpl extends ImageService implements EquipmentServi
         equipment.setEquipmentAvailable(equipmentUpdateDTO.getEquipmentInfoUpdateDTO().getEquipmentAvailable());
         equipment.setEquipmentQRCode(equipmentUpdateDTO.getEquipmentInfoUpdateDTO().getEquipmentQRCode());
         equipment.setEquipmentImage(findEquipment.getEquipmentImage());
+        equipment.setEslID(findEquipment.getEslID());
 
         if(equipmentUpdateDTO.getEquipmentImage() != null) { //이미지를 수정할 경우
             String oldFile = findEquipment.getEquipmentImage(); //S3에서 변경 전 이미지 삭제

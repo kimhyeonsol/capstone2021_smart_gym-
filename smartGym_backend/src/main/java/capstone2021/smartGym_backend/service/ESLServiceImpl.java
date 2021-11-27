@@ -143,6 +143,11 @@ public class ESLServiceImpl implements ESLService {
     public ReturnESLDetailedReadDTO eslDetailedRead(ESLDeleteDetailedReadDTO eslDeleteDetailedReadDTO) {
         ReturnESLDetailedReadDTO returnESLDetailedReadDTO = new ReturnESLDetailedReadDTO();
 
+        if(eslDeleteDetailedReadDTO.getEslID() == null) { //매칭된 운동기구가 없는 경우
+            returnESLDetailedReadDTO.setEquipmentAvailable(4);
+            return returnESLDetailedReadDTO;
+        }
+
         // 해당 아이디 esl 객체 찾기
         ESL findESL = eslRepository.findByID(eslDeleteDetailedReadDTO.getEslID());
         if(findESL == null){ //없는 ESL일 경우

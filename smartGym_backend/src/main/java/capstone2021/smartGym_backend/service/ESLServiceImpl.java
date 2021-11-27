@@ -96,6 +96,12 @@ public class ESLServiceImpl implements ESLService {
         }
     }
 
+    @Override
+    public boolean eslEquipmentUnmatch(ESLEquipmentMatchingDTO eslEquipmentMatchingDTO) {
+
+        return false;
+    }
+
     public String makeCsvStringAndEquipmentMatching(Equipment equipment,ESL newEsl){//매칭된 equipment 객체, 현재 esl객체, 새로 update할 esl 객체
 
         String csvString=new String();

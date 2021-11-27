@@ -12,6 +12,7 @@ import java.util.List;
 public interface ESLService {
     int eslCreate(ESLCreateDTO eslCreateDTO); //ESL 생성
     boolean eslEquipmentUpdate(ESLEquipmentMatchingDTO eslEquipmentMatchingDTO); //ESL 수정
+    boolean eslEquipmentUnmatch(ESLEquipmentMatchingDTO eslEquipmentMatchingDTO);//매칭 해제
     boolean eslDelete(ESLDeleteDetailedReadDTO eslDeleteDetailedReadDTO); //ESL 삭제
     List<ESL> eslRead(); //ESL 조회
     ReturnESLDetailedReadDTO eslDetailedRead(ESLDeleteDetailedReadDTO eslDeleteDetailedReadDTO); //ESL 상세조회

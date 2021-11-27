@@ -56,6 +56,15 @@ public class ESLController {
         return eslService.eslDetailedRead(eslDeleteDetailedReadDTO);
     }
 
+    @CrossOrigin("*")
+    @PostMapping("/esl/eslEquipmentUpdate") //ESL 운동기구 매칭
+    @ResponseBody
+    public Boolean eslEquipmentUpdate(@RequestBody final ESLEquipmentMatchingDTO eslEquipmentMatchingDTO) {
+        return eslService.eslEquipmentUpdate(eslEquipmentMatchingDTO);
+    }
+
+
+
 
 }
 

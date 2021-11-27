@@ -19,4 +19,5 @@ public interface ReservationRepository {
     List<Reservation> isInUse(Long equipmentID);
     Reservation recentReservation(Equipment equipment);
     List<Reservation> reservationDuplCheck(ReservationCreateDTO reservationCreateDTO);
+    Boolean updateReservationTime(Long reservationID);
 }

@@ -234,6 +234,13 @@ public class ReservationServiceImpl implements ReservationService{
     }
 
     @Override
+    public Boolean terminateReservation(ReservationCancleDTO reservationCancleDTO) {
+        Reservation reservation=null;
+        reservation=reservationRepository.findByID(reservationCancleDTO.getReservationID());
+        return reservationRepository.updateReservationTime(reservationCancleDTO.getReservationID());
+    }
+
+    @Override
     public ReservationReadOperatingTimeDTO readOperatingTime() {
         SimpleDateFormat format1 = new SimpleDateFormat("HH:mm");
         ReservationReadOperatingTimeDTO reservationReadOperatingTimeDTO=new ReservationReadOperatingTimeDTO();

@@ -5,6 +5,7 @@ import capstone2021.smartGym_backend.DTO.Equipment.*;
 import capstone2021.smartGym_backend.DTO.Return.ReturnEquipmentDetailedReadOnlyNameDTO;
 import capstone2021.smartGym_backend.domain.Equipment;
 import capstone2021.smartGym_backend.domain.EquipmentCategory;
+import capstone2021.smartGym_backend.repository.ESLRepository;
 import capstone2021.smartGym_backend.repository.EquipmentRepository;
 import capstone2021.smartGym_backend.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +22,13 @@ public class EquipmentServiceImpl extends ImageService implements EquipmentServi
     private static final java.util.UUID UUID = null;
     private final EquipmentRepository equipmentRepository;
     private final ReservationRepository reservationRepository;
+    private final ESLRepository eslRepository;
 
     @Autowired
-    public EquipmentServiceImpl(EquipmentRepository equipmentRepository, ReservationRepository reservationRepository) {
+    public EquipmentServiceImpl(EquipmentRepository equipmentRepository, ReservationRepository reservationRepository, ESLRepository eslRepository) {
         this.equipmentRepository = equipmentRepository;
         this.reservationRepository = reservationRepository;
+        this.eslRepository = eslRepository;
     }
 
     @Override
@@ -126,6 +129,10 @@ public class EquipmentServiceImpl extends ImageService implements EquipmentServi
         Equipment findEquipment = findByID(equipmentDeleteDetailedReadDTO.getEquipmentID());
         boolean result = reservationRepository.deleteWhenEquipmentDelete(findEquipment); //예약 삭제
         if(result == false){ //예약 삭제 실패 시
+            return false;
+        }
+        boolean eslResult = eslRepository.updateWhenEquipmentDelete(equipmentDeleteDetailedReadDTO.getEquipmentID());
+        if(eslResult == false){ //ESL equipmentID 삭제 실패 시
             return false;
         }
 

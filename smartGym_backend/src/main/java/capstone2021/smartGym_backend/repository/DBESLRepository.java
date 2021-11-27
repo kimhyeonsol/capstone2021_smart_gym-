@@ -59,6 +59,24 @@ public class DBESLRepository implements ESLRepository {
     }
 
     @Override
+    public boolean updateWhenEquipmentDelete(long id) {
+        ESL esl = em.createQuery("SELECT esl FROM ESL esl WHERE esl.equipmentID = :id", ESL.class)
+                .setParameter("id", id).getSingleResult();
+
+        esl.setEquipmentID(null);
+        esl.setReservationID(null);
+
+        try{
+            em.merge(esl);
+            return true;
+
+        } catch (PersistenceException | IllegalStateException e){
+            System.out.println("update 오류");
+            return false;
+        }
+    }
+
+    @Override
     public List<ESL> read() {
         return em.createQuery("SELECT esl FROM ESL esl", ESL.class)
                 .getResultList();

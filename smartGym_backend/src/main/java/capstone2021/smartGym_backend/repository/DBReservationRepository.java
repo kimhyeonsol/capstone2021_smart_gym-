@@ -105,6 +105,19 @@ public class DBReservationRepository implements ReservationRepository{
     }
 
     @Override
+    public Boolean updateReservationTime(Long reservationID) {
+        Reservation reservation=null;
+        LocalDateTime now=LocalDateTime.now();
+        try {
+            reservation = em.find(Reservation.class, reservationID);
+            reservation.setEndTime(now);
+            return true;
+        }catch(Exception e){
+            return false;
+        }
+    }
+
+    @Override
     public boolean deleteWhenEquipmentDelete(Equipment equipment) {
         List<Reservation> reservations;
 

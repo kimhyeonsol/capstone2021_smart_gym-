@@ -20,8 +20,10 @@ public interface ReservationService {
     List<SelectedDayReservationDTO> readEquipmentReservationOfSeletedDay(ReservationReadBySelectedDayAndEquipmentDTO reservationReadBySelectedDayAndEquipmentDTO);//선택한 날짜 운동기굽 별 조회하기
     List<ReturnReservationReadByEquipmentDTO> reservationReadByEquipment(ReservationReadByEquipmentDTO reservationReadByEquipmentDTO); //운동기구 별 예약 이력 조회
     Boolean cancleReservation(ReservationCancleDTO reservationCancleDTO);//예약 취소하기
+    Boolean terminateReservation(ReservationCancleDTO reservationCancleDTO);//예약 종료하기
     ReservationReadOperatingTimeDTO readOperatingTime();//헬스장 운영 시간 조회
     List<Reservation> equipmentIsinUseCurrently(Long equipmentID);//현재 시간 기준으로 해당 운동기구가 사용중인지 조회
     void equipmentAvailableCheck();//현재 운동기구가 사용 가능한지 체크해서 available값 지정해주는 메소드
+
     // 예약 확인
 }

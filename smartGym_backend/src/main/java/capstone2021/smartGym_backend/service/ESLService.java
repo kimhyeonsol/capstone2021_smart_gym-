@@ -10,11 +10,12 @@ import java.util.List;
 
 public interface ESLService {
     boolean eslCreate(); //ESL 생성
-    boolean eslEquipmentUpdate(ESLEquipmentMatchingDTO eslEquipmentMatchingDTO); //ESL 수정
+    boolean eslEquipmentUpdate(ESLEquipmentMatchingDTO eslEquipmentMatchingDTO); //ESL 운동기구 매칭
+    boolean eslEquipmentUnmatch(ESLEquipmentMatchingDTO eslEquipmentMatchingDTO);//매칭 해제
     boolean eslDelete(ESLDeleteDetailedReadDTO eslDeleteDetailedReadDTO); //ESL 삭제
     List<ESL> eslRead(); //ESL 조회
     ReturnESLDetailedRead eslDetailedRead(ESLDeleteDetailedReadDTO eslDeleteDetailedReadDTO); //ESL 상세조회
-    void eslReservationUpdate() throws Exception;
+    void eslReservationUpdate() throws Exception;//esl 예약 매칭
     String makeCsvStringAndReservationMatching(Equipment equipment, ESL esl,ESL newEsl);
     void writeCSV(String csvString);
     String recentReservation(Equipment equipment); //현재 시간 기준 가장 최근 예약 조회(모두 사용 가능 상태일 경우)

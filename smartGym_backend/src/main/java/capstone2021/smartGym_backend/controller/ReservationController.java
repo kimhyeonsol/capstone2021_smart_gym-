@@ -108,6 +108,21 @@ public class ReservationController {
     }
 
     @CrossOrigin("*")
+    @PostMapping("/reservation/terminateReservation") //예약 - 운동기구 예약취소하기
+    @ResponseBody
+    public ReturnBooleanDTO terminateReservation(@RequestBody ReservationCancleDTO reservationCancleDTO) {
+        ReturnBooleanDTO returnBooleanDTO =new ReturnBooleanDTO();
+        if(reservationCancleDTO==null){
+            returnBooleanDTO.setSuccess(false);
+        }
+        else {
+            returnBooleanDTO.setData(reservationService.terminateReservation(reservationCancleDTO));
+        }
+        return returnBooleanDTO;
+    }
+
+
+    @CrossOrigin("*")
     @PostMapping("/reservation/readByEquipment") //운동기구 별 예약 조회
     @ResponseBody
     public List<ReturnReservationReadByEquipmentDTO> reservationReadByEquipment(@RequestBody ReservationReadByEquipmentDTO reservationReadByEquipmentDTO){

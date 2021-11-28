@@ -2,6 +2,7 @@ package capstone2021.smartGym_backend.service;
 
 import capstone2021.smartGym_backend.DTO.ESL.ESLCreateDTO;
 import capstone2021.smartGym_backend.DTO.ESL.ESLDeleteDetailedReadDTO;
+import capstone2021.smartGym_backend.DTO.ESL.ESLEquipmentMatchCheckDTO;
 import capstone2021.smartGym_backend.DTO.ESL.ESLEquipmentMatchingDTO;
 import capstone2021.smartGym_backend.DTO.Return.ReturnESLDetailedReadDTO;
 import capstone2021.smartGym_backend.domain.ESL;
@@ -380,6 +381,26 @@ public class ESLServiceImpl implements ESLService {
                 matchableList.add(e);
         }
         return matchableList;
+    }
+
+    @Override
+    public boolean eslEquipmentMatchCheck(ESLEquipmentMatchCheckDTO eslEquipmentMatchCheckDTO) {
+        if(eslEquipmentMatchCheckDTO.getEslID() == null || eslEquipmentMatchCheckDTO.getEslID().isBlank() || eslEquipmentMatchCheckDTO.getEquipmentID() == null){
+            return false;
+        }
+        if(eslRepository.findByID(eslEquipmentMatchCheckDTO.getEslID()) == null){ //없는 ESL
+            return false;
+        }
+        if(equipmentRepository.findByID(eslEquipmentMatchCheckDTO.getEquipmentID()) == null){ //없는 운동기구
+            return false;
+        }
+
+        ESL findESL = eslRepository.findByID(eslEquipmentMatchCheckDTO.getEslID());
+        if(findESL.getEquipmentID() == eslEquipmentMatchCheckDTO.getEquipmentID()){
+            return true;
+        }
+
+        return false;
     }
 
     // param( host server ip, username, password ) 생성자

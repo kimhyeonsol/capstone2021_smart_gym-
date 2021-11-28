@@ -2,6 +2,7 @@ package capstone2021.smartGym_backend.controller;
 
 import capstone2021.smartGym_backend.DTO.ESL.ESLCreateDTO;
 import capstone2021.smartGym_backend.DTO.ESL.ESLDeleteDetailedReadDTO;
+import capstone2021.smartGym_backend.DTO.ESL.ESLEquipmentMatchCheckDTO;
 import capstone2021.smartGym_backend.DTO.ESL.ESLEquipmentMatchingDTO;
 import capstone2021.smartGym_backend.DTO.Return.ReturnESLDetailedReadDTO;
 import capstone2021.smartGym_backend.domain.ESL;
@@ -78,8 +79,11 @@ public class ESLController {
         return eslService.readMatchableExerciser();
     }
 
-
-
-
+    @CrossOrigin("*")
+    @PostMapping("/esl/eslEquipmentMatchCheck") //ESL과 운동기구가 매칭 상태인지 아닌지 체크
+    @ResponseBody
+    public boolean eslEquipmentMatchCheck(@RequestBody final ESLEquipmentMatchCheckDTO eslEquipmentMatchCheckDTO) {
+        return eslService.eslEquipmentMatchCheck(eslEquipmentMatchCheckDTO);
+    }
 }
 

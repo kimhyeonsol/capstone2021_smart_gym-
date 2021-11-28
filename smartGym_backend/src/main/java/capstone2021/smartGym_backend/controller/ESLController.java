@@ -29,13 +29,7 @@ public class ESLController {
     public int eslCreate(@RequestBody final ESLCreateDTO eslCreateDTO) {
         return eslService.eslCreate(eslCreateDTO);
     }
-
-    @CrossOrigin("*")
-    @PostMapping("/esl/update") //ESL 수정
-    @ResponseBody
-    public boolean eslUpdate(@RequestBody final ESLEquipmentMatchingDTO eslEquipmentMatchingDTO) {
-        return eslService.eslEquipmentUpdate(eslEquipmentMatchingDTO);
-    }
+    
 
     @CrossOrigin("*")
     @PostMapping("/esl/delete") //ESL 삭제
@@ -61,7 +55,7 @@ public class ESLController {
     @CrossOrigin("*")
     @PostMapping("/esl/eslEquipmentUpdate") //ESL 운동기구 매칭
     @ResponseBody
-    public Boolean eslEquipmentUpdate(@RequestBody final ESLEquipmentMatchingDTO eslEquipmentMatchingDTO) {
+    public int eslEquipmentUpdate(@RequestBody final ESLEquipmentMatchingDTO eslEquipmentMatchingDTO) {
         return eslService.eslEquipmentUpdate(eslEquipmentMatchingDTO);
     }
 

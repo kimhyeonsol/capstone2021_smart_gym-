@@ -76,7 +76,7 @@ public class ESLServiceImpl implements ESLService {
     }
 
     @Override
-    public boolean eslEquipmentUpdate(ESLEquipmentMatchingDTO eslEquipmentMatchingDTO) {
+    public int eslEquipmentUpdate(ESLEquipmentMatchingDTO eslEquipmentMatchingDTO) {
         ESL newEsl = new ESL();
         Equipment equipment;
         String csvString=new String();
@@ -85,7 +85,8 @@ public class ESLServiceImpl implements ESLService {
         try {
             ESL esl = eslRepository.findByID(eslEquipmentMatchingDTO.getEslID());
             if(esl==null)
-                return false;
+                return 1;
+
             if(esl.getEquipmentID()!=null) {
                 equipment = equipmentRepository.findByID(esl.getEquipmentID());
                 equipment.setEslID(null);
@@ -94,6 +95,8 @@ public class ESLServiceImpl implements ESLService {
             newEsl.setEslID(eslEquipmentMatchingDTO.getEslID());
             newEsl.setEquipmentID(eslEquipmentMatchingDTO.getEquipmentID());
             equipment = equipmentRepository.findByID(eslEquipmentMatchingDTO.getEquipmentID());
+            if(equipment==null)
+                return 2;
             csvString+= makeCsvStringAndEquipmentMatching(equipment, newEsl);//새로 매칭된 운동기구,원래 esl,새로운 esl
             writeCSV(csvString);
             FTPUploader("192.168.1.15", "cgESLUser", "cgESLPassword");
@@ -101,9 +104,9 @@ public class ESLServiceImpl implements ESLService {
             String fileName = fileTest.getName();
             uploadFile("./src/main/resources/import_" + oldFile + ".csv",fileName,"/Import/");
             disconnect();
-            return true;
+            return 0;
         }catch (Exception e){
-            return false;
+            return 3;
         }
     }
 

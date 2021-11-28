@@ -178,12 +178,15 @@ public class EquipmentServiceImpl extends ImageService implements EquipmentServi
 
     @Override
     public ReturnEquipmentDetailedReadOnlyNameDTO detailedReadOnlyName(EquipmentDeleteDetailedReadDTO equipmentdetailedReadDTO) {
-        if(equipmentdetailedReadDTO.getEquipmentID() == null){
-            return null;
-        }
-        if(equipmentdetailedReadDTO.getEquipmentID() == -1){
-            ReturnEquipmentDetailedReadOnlyNameDTO returnEquipmentDetailedReadOnlyNameDTO = new ReturnEquipmentDetailedReadOnlyNameDTO(" ", " ");
+        ReturnEquipmentDetailedReadOnlyNameDTO returnEquipmentDetailedReadOnlyNameDTO = new ReturnEquipmentDetailedReadOnlyNameDTO(" ", " ");
 
+        if(equipmentdetailedReadDTO.getEquipmentID() == null){
+            return returnEquipmentDetailedReadOnlyNameDTO;
+        }
+        if(equipmentdetailedReadDTO.getEquipmentID() == -1){ //매칭 안된 운동기구
+            return returnEquipmentDetailedReadOnlyNameDTO;
+        }
+        if(equipmentRepository.findByID(equipmentdetailedReadDTO.getEquipmentID()) == null){ //없는 운동기구
             return returnEquipmentDetailedReadOnlyNameDTO;
         }
 

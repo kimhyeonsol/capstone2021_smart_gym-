@@ -77,15 +77,19 @@ public class ESLServiceImpl implements ESLService {
     @Override
     public boolean eslEquipmentUpdate(ESLEquipmentMatchingDTO eslEquipmentMatchingDTO) {
         ESL newEsl = new ESL();
+        Equipment equipment;
         String csvString=new String();
         csvString="esl_id,equipment_name,user_name,reservation_start_time,reservation_end_time,gym_info_name,equipment_QR_code,equipment_available\n";
 
         try {
             ESL esl = eslRepository.findByID(eslEquipmentMatchingDTO.getEslID());
-            Equipment equipment=equipmentRepository.findByID(esl.getEquipmentID());
-            equipment.setEslID(null);
             if(esl==null)
                 return false;
+            if(esl.getEquipmentID()!=null) {
+                equipment = equipmentRepository.findByID(esl.getEquipmentID());
+                equipment.setEslID(null);
+            }
+
             newEsl.setEslID(eslEquipmentMatchingDTO.getEslID());
             newEsl.setEquipmentID(eslEquipmentMatchingDTO.getEquipmentID());
             equipment = equipmentRepository.findByID(eslEquipmentMatchingDTO.getEquipmentID());

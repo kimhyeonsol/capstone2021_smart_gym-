@@ -1,6 +1,7 @@
 package capstone2021.smartGym_backend.repository;
 
 import capstone2021.smartGym_backend.domain.ESL;
+import capstone2021.smartGym_backend.domain.Equipment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -96,5 +97,17 @@ public class DBESLRepository implements ESLRepository {
 
         }
         return findESL;
+    }
+
+    @Override
+    public boolean updateUnmatch(Equipment equipment,ESL esl) {
+        try {
+            equipment.setEslID(null);
+            esl.setEquipmentID(null);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+
     }
 }

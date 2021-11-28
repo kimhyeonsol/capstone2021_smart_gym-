@@ -23,9 +23,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -98,8 +100,15 @@ public class ESLServiceImpl implements ESLService {
 
     @Override
     public boolean eslEquipmentUnmatch(ESLEquipmentMatchingDTO eslEquipmentMatchingDTO) {
-
-        return false;
+        Equipment equipment;
+        ESL esl = eslRepository.findByID(eslEquipmentMatchingDTO.getEslID());
+        try {
+            equipment = equipmentRepository.findByID(esl.getEquipmentID());
+            eslRepository.updateUnmatch(equipment,esl);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
     }
 
     public String makeCsvStringAndEquipmentMatching(Equipment equipment,ESL newEsl){//매칭된 equipment 객체, 현재 esl객체, 새로 update할 esl 객체
@@ -246,7 +255,10 @@ public class ESLServiceImpl implements ESLService {
         for (ESL esl : eslList) {
             newEsl.setEslID(esl.getEslID());
             newEsl.setEquipmentID(esl.getEquipmentID());
+            if(esl.getEquipmentID()==null)
+                continue;
             Equipment equipment=equipmentRepository.findByID(esl.getEquipmentID());
+
             makeCsvString=makeCsvStringAndReservationMatching(equipment,esl,newEsl);
             if(makeCsvString!=null) {
                 csvString += makeCsvString;
@@ -344,6 +356,18 @@ public class ESLServiceImpl implements ESLService {
         String recentStartTime = format.format(java.sql.Timestamp.valueOf(reservation.getStartTime()));
 
         return recentStartTime;
+    }
+
+    @Override
+    public List<Equipment> readMatchableExerciser() {
+        List<Equipment> equipmentList=null;
+        ArrayList<Equipment> matchableList=new ArrayList<Equipment>();
+        equipmentList=equipmentRepository.readAll(0);
+        for(Equipment e:equipmentList){
+            if(e.getEslID()==null)
+                matchableList.add(e);
+        }
+        return matchableList;
     }
 
     // param( host server ip, username, password ) 생성자

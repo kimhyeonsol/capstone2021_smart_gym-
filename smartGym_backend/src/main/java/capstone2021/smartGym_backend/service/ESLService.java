@@ -20,7 +20,7 @@ public interface ESLService {
     String makeCsvStringAndReservationMatching(Equipment equipment, ESL esl,ESL newEsl);
     void writeCSV(String csvString);
     String recentReservation(Equipment equipment); //현재 시간 기준 가장 최근 예약 조회(모두 사용 가능 상태일 경우)
-
+    List<Equipment> readMatchableExerciser();
 
 }
 

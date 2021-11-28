@@ -5,6 +5,7 @@ import capstone2021.smartGym_backend.DTO.ESL.ESLDeleteDetailedReadDTO;
 import capstone2021.smartGym_backend.DTO.ESL.ESLEquipmentMatchingDTO;
 import capstone2021.smartGym_backend.DTO.Return.ReturnESLDetailedReadDTO;
 import capstone2021.smartGym_backend.domain.ESL;
+import capstone2021.smartGym_backend.domain.Equipment;
 import capstone2021.smartGym_backend.service.ESLService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -61,6 +62,20 @@ public class ESLController {
     @ResponseBody
     public Boolean eslEquipmentUpdate(@RequestBody final ESLEquipmentMatchingDTO eslEquipmentMatchingDTO) {
         return eslService.eslEquipmentUpdate(eslEquipmentMatchingDTO);
+    }
+
+    @CrossOrigin("*")
+    @PostMapping("/esl/eslEquipmentUnmatch") //ESL 운동기구 매칭 해제
+    @ResponseBody
+    public Boolean eslEquipmentUnmatch(@RequestBody final ESLEquipmentMatchingDTO eslEquipmentMatchingDTO) {
+        return eslService.eslEquipmentUnmatch(eslEquipmentMatchingDTO);
+    }
+
+    @CrossOrigin("*")
+    @GetMapping("/esl/readMatchableEquipmentList") //매칭 가능한 운동기구 목록 조회
+    @ResponseBody
+    public List<Equipment> readMatchableEquipmentList() {
+        return eslService.readMatchableExerciser();
     }
 
 

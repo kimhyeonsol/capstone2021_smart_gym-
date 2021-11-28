@@ -1,6 +1,7 @@
 package capstone2021.smartGym_backend.repository;
 
 import capstone2021.smartGym_backend.domain.ESL;
+import capstone2021.smartGym_backend.domain.Equipment;
 
 import java.util.List;
 
@@ -12,5 +13,6 @@ public interface ESLRepository {
     List<ESL> read();
     ESL findByID(String id);
     ESL readByEquipmentID(Long equipmentID);
+    boolean updateUnmatch(Equipment equipment,ESL esl);
 }
 

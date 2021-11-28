@@ -42,7 +42,7 @@ public class ESLServiceImpl implements ESLService {
     private final ESLRepository eslRepository;
     private String oldFile=null;
 
-    FTPClient ftpClient = null; //FTP 관련 변수들
+    private FTPClient ftpClient = null; //FTP 관련 변수들
     private static final Logger log = LoggerFactory.getLogger(ESLServiceImpl.class);
 
     @Autowired
@@ -82,9 +82,13 @@ public class ESLServiceImpl implements ESLService {
 
         try {
             ESL esl = eslRepository.findByID(eslEquipmentMatchingDTO.getEslID());
+            Equipment equipment=equipmentRepository.findByID(esl.getEquipmentID());
+            equipment.setEslID(null);
+            if(esl==null)
+                return false;
             newEsl.setEslID(eslEquipmentMatchingDTO.getEslID());
             newEsl.setEquipmentID(eslEquipmentMatchingDTO.getEquipmentID());
-            Equipment equipment = equipmentRepository.findByID(eslEquipmentMatchingDTO.getEquipmentID());
+            equipment = equipmentRepository.findByID(eslEquipmentMatchingDTO.getEquipmentID());
             csvString+= makeCsvStringAndEquipmentMatching(equipment, newEsl);//새로 매칭된 운동기구,원래 esl,새로운 esl
             writeCSV(csvString);
             FTPUploader("192.168.1.15", "cgESLUser", "cgESLPassword");
@@ -104,6 +108,8 @@ public class ESLServiceImpl implements ESLService {
         ESL esl = eslRepository.findByID(eslEquipmentMatchingDTO.getEslID());
         try {
             equipment = equipmentRepository.findByID(esl.getEquipmentID());
+            if(equipment==null)
+                return false;
             eslRepository.updateUnmatch(equipment,esl);
             return true;
         }catch (Exception e){
@@ -241,7 +247,7 @@ public class ESLServiceImpl implements ESLService {
 
 
     @Override
-    @Scheduled(fixedDelay = 1000)//30초마다 체크
+    @Scheduled(fixedDelay = 1000)//1초마다 체크
     public void eslReservationUpdate() throws Exception {
 
         List<ESL> eslList = eslRepository.read();
@@ -281,6 +287,7 @@ public class ESLServiceImpl implements ESLService {
         List<Reservation> reservationList;
         Reservation reservation;
 
+        //기구고장
         if(equipment.getEquipmentAvailable()==0){
             if (esl.getReservationID() == null)
                 return null;
@@ -289,6 +296,7 @@ public class ESLServiceImpl implements ESLService {
             csvString=csvString+esl.getEslID()+','+equipment.getEquipmentName()+' '+equipment.getEquipmentNameNth()+','+" "+','+" "+','+" "+','+gymInfoRepository.read().getGymInfoName()+','+equipment.getEquipmentQRCode()+','+equipment.getEquipmentAvailable()+"\n";
         }
 
+        //기구 예약 상태인 경우
         else if(equipment.getEquipmentAvailable()==1){
             reservationList=reservationRepository.isInUse(equipment.getEquipmentID());
             if(esl.getReservationID()==reservationList.get(0).getReservationID())

@@ -273,6 +273,7 @@ public class ESLServiceImpl implements ESLService {
     public void eslReservationUpdate() throws Exception {
 
         List<ESL> eslList = eslRepository.read();
+
         if(eslList.isEmpty())return;
 
         ESL newEsl = new ESL();

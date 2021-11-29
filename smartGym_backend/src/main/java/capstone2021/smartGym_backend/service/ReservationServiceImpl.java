@@ -258,11 +258,14 @@ public class ReservationServiceImpl implements ReservationService{
     @Scheduled(fixedDelay = 1000)//1분마다 체크
     @Override
     public void equipmentAvailableCheck() {
-        List<Equipment> equipmentList;
+        List<Equipment> equipmentList=null;
         List<Reservation> list;
-        equipmentList=equipmentRepository.readAll(0);
         int equipmentInUseCnt=0;
         float congestion;
+
+        equipmentList=equipmentRepository.readAll(0);
+        if(equipmentList.isEmpty()) return;
+
 
         for(Equipment e:equipmentList){
             if(e.getEquipmentAvailable()==0) continue;

@@ -2,8 +2,7 @@ package capstone2021.smartGym_backend.controller;
 
 import capstone2021.smartGym_backend.DTO.Return.ReturnBooleanDTO;
 import capstone2021.smartGym_backend.DTO.UnAllowedUser.*;
-import capstone2021.smartGym_backend.DTO.User.UserEmailDuplDTO;
-import capstone2021.smartGym_backend.DTO.User.UserPhoneDuplDTO;
+import capstone2021.smartGym_backend.DTO.User.UserIdDuplDTO;
 import capstone2021.smartGym_backend.domain.UnAllowedUser;
 import capstone2021.smartGym_backend.service.UnAllowedUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,19 +33,7 @@ public class UnAllowedUserController {
         return returnBooleanDTO;
     }
 
-    @CrossOrigin("*")
-    @PostMapping("/unAllowedUser/idDuplicateCheck") //가입대기- id 중복 체크
-    @ResponseBody
-    public ReturnBooleanDTO unAllowedUserIdDuplicateCheck(@RequestBody final UnAllowedUserIdDuplDTO unAllowedUserIdDuplDTO){
-        ReturnBooleanDTO returnBooleanDTO=new ReturnBooleanDTO();
-        if(unAllowedUserIdDuplDTO.getUserID().equals("")) {
-            returnBooleanDTO.setSuccess(false);
-        }
-        else {
-            returnBooleanDTO.setData(unAllowedUserService.unAllowedUserIdDuplicateCheck(unAllowedUserIdDuplDTO));
-        }
-        return returnBooleanDTO;
-    }
+
 
 
     @CrossOrigin("*")

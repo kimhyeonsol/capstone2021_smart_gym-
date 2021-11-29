@@ -2,6 +2,7 @@ package capstone2021.smartGym_backend.controller;
 
 import capstone2021.smartGym_backend.DTO.Return.ReturnBooleanDTO;
 import capstone2021.smartGym_backend.DTO.User.UserEmailDuplDTO;
+import capstone2021.smartGym_backend.DTO.User.UserIdDuplDTO;
 import capstone2021.smartGym_backend.DTO.User.UserPhoneDuplDTO;
 import capstone2021.smartGym_backend.service.AllowedUserService;
 import capstone2021.smartGym_backend.service.UserService;
@@ -20,7 +21,20 @@ public class UserContoller {
     public UserContoller(@Qualifier("userServiceImpl") UserService userService) {
         this.userService = userService;
     }
-    
+
+    @CrossOrigin("*")
+    @PostMapping("/user/idDuplicateCheck") //가입대기- id 중복 체크
+    @ResponseBody
+    public ReturnBooleanDTO unAllowedUserIdDuplicateCheck(@RequestBody final UserIdDuplDTO userIdDuplDTO){
+        ReturnBooleanDTO returnBooleanDTO=new ReturnBooleanDTO();
+        if(userIdDuplDTO.getUserID().equals("")) {
+            returnBooleanDTO.setSuccess(false);
+        }
+        else {
+            returnBooleanDTO.setData(userService.userIdDuplicateCheck(userIdDuplDTO));
+        }
+        return returnBooleanDTO;
+    }
     @CrossOrigin("*")
     @PostMapping("/user/phoneDuplicateCheck") //가입대기- 핸드폰 번호 중복 체크
     @ResponseBody

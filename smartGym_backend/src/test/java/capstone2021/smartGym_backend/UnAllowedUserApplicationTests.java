@@ -1,8 +1,6 @@
 package capstone2021.smartGym_backend;
 
-import capstone2021.smartGym_backend.DTO.User.UserEmailDuplDTO;
-import capstone2021.smartGym_backend.DTO.UnAllowedUser.UnAllowedUserIdDuplDTO;
-import capstone2021.smartGym_backend.DTO.User.UserPhoneDuplDTO;
+import capstone2021.smartGym_backend.DTO.User.UserIdDuplDTO;
 import capstone2021.smartGym_backend.DTO.UnAllowedUser.UnAllowedUserRegisterDTO;
 import capstone2021.smartGym_backend.service.UnAllowedUserService;
 import org.junit.jupiter.api.Test;
@@ -83,14 +81,14 @@ public class UnAllowedUserApplicationTests extends SmartGymBackendApplicationTes
         System.out.println(unAllowedUserService.unAllowedUserRegister(unAllowedUserRegisterDTO5));
     }
 
-    @Test
-    @Commit
-    void 아이디_중복_테스트() {
-        UnAllowedUserIdDuplDTO unAllowedUserIdDuplDTO= new UnAllowedUserIdDuplDTO();
-        unAllowedUserIdDuplDTO.setUserID("3");
-
-        System.out.println(unAllowedUserService.unAllowedUserIdDuplicateCheck(unAllowedUserIdDuplDTO));
-    }
+//    @Test
+//    @Commit
+//    void 아이디_중복_테스트() {
+//        UserIdDuplDTO userIdDuplDTO = new UserIdDuplDTO();
+//        userIdDuplDTO.setUserID("3");
+//
+//        System.out.println(unAllowedUserService.unAllowedUserIdDuplicateCheck(userIdDuplDTO));
+//    }
 
 //    @Test
 //    @Commit

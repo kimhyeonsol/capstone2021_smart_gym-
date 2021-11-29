@@ -1,5 +1,6 @@
 package capstone2021.smartGym_backend.service;
 
+import capstone2021.smartGym_backend.DTO.User.UserIdDuplDTO;
 import capstone2021.smartGym_backend.DTO.User.UserEmailDuplDTO;
 import capstone2021.smartGym_backend.DTO.User.UserPhoneDuplDTO;
 import capstone2021.smartGym_backend.domain.User;
@@ -17,6 +18,16 @@ public class UserServiceImpl implements UserService  {
     @Autowired
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
+    }
+
+    @Override
+    public boolean userIdDuplicateCheck(UserIdDuplDTO userIdDuplDTO) {
+        User findUserByID = null;
+        findUserByID = userRepository.findByUserID(userIdDuplDTO.getUserID());
+        if (findUserByID == null) {
+            return true;
+        }
+        return false;
     }
 
     @Override

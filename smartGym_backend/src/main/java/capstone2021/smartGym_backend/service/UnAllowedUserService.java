@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface UnAllowedUserService{
     boolean unAllowedUserRegister(UnAllowedUserRegisterDTO unAllowedUserRegisterDTO) ; //회원가입
-    boolean unAllowedUserIdDuplicateCheck(UnAllowedUserIdDuplDTO unAllowedUserIdDuplDTO);//id 중복 체크
     boolean unAllowedUserApprove(UnAllowedUserApproveDTO unAllowedUserApproveDTO);// 가입대기 사용자 승인
     boolean unAllowedUserUnApprove(UnAllowedUserApproveDTO unAllowedUserApproveDTO);// 가입대기 사용자 승인
     List<UnAllowedUser> unAllowedUserReadAll(); //가입대기 사용자 전체 조회

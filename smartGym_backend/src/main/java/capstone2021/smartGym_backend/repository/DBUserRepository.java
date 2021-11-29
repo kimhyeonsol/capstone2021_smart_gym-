@@ -15,7 +15,6 @@ public class DBUserRepository implements UserRepository{
         this.em = em;
     }
 
-
     @Override
     public User findByUserID(String userID) {
         User findUser=null;

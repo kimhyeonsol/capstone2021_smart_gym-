@@ -1,9 +1,6 @@
 package capstone2021.smartGym_backend.service;
 
-import capstone2021.smartGym_backend.DTO.ESL.ESLCreateDTO;
-import capstone2021.smartGym_backend.DTO.ESL.ESLDeleteDetailedReadDTO;
-import capstone2021.smartGym_backend.DTO.ESL.ESLEquipmentMatchCheckDTO;
-import capstone2021.smartGym_backend.DTO.ESL.ESLEquipmentMatchingDTO;
+import capstone2021.smartGym_backend.DTO.ESL.*;
 import capstone2021.smartGym_backend.DTO.Return.ReturnESLDetailedReadDTO;
 import capstone2021.smartGym_backend.domain.ESL;
 import capstone2021.smartGym_backend.domain.Equipment;
@@ -23,5 +20,6 @@ public interface ESLService {
     String recentReservation(Equipment equipment); //현재 시간 기준 가장 최근 예약 조회(모두 사용 가능 상태일 경우)
     List<Equipment> readMatchableExerciser();
     boolean eslEquipmentMatchCheck(ESLEquipmentMatchCheckDTO eslEquipmentMatchCheckDTO); //ESL과 운동기구가 매칭 상태인지 체크
+    List<Equipment> readMatchableExerciserLikeEquipmentName(EslReadLikeEquipmentNameDTO eslReadLikeEquipmentNameDTO);
 }
 

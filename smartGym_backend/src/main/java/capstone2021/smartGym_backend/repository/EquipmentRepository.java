@@ -19,4 +19,5 @@ public interface EquipmentRepository{
     List<Equipment> readByCategory(String equipmentCategorySelect);
     List<EquipmentCategory> detailedRead(Equipment equipment);
     ReturnEquipmentDetailedReadOnlyNameDTO detailedReadOnlyName(long id);
+    List<Equipment> readMatchableEquipmentByLikeEquipmentName(String likeEquipmentName);
 }

@@ -1,9 +1,6 @@
 package capstone2021.smartGym_backend.controller;
 
-import capstone2021.smartGym_backend.DTO.ESL.ESLCreateDTO;
-import capstone2021.smartGym_backend.DTO.ESL.ESLDeleteDetailedReadDTO;
-import capstone2021.smartGym_backend.DTO.ESL.ESLEquipmentMatchCheckDTO;
-import capstone2021.smartGym_backend.DTO.ESL.ESLEquipmentMatchingDTO;
+import capstone2021.smartGym_backend.DTO.ESL.*;
 import capstone2021.smartGym_backend.DTO.Return.ReturnESLDetailedReadDTO;
 import capstone2021.smartGym_backend.domain.ESL;
 import capstone2021.smartGym_backend.domain.Equipment;
@@ -29,7 +26,7 @@ public class ESLController {
     public int eslCreate(@RequestBody final ESLCreateDTO eslCreateDTO) {
         return eslService.eslCreate(eslCreateDTO);
     }
-    
+
 
     @CrossOrigin("*")
     @PostMapping("/esl/delete") //ESL 삭제
@@ -79,5 +76,14 @@ public class ESLController {
     public boolean eslEquipmentMatchCheck(@RequestBody final ESLEquipmentMatchCheckDTO eslEquipmentMatchCheckDTO) {
         return eslService.eslEquipmentMatchCheck(eslEquipmentMatchCheckDTO);
     }
-}
 
+
+    @CrossOrigin("*")
+    @GetMapping("/esl/readMatchableExerciserLikeEquipmentName") //ESL과 운동기구가 매칭 상태인지 아닌지 체크
+    @ResponseBody
+    public List<Equipment> readMatchableExerciserLikeEquipmentName(@RequestParam( value="likeEquipmentName")String likeEquipmentName) {
+        EslReadLikeEquipmentNameDTO eslReadLikeEquipmentNameDTO=new EslReadLikeEquipmentNameDTO();
+        eslReadLikeEquipmentNameDTO.setLikeEquipmentName(likeEquipmentName);
+        return eslService.readMatchableExerciserLikeEquipmentName(eslReadLikeEquipmentNameDTO);
+    }
+}

@@ -290,4 +290,11 @@ public class DBEquipmentRepository implements EquipmentRepository{
         return em.createQuery("SELECT new capstone2021.smartGym_backend.DTO.Return.ReturnEquipmentDetailedReadOnlyNameDTO(e.equipmentName, e.equipmentNameNth) FROM Equipment e WHERE e.equipmentID = :id", ReturnEquipmentDetailedReadOnlyNameDTO.class)
                 .setParameter("id", id).getSingleResult();
     }
+
+    @Override
+    public List<Equipment> readMatchableEquipmentByLikeEquipmentName(String likeEquipmentName) {
+        return em.createQuery("SELECT e FROM Equipment e WHERE e.eslID IS NULL And e.equipmentName like :likeEquipmentName")
+                .setParameter("likeEquipmentName", "%"+likeEquipmentName+"%").getResultList();
+    }
+
 }

@@ -1,9 +1,6 @@
 package capstone2021.smartGym_backend.service;
 
-import capstone2021.smartGym_backend.DTO.ESL.ESLCreateDTO;
-import capstone2021.smartGym_backend.DTO.ESL.ESLDeleteDetailedReadDTO;
-import capstone2021.smartGym_backend.DTO.ESL.ESLEquipmentMatchCheckDTO;
-import capstone2021.smartGym_backend.DTO.ESL.ESLEquipmentMatchingDTO;
+import capstone2021.smartGym_backend.DTO.ESL.*;
 import capstone2021.smartGym_backend.DTO.Return.ReturnESLDetailedReadDTO;
 import capstone2021.smartGym_backend.domain.ESL;
 
@@ -421,6 +418,11 @@ public class ESLServiceImpl implements ESLService {
         }
 
         return false;
+    }
+
+    @Override
+    public List<Equipment> readMatchableExerciserLikeEquipmentName(EslReadLikeEquipmentNameDTO eslReadLikeEquipmentNameDTO) {
+        return equipmentRepository.readMatchableEquipmentByLikeEquipmentName(eslReadLikeEquipmentNameDTO.getLikeEquipmentName());
     }
 
     // param( host server ip, username, password ) 생성자

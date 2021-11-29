@@ -83,27 +83,44 @@ public class ESLServiceImpl implements ESLService {
         csvString="esl_id,equipment_name,user_name,reservation_start_time,reservation_end_time,gym_info_name,equipment_QR_code,equipment_available\n";
 
         try {
+            //esl 찾기
             ESL esl = eslRepository.findByID(eslEquipmentMatchingDTO.getEslID());
             if(esl==null)
                 return 1;
 
+            //만약 원래 매칭되었던 운동기구가 있다면
             if(esl.getEquipmentID()!=null) {
+                //운동기구의 esl 매칭 해제
                 equipment = equipmentRepository.findByID(esl.getEquipmentID());
                 equipment.setEslID(null);
             }
 
             newEsl.setEslID(eslEquipmentMatchingDTO.getEslID());
-            newEsl.setEquipmentID(eslEquipmentMatchingDTO.getEquipmentID());
+            //새로 매칭할 운동기구 객체 찾기
             equipment = equipmentRepository.findByID(eslEquipmentMatchingDTO.getEquipmentID());
+            //만약 운동기구 아이디 잘못됐으면 2 반환
             if(equipment==null)
                 return 2;
+            //아직 esl 매칭 안된 운동기구 목록 조회
+            List<Equipment> matchableEquipmentList=readMatchableExerciser();
+            //만약 운동기구에 이미 esl이 매칭이 되었다면
+            if(!matchableEquipmentList.contains(equipment)){
+                //매칭해제
+                esl = eslRepository.findByID(equipment.getEslID());
+                esl.setEquipmentID(null);
+                //운동기구의 eslID 업데이트
+                equipment.setEslID(eslEquipmentMatchingDTO.getEslID());
+            }
+            //esl에 운동기구 아이디 업데이트
+            newEsl.setEquipmentID(eslEquipmentMatchingDTO.getEquipmentID());
+
             csvString+= makeCsvStringAndEquipmentMatching(equipment, newEsl);//새로 매칭된 운동기구,원래 esl,새로운 esl
             writeCSV(csvString);
-            FTPUploader("192.168.1.15", "cgESLUser", "cgESLPassword");
-            File fileTest = new File("./src/main/resources/import_" + oldFile + ".csv");
-            String fileName = fileTest.getName();
-            uploadFile("./src/main/resources/import_" + oldFile + ".csv",fileName,"/Import/");
-            disconnect();
+//            FTPUploader("192.168.1.15", "cgESLUser", "cgESLPassword");
+//            File fileTest = new File("./src/main/resources/import_" + oldFile + ".csv");
+//            String fileName = fileTest.getName();
+//            uploadFile("./src/main/resources/import_" + oldFile + ".csv",fileName,"/Import/");
+//            disconnect();
             return 0;
         }catch (Exception e){
             return 3;

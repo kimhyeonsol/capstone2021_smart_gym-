@@ -52,15 +52,6 @@ public class UnAllowedUserServiceImpl extends UserServiceImpl implements UnAllow
     }
 
 
-    @Override
-    public boolean unAllowedUserIdDuplicateCheck(UnAllowedUserIdDuplDTO unAllowedUserIdDuplDTO) {
-        UnAllowedUser findUserByID = null;
-        findUserByID = unAllowedUserRepository.findByUnAllowedUserID(unAllowedUserIdDuplDTO.getUserID());
-        if (findUserByID == null) {
-            return true;
-        }
-        return false;
-    }
 
     @Override
     public boolean unAllowedUserApprove(UnAllowedUserApproveDTO unAllowedUserApproveDTO) {

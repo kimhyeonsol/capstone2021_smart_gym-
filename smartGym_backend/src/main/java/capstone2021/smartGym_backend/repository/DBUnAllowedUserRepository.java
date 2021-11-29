@@ -67,14 +67,15 @@ public class DBUnAllowedUserRepository implements UnAllowedUserRepository {
 
     @Override
     public List<UnAllowedUser> unAllowedUserReadByID(UnAllowedUser unAllowedUser) {
-        return em.createQuery("SELECT u FROM UnAllowedUser u WHERE u.userID = :unAllowedUser")
-                .setParameter("unAllowedUser", unAllowedUser.getUserID()).getResultList();
+        return em.createQuery("SELECT u FROM UnAllowedUser u WHERE u.userID like :likeUserID")
+                .setParameter("likeUserID", "%"+unAllowedUser.getUserID()+"%")
+                .getResultList();
     }
 
     @Override
     public List<UnAllowedUser> unAllowedUserReadByName(UnAllowedUser unAllowedUser) {
-        return em.createQuery("SELECT u FROM UnAllowedUser u WHERE u.userName = :unAllowedUser")
-                .setParameter("unAllowedUser", unAllowedUser.getUserName()).getResultList();
+        return em.createQuery("SELECT u FROM UnAllowedUser u WHERE u.userName like :unAllowedUser")
+                .setParameter("unAllowedUser","%"+unAllowedUser.getUserName()+"%").getResultList();
     }
 
     public User findByUserID(String userID) {

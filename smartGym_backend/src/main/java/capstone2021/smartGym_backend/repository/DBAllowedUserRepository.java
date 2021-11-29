@@ -66,14 +66,14 @@ public class DBAllowedUserRepository implements AllowedUserRepository{
 
     @Override
     public List<AllowedUser> allowedUserReadByID(AllowedUser AllowedUser) {
-        return em.createQuery("SELECT u FROM AllowedUser u WHERE u.userID = :allowedUserID")
-                .setParameter("allowedUserID", AllowedUser.getUserID()).getResultList();
+        return em.createQuery("SELECT u FROM AllowedUser u WHERE u.userID like :allowedUserID")
+                .setParameter("allowedUserID", "%"+AllowedUser.getUserID()+"%").getResultList();
     }
 
     @Override
     public List<AllowedUser> allowedUserReadByName(AllowedUser AllowedUser) {
-        return em.createQuery("SELECT u FROM AllowedUser u WHERE u.userName = :allowedUserName")
-                .setParameter("allowedUserName", AllowedUser.getUserName()).getResultList();
+        return em.createQuery("SELECT u FROM AllowedUser u WHERE u.userName like :allowedUserName")
+                .setParameter("allowedUserName","%"+ AllowedUser.getUserName()+"%").getResultList();
     }
 
     @Override

@@ -33,9 +33,13 @@ public class DBAllowedUserRepository implements AllowedUserRepository{
 
     @Override
     public AllowedUser findByAllowedUserName(String userName) {
-        AllowedUser findAllowedUser=null;
-        findAllowedUser=em.find(AllowedUser.class,userName);
-        return findAllowedUser;
+        List<AllowedUser> findAllowedUser=null;
+        findAllowedUser=em.createQuery("SELECT u FROM AllowedUser u WHERE u.userName = :userName")
+                .setParameter("userName", userName).getResultList();
+        if(findAllowedUser.isEmpty())
+            return null;
+
+        return findAllowedUser.get(0);
     }
 
     @Override

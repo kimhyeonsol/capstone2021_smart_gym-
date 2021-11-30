@@ -131,9 +131,11 @@ public class EquipmentServiceImpl extends ImageService implements EquipmentServi
         if(result == false){ //예약 삭제 실패 시
             return false;
         }
-        boolean eslResult = eslRepository.updateWhenEquipmentDelete(equipmentDeleteDetailedReadDTO.getEquipmentID());
-        if(eslResult == false){ //ESL equipmentID 삭제 실패 시
-            return false;
+        if(findEquipment.getEslID()!=null){
+            boolean eslResult = eslRepository.updateWhenEquipmentDelete(equipmentDeleteDetailedReadDTO.getEquipmentID());
+            if(eslResult == false){ //ESL equipmentID 삭제 실패 시
+                return false;
+            }
         }
 
         String oldFile = findEquipment.getEquipmentImage(); //S3에서 이미지 삭제

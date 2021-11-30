@@ -14,8 +14,8 @@ public interface ReservationRepository {
     List<ReturnReservationReadByEquipmentDTO> reservationReadByEquipment(long id);
     Boolean delete(Long reservationID);
     Reservation findByID(Long reservationID);
-    boolean deleteWhenEquipmentDelete(Equipment equipment); //운동기구 삭제 시 예약 삭제
-    int deleteWhenEquipmentUpdate(Equipment equipment); //운동기구 고장 시 예약 삭제
+    int deleteWhenEquipmentUpdateDelete(Equipment equipment); //운동기구 고장 시 예약 삭제
+    boolean nullWhenEquipmentDelete(Equipment equipment); //운동기구 삭제 시 이전 예약 null처리
     List<Reservation> isInUse(Long equipmentID);
     Reservation recentReservation(Equipment equipment);
     List<Reservation> reservationDuplCheck(ReservationCreateDTO reservationCreateDTO);

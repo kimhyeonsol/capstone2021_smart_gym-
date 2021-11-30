@@ -87,7 +87,7 @@ public class EquipmentServiceImpl extends ImageService implements EquipmentServi
 
         Equipment findEquipment = findByID(equipmentUpdateDTO.getEquipmentInfoUpdateDTO().getEquipmentID());
         if(equipmentUpdateDTO.getEquipmentInfoUpdateDTO().getEquipmentAvailable() == 0){
-            int result = reservationRepository.deleteWhenEquipmentUpdate(findEquipment); //예약 삭제
+            int result = reservationRepository.deleteWhenEquipmentUpdateDelete(findEquipment); //예약 삭제
             if(result == 3){ //예약 삭제 실패 시
                 return 3;
             }
@@ -127,10 +127,16 @@ public class EquipmentServiceImpl extends ImageService implements EquipmentServi
         equipment.setEquipmentID(equipmentDeleteDetailedReadDTO.getEquipmentID());
 
         Equipment findEquipment = findByID(equipmentDeleteDetailedReadDTO.getEquipmentID());
-        boolean result = reservationRepository.deleteWhenEquipmentDelete(findEquipment); //예약 삭제
-        if(result == false){ //예약 삭제 실패 시
+        int result1 = reservationRepository.deleteWhenEquipmentUpdateDelete(findEquipment); //현재 이후 예약 삭제
+        if(result1 == 3){ //예약 삭제 실패 시
             return false;
         }
+
+        boolean result2 = reservationRepository.nullWhenEquipmentDelete(findEquipment); //이전 예약들은 null처리
+        if(result2 == false){ //예약 삭제 실패 시
+            return false;
+        }
+        
         if(findEquipment.getEslID()!=null){
             boolean eslResult = eslRepository.updateWhenEquipmentDelete(equipmentDeleteDetailedReadDTO.getEquipmentID());
             if(eslResult == false){ //ESL equipmentID 삭제 실패 시

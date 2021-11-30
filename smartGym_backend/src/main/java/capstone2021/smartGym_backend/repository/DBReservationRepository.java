@@ -130,25 +130,7 @@ public class DBReservationRepository implements ReservationRepository{
     }
 
     @Override
-    public boolean deleteWhenEquipmentDelete(Equipment equipment) {
-        List<Reservation> reservations;
-
-        reservations = em.createQuery("SELECT r FROM Reservation r WHERE r.equipmentID = :equipment", Reservation.class)
-                .setParameter("equipment", equipment).getResultList();
-
-        try {
-            for(Reservation reservation : reservations){ //예약 다 삭제
-                delete(reservation.getReservationID());
-            }
-            return true;
-        } catch (PersistenceException | IllegalStateException e){
-            System.out.println("예약 delete 오류");
-            return false;
-        }
-    }
-
-    @Override
-    public int deleteWhenEquipmentUpdate(Equipment equipment) {
+    public int deleteWhenEquipmentUpdateDelete(Equipment equipment) {
         List<Reservation> reservations;
         LocalDateTime now = LocalDateTime.now();
 
@@ -162,6 +144,25 @@ public class DBReservationRepository implements ReservationRepository{
         } catch (PersistenceException | IllegalStateException e){
             System.out.println("예약 delete 오류");
             return 3;
+        }
+    }
+
+    @Override
+    public boolean nullWhenEquipmentDelete(Equipment equipment) {
+        List<Reservation> reservations;
+        LocalDateTime now = LocalDateTime.now();
+
+        reservations = em.createQuery("SELECT r FROM Reservation r WHERE function('date_format', :now, '%Y-%m-%d %H:%i:%s') > r.startTime AND r.equipmentID = :equipment", Reservation.class)
+                .setParameter("now", now).setParameter("equipment", equipment).getResultList();
+        try {
+            for(Reservation reservation : reservations){
+                reservation.setEquipmentID(null);
+                em.merge(reservation);
+            }
+            return true;
+        } catch (PersistenceException | IllegalStateException e){
+            System.out.println("예약 update 오류");
+            return false;
         }
     }
 

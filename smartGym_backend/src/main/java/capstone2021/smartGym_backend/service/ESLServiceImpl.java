@@ -313,15 +313,19 @@ public class ESLServiceImpl implements ESLService {
 
         try {
             //esl 찾기
+
             ESL esl = eslRepository.readByEquipmentID(equipmentID);
+
             if(esl==null)
                 return;
+
             newEsl.setEslID(esl.getEslID());
             //새로 매칭할 운동기구 객체 찾기
             findEquipment = equipmentRepository.findByID(equipmentID);
             //만약 운동기구 아이디 잘못됐으면 2 반환
             if(findEquipment==null)
                 return;
+            esl.setEquipmentID(findEquipment.getEquipmentID());
 
             csvString+= makeCsvStringWhenUpdateEquipment(findEquipment,esl, newEsl);//새로 매칭된 운동기구,원래 esl,새로운 esl
             writeCSV(csvString);
@@ -343,12 +347,14 @@ public class ESLServiceImpl implements ESLService {
 
         //기구고장
         if(equipment.getEquipmentAvailable()==0){
+            System.out.println(0);
             newEsl.setReservationID(null);
             eslRepository.update(newEsl);
             csvString=csvString+esl.getEslID()+','+equipment.getEquipmentName()+' '+equipment.getEquipmentNameNth()+','+" "+','+" "+','+" "+','+gymInfoRepository.read().getGymInfoName()+','+equipment.getEquipmentQRCode()+','+equipment.getEquipmentAvailable()+"\n";
         }
         //모든 사용자 사용 가능
         else if(equipment.getEquipmentAvailable()==2){
+            System.out.println(2);
             newEsl.setReservationID(null);
             eslRepository.update(newEsl);
             csvString=csvString+esl.getEslID()+','+equipment.getEquipmentName()+' '+equipment.getEquipmentNameNth()+','+" "+','+" "+','+recentReservation(equipment)+','+gymInfoRepository.read().getGymInfoName()+','+equipment.getEquipmentQRCode()+','+equipment.getEquipmentAvailable()+"\n";

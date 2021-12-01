@@ -21,5 +21,6 @@ public interface ESLService {
     List<Equipment> readMatchableExerciser();
     boolean eslEquipmentMatchCheck(ESLEquipmentMatchCheckDTO eslEquipmentMatchCheckDTO); //ESL과 운동기구가 매칭 상태인지 체크
     List<Equipment> readMatchableExerciserLikeEquipmentName(EslReadLikeEquipmentNameDTO eslReadLikeEquipmentNameDTO);
+    void eslUpdateWhenUpdateEquipment(Long equipmentID);
 }
 

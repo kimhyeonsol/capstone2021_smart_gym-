@@ -92,7 +92,8 @@ public class DBESLRepository implements ESLRepository {
     public ESL readByEquipmentID(Long equipmentID) {
         ESL findESL=null;
         try {
-            findESL= em.find(ESL.class,equipmentID);
+            findESL = em.createQuery("SELECT esl FROM ESL esl WHERE esl.equipmentID = :id", ESL.class)
+                    .setParameter("id", equipmentID).getSingleResult();
         }catch(PersistenceException | IllegalStateException e) {
 
         }

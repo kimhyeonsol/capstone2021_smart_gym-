@@ -169,6 +169,8 @@ public class ReservationServiceImpl implements ReservationService{
             return 4;
 
 
+
+
         reservation.setEquipmentID(equipment);
         reservation.setStartTime(reservationCreateDTO.getStartTime());
         reservation.setEndTime(reservationCreateDTO.getEndTime());

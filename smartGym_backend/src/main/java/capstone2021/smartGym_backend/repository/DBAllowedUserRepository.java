@@ -89,14 +89,14 @@ public class DBAllowedUserRepository implements AllowedUserRepository{
 
         try {
             if (em.contains(allowedUser)) {
-                for(Reservation reservation : reservations){ //예약 다 삭제
-                    em.remove(reservation);
+                for(Reservation reservation : reservations){ //예약 userID null로 세팅
+                    reservation.setUserID(null);
                 }
                 em.remove(allowedUser);
             }
             else {
                 for(Reservation reservation : reservations){
-                    em.remove(em.merge(reservation));
+                    reservation.setUserID(null);
                 }
                 em.remove(em.merge(allowedUser));
             }

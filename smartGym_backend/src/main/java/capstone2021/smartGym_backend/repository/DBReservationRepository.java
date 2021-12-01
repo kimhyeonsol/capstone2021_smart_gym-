@@ -84,7 +84,7 @@ public class DBReservationRepository implements ReservationRepository{
         long smallTimeDifference = -1;
         Reservation resultReservation = null;
 
-        List<Reservation> reservations = em.createQuery("SELECT r FROM Reservation r WHERE r.equipmentID = :equipment AND :now <= r.startTime", Reservation.class)
+        List<Reservation> reservations = em.createQuery("SELECT r FROM Reservation r WHERE r.equipmentID = :equipment AND function('date_format', r.startTime, '%Y-%m-%d') = function('date_format', :now, '%Y-%m-%d') AND :now <= r.startTime ", Reservation.class)
                 .setParameter("now", now).setParameter("equipment", equipment).getResultList();
 
         for(Reservation reservation:reservations) {

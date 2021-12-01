@@ -4,6 +4,7 @@ import capstone2021.smartGym_backend.DTO.Equipment.*;
 import capstone2021.smartGym_backend.DTO.Return.ReturnEquipmentDetailedReadOnlyNameDTO;
 import capstone2021.smartGym_backend.domain.Equipment;
 import capstone2021.smartGym_backend.domain.EquipmentCategory;
+import capstone2021.smartGym_backend.service.ESLService;
 import capstone2021.smartGym_backend.service.EquipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,10 +17,12 @@ import java.util.List;
 @Controller
 public class EquipmentController {
     private final EquipmentService equipmentService;
+    private final ESLService eslService;
 
     @Autowired
-    public EquipmentController(EquipmentService equipmentService) {
+    public EquipmentController(EquipmentService equipmentService,ESLService eslService) {
         this.equipmentService = equipmentService;
+        this.eslService=eslService;
     }
 
     @CrossOrigin("*")
@@ -33,7 +36,9 @@ public class EquipmentController {
     @PostMapping("/equipment/update") //운동기구 수정
     @ResponseBody
     public int equipmentUpdate(@ModelAttribute final EquipmentUpdateDTO equipmentUpdateDTO, BindingResult bindingResult) throws IOException {
-        return equipmentService.update(equipmentUpdateDTO);
+        int result=equipmentService.update(equipmentUpdateDTO);
+        eslService.eslUpdateWhenUpdateEquipment(equipmentUpdateDTO.getEquipmentInfoUpdateDTO().getEquipmentID());
+        return result;
     }
 
     @CrossOrigin("*")

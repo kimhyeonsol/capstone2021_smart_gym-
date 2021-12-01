@@ -325,7 +325,7 @@ public class ESLServiceImpl implements ESLService {
             //만약 운동기구 아이디 잘못됐으면 2 반환
             if(findEquipment==null)
                 return;
-            esl.setEquipmentID(findEquipment.getEquipmentID());
+            newEsl.setEquipmentID(findEquipment.getEquipmentID());
 
             csvString+= makeCsvStringWhenUpdateEquipment(findEquipment,esl, newEsl);//새로 매칭된 운동기구,원래 esl,새로운 esl
             writeCSV(csvString);

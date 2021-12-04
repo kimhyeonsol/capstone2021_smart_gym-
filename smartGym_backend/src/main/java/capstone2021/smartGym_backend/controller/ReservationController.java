@@ -104,14 +104,16 @@ public class ReservationController {
         ReturnBooleanDTO returnBooleanDTO =new ReturnBooleanDTO();
         Equipment equipment;
         Long equipmentID;
+        String oldStart;
         if(reservationCancleDTO==null){
             returnBooleanDTO.setSuccess(false);
         }
         else {
             equipment=reservationService.findByID(reservationCancleDTO.getReservationID()).getEquipmentID();
+            oldStart=eslService.recentReservation(equipment);
             returnBooleanDTO.setData(reservationService.cancleReservation(reservationCancleDTO));
-            if(eslService.recentReservation(equipment).equals(reservationService.findByID(reservationCancleDTO.getReservationID()).getStartTime()))
-                eslService.eslUpdateWhenUpdateEquipment(equipment.getEquipmentID());
+            if(!eslService.recentReservation(equipment).equals(oldStart))
+                eslService.eslUpdateWhenCancleReservation(equipment.getEquipmentID());
         }
         return returnBooleanDTO;
     }

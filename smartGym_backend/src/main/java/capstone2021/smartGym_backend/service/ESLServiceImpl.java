@@ -414,16 +414,18 @@ public class ESLServiceImpl implements ESLService {
 
         try {
             //esl 찾기
-
+            System.out.println(3);
             ESL esl = eslRepository.readByEquipmentID(equipmentID);
             if(esl==null)
                 return;
+            System.out.println(4);
             newEsl.setEslID(esl.getEslID());
             //새로 매칭할 운동기구 객체 찾기
             findEquipment = equipmentRepository.findByID(equipmentID);
             //만약 운동기구 아이디 잘못됐으면 2 반환
             if(findEquipment==null)
                 return;
+            System.out.println(5);
             newEsl.setEquipmentID(findEquipment.getEquipmentID());
 
             csvString+= makeCsvStringWhenCancleReservation(findEquipment,esl, newEsl);//새로 매칭된 운동기구,원래 esl,새로운 esl
@@ -443,7 +445,7 @@ public class ESLServiceImpl implements ESLService {
         String csvString=new String();
         List<Reservation> reservationList;
         Reservation reservation;
-
+        System.out.println(1);
         if(equipment.getEquipmentAvailable()==2){
             System.out.println(2);
             newEsl.setReservationID(null);

@@ -2,6 +2,7 @@ package capstone2021.smartGym_backend.controller;
 
 import capstone2021.smartGym_backend.DTO.Reservation.*;
 import capstone2021.smartGym_backend.DTO.Return.*;
+import capstone2021.smartGym_backend.domain.Equipment;
 import capstone2021.smartGym_backend.domain.Reservation;
 import capstone2021.smartGym_backend.service.ESLService;
 import capstone2021.smartGym_backend.service.ReservationService;
@@ -101,14 +102,16 @@ public class ReservationController {
     @ResponseBody
     public ReturnBooleanDTO cancleReservation(@RequestBody ReservationCancleDTO reservationCancleDTO) {
         ReturnBooleanDTO returnBooleanDTO =new ReturnBooleanDTO();
+        Equipment equipment;
         Long equipmentID;
         if(reservationCancleDTO==null){
             returnBooleanDTO.setSuccess(false);
         }
         else {
-            equipmentID=reservationService.findByID(reservationCancleDTO.getReservationID()).getEquipmentID().getEquipmentID();
+            equipment=reservationService.findByID(reservationCancleDTO.getReservationID()).getEquipmentID();
             returnBooleanDTO.setData(reservationService.cancleReservation(reservationCancleDTO));
-            eslService.eslUpdateWhenUpdateEquipment(equipmentID);
+            if(eslService.recentReservation(equipment).equals(reservationService.findByID(reservationCancleDTO.getReservationID()).getStartTime()))
+                eslService.eslUpdateWhenUpdateEquipment(equipment.getEquipmentID());
         }
         return returnBooleanDTO;
     }

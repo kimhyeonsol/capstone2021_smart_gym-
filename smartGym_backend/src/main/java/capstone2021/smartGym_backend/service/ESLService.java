@@ -1,6 +1,7 @@
 package capstone2021.smartGym_backend.service;
 
 import capstone2021.smartGym_backend.DTO.ESL.*;
+import capstone2021.smartGym_backend.DTO.Reservation.ReservationCancleDTO;
 import capstone2021.smartGym_backend.DTO.Return.ReturnESLDetailedReadDTO;
 import capstone2021.smartGym_backend.domain.ESL;
 import capstone2021.smartGym_backend.domain.Equipment;
@@ -22,5 +23,6 @@ public interface ESLService {
     boolean eslEquipmentMatchCheck(ESLEquipmentMatchCheckDTO eslEquipmentMatchCheckDTO); //ESL과 운동기구가 매칭 상태인지 체크
     List<Equipment> readMatchableExerciserLikeEquipmentName(EslReadLikeEquipmentNameDTO eslReadLikeEquipmentNameDTO);
     void eslUpdateWhenUpdateEquipment(Long equipmentID);
+    void eslUpdateWhenCancleReservation(Long equipmentID);
 }
 

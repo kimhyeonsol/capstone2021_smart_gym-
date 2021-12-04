@@ -1,6 +1,7 @@
 package capstone2021.smartGym_backend.service;
 
 import capstone2021.smartGym_backend.DTO.ESL.*;
+import capstone2021.smartGym_backend.DTO.Reservation.ReservationCancleDTO;
 import capstone2021.smartGym_backend.DTO.Return.ReturnESLDetailedReadDTO;
 import capstone2021.smartGym_backend.domain.ESL;
 
@@ -304,6 +305,46 @@ public class ESLServiceImpl implements ESLService {
         }
     }
 
+    public String makeCsvStringAndReservationMatching(Equipment equipment, ESL esl,ESL newEsl){//매칭된 equipment 객체, 현재 esl객체, 새로 update할 esl 객체
+
+        String csvString=new String();
+        List<Reservation> reservationList;
+        Reservation reservation;
+
+        //기구고장
+        if(equipment.getEquipmentAvailable()==0){
+            if (esl.getReservationID() == null)
+                return null;
+            newEsl.setReservationID(null);
+            eslRepository.update(newEsl);
+            csvString=csvString+esl.getEslID()+','+equipment.getEquipmentName()+' '+equipment.getEquipmentNameNth()+','+" "+','+" "+','+" "+','+gymInfoRepository.read().getGymInfoName()+','+equipment.getEquipmentQRCode()+','+equipment.getEquipmentAvailable()+"\n";
+        }
+
+        //기구 예약 상태인 경우
+        else if(equipment.getEquipmentAvailable()==1){
+            reservationList=reservationRepository.isInUse(equipment.getEquipmentID());
+            if(reservationList.isEmpty())
+                return null;
+            if(esl.getReservationID()==reservationList.get(0).getReservationID())
+                return null;
+            else {
+                newEsl.setReservationID(reservationList.get(0).getReservationID());
+                eslRepository.update(newEsl);
+                reservation=reservationRepository.findByID(esl.getReservationID());
+                csvString=csvString+esl.getEslID()+','+equipment.getEquipmentName()+' '+equipment.getEquipmentNameNth()+','+reservation.getUserID().getUserName()+','+reservation.getStartTime().format(DateTimeFormatter.ofPattern("HH:mm"))+','+reservation.getEndTime().format(DateTimeFormatter.ofPattern("HH:mm"))+','+gymInfoRepository.read().getGymInfoName()+','+equipment.getEquipmentQRCode()+','+equipment.getEquipmentAvailable()+"\n";
+            }
+        }
+        else if(equipment.getEquipmentAvailable()==2){
+            if (esl.getReservationID() == null)
+                return null;
+            newEsl.setReservationID(null);
+            eslRepository.update(newEsl);
+            csvString=csvString+esl.getEslID()+','+equipment.getEquipmentName()+' '+equipment.getEquipmentNameNth()+','+" "+','+" "+','+recentReservation(equipment)+','+gymInfoRepository.read().getGymInfoName()+','+equipment.getEquipmentQRCode()+','+equipment.getEquipmentAvailable()+"\n";
+        }
+        return csvString;
+    }
+
+    //기구 고장났을 때
     @Override
     public void eslUpdateWhenUpdateEquipment(Long equipmentID) {
         ESL newEsl = new ESL();
@@ -363,44 +404,56 @@ public class ESLServiceImpl implements ESLService {
         return csvString;
     }
 
-    public String makeCsvStringAndReservationMatching(Equipment equipment, ESL esl,ESL newEsl){//매칭된 equipment 객체, 현재 esl객체, 새로 update할 esl 객체
+    //예약 취소할 때
+    @Override
+    public void eslUpdateWhenCancleReservation(Long equipmentID) {
+        ESL newEsl = new ESL();
+        Equipment findEquipment;
+        String csvString=new String();
+        csvString="esl_id,equipment_name,user_name,reservation_start_time,reservation_end_time,gym_info_name,equipment_QR_code,equipment_available\n";
+
+        try {
+            //esl 찾기
+
+            ESL esl = eslRepository.readByEquipmentID(equipmentID);
+            if(esl==null)
+                return;
+            newEsl.setEslID(esl.getEslID());
+            //새로 매칭할 운동기구 객체 찾기
+            findEquipment = equipmentRepository.findByID(equipmentID);
+            //만약 운동기구 아이디 잘못됐으면 2 반환
+            if(findEquipment==null)
+                return;
+            newEsl.setEquipmentID(findEquipment.getEquipmentID());
+
+            csvString+= makeCsvStringWhenCancleReservation(findEquipment,esl, newEsl);//새로 매칭된 운동기구,원래 esl,새로운 esl
+            writeCSV(csvString);
+            FTPUploader("192.168.1.15", "cgESLUser", "cgESLPassword");
+            File fileTest = new File("./src/main/resources/import_" + oldFile + ".csv");
+            String fileName = fileTest.getName();
+            uploadFile("./src/main/resources/import_" + oldFile + ".csv",fileName,"/Import/");
+            disconnect();
+
+        }catch (Exception e){
+            return;
+        }
+    }
+    public String makeCsvStringWhenCancleReservation(Equipment equipment, ESL esl,ESL newEsl){//매칭된 equipment 객체, 현재 esl객체, 새로 update할 esl 객체
 
         String csvString=new String();
         List<Reservation> reservationList;
         Reservation reservation;
 
-        //기구고장
-        if(equipment.getEquipmentAvailable()==0){
-            if (esl.getReservationID() == null)
-                return null;
-            newEsl.setReservationID(null);
-            eslRepository.update(newEsl);
-            csvString=csvString+esl.getEslID()+','+equipment.getEquipmentName()+' '+equipment.getEquipmentNameNth()+','+" "+','+" "+','+" "+','+gymInfoRepository.read().getGymInfoName()+','+equipment.getEquipmentQRCode()+','+equipment.getEquipmentAvailable()+"\n";
-        }
-
-        //기구 예약 상태인 경우
-        else if(equipment.getEquipmentAvailable()==1){
-            reservationList=reservationRepository.isInUse(equipment.getEquipmentID());
-            if(reservationList.isEmpty())
-                return null;
-            if(esl.getReservationID()==reservationList.get(0).getReservationID())
-                return null;
-            else {
-                newEsl.setReservationID(reservationList.get(0).getReservationID());
-                eslRepository.update(newEsl);
-                reservation=reservationRepository.findByID(esl.getReservationID());
-                csvString=csvString+esl.getEslID()+','+equipment.getEquipmentName()+' '+equipment.getEquipmentNameNth()+','+reservation.getUserID().getUserName()+','+reservation.getStartTime().format(DateTimeFormatter.ofPattern("HH:mm"))+','+reservation.getEndTime().format(DateTimeFormatter.ofPattern("HH:mm"))+','+gymInfoRepository.read().getGymInfoName()+','+equipment.getEquipmentQRCode()+','+equipment.getEquipmentAvailable()+"\n";
-            }
-        }
-        else if(equipment.getEquipmentAvailable()==2){
-            if (esl.getReservationID() == null)
-                return null;
+        if(equipment.getEquipmentAvailable()==2){
+            System.out.println(2);
             newEsl.setReservationID(null);
             eslRepository.update(newEsl);
             csvString=csvString+esl.getEslID()+','+equipment.getEquipmentName()+' '+equipment.getEquipmentNameNth()+','+" "+','+" "+','+recentReservation(equipment)+','+gymInfoRepository.read().getGymInfoName()+','+equipment.getEquipmentQRCode()+','+equipment.getEquipmentAvailable()+"\n";
         }
+
         return csvString;
     }
+
 
     public void writeCSV(String csvString) {
         LocalDateTime now=LocalDateTime.now();

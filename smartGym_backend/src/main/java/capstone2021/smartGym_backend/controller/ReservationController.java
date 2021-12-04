@@ -3,6 +3,7 @@ package capstone2021.smartGym_backend.controller;
 import capstone2021.smartGym_backend.DTO.Reservation.*;
 import capstone2021.smartGym_backend.DTO.Return.*;
 import capstone2021.smartGym_backend.domain.Reservation;
+import capstone2021.smartGym_backend.service.ESLService;
 import capstone2021.smartGym_backend.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -16,10 +17,12 @@ import java.util.List;
 public class ReservationController {
 
     private final ReservationService reservationService;
+    private final ESLService eslService;
 
     @Autowired
-    public ReservationController(ReservationService reservationService) {
+    public ReservationController(ReservationService reservationService,ESLService eslService) {
         this.reservationService = reservationService;
+        this.eslService=eslService;
     }
 
     @CrossOrigin("*")
@@ -98,11 +101,14 @@ public class ReservationController {
     @ResponseBody
     public ReturnBooleanDTO cancleReservation(@RequestBody ReservationCancleDTO reservationCancleDTO) {
         ReturnBooleanDTO returnBooleanDTO =new ReturnBooleanDTO();
+        Long equipmentID;
         if(reservationCancleDTO==null){
             returnBooleanDTO.setSuccess(false);
         }
         else {
+            equipmentID=reservationService.findByID(reservationCancleDTO.getReservationID()).getEquipmentID().getEquipmentID();
             returnBooleanDTO.setData(reservationService.cancleReservation(reservationCancleDTO));
+            eslService.eslUpdateWhenUpdateEquipment(equipmentID);
         }
         return returnBooleanDTO;
     }

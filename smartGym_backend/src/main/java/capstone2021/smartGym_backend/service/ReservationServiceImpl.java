@@ -295,5 +295,10 @@ public class ReservationServiceImpl implements ReservationService{
         }
     }
 
+    @Override
+    public Reservation findByID(Long reservationID) {
+        return reservationRepository.findByID(reservationID);
+    }
+
 
 }

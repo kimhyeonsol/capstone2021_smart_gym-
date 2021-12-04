@@ -296,6 +296,7 @@ public class ESLServiceImpl implements ESLService {
             }
         }
         if(csvString.length()>initStringlength){
+            System.out.println("**");
             writeCSV(csvString);
             FTPUploader("192.168.1.15", "cgESLUser", "cgESLPassword");
             File fileTest = new File("./src/main/resources/import_" + oldFile + ".csv");
@@ -313,7 +314,7 @@ public class ESLServiceImpl implements ESLService {
 
         //기구고장
         if(equipment.getEquipmentAvailable()==0){
-            if (esl.getReservationID() == null)
+            if (esl.getReservationID().equals(null))
                 return null;
             newEsl.setReservationID(null);
             eslRepository.update(newEsl);
@@ -325,7 +326,8 @@ public class ESLServiceImpl implements ESLService {
             reservationList=reservationRepository.isInUse(equipment.getEquipmentID());
             if(reservationList.isEmpty())
                 return null;
-            if(esl.getReservationID()==reservationList.get(0).getReservationID())
+
+            if(esl.getReservationID().equals(reservationList.get(0).getReservationID()))
                 return null;
             else {
                 newEsl.setReservationID(reservationList.get(0).getReservationID());
@@ -335,7 +337,7 @@ public class ESLServiceImpl implements ESLService {
             }
         }
         else if(equipment.getEquipmentAvailable()==2){
-            if (esl.getReservationID() == null)
+            if (esl.getReservationID().equals( null))
                 return null;
             newEsl.setReservationID(null);
             eslRepository.update(newEsl);
@@ -400,7 +402,6 @@ public class ESLServiceImpl implements ESLService {
             eslRepository.update(newEsl);
             csvString=csvString+esl.getEslID()+','+equipment.getEquipmentName()+' '+equipment.getEquipmentNameNth()+','+" "+','+" "+','+recentReservation(equipment)+','+gymInfoRepository.read().getGymInfoName()+','+equipment.getEquipmentQRCode()+','+equipment.getEquipmentAvailable()+"\n";
         }
-
         return csvString;
     }
 

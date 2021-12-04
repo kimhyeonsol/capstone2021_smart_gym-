@@ -381,6 +381,8 @@ public class ESLServiceImpl implements ESLService {
         //기구 예약 상태인 경우
         else if(equipment.getEquipmentAvailable()==1){
             reservationList=reservationRepository.isInUse(equipment.getEquipmentID());
+            if(reservationList.isEmpty())
+                return null;
             if(esl.getReservationID()==reservationList.get(0).getReservationID())
                 return null;
             else {

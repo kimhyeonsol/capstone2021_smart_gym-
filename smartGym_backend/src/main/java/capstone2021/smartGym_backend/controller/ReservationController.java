@@ -5,6 +5,7 @@ import capstone2021.smartGym_backend.DTO.Return.*;
 import capstone2021.smartGym_backend.domain.Equipment;
 import capstone2021.smartGym_backend.domain.Reservation;
 import capstone2021.smartGym_backend.service.ESLService;
+import capstone2021.smartGym_backend.service.EquipmentService;
 import capstone2021.smartGym_backend.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -19,11 +20,12 @@ public class ReservationController {
 
     private final ReservationService reservationService;
     private final ESLService eslService;
-
+    private final EquipmentService equipmentService;
     @Autowired
-    public ReservationController(ReservationService reservationService,ESLService eslService) {
+    public ReservationController(ReservationService reservationService, ESLService eslService, EquipmentService equipmentService) {
         this.reservationService = reservationService;
         this.eslService=eslService;
+        this.equipmentService=equipmentService;
     }
 
     @CrossOrigin("*")
@@ -88,11 +90,18 @@ public class ReservationController {
     @ResponseBody
     public ReturnIntDTO makeReservation(@RequestBody ReservationCreateDTO reservationCreateDTO) {
         ReturnIntDTO returnIntDTO =new ReturnIntDTO();
+        Equipment equipment;
+        Long equipmentID;
+        String oldStart;
         if(reservationCreateDTO==null){
             returnIntDTO.setSuccess(false);
         }
         else {
+            equipment=equipmentService.findByID(reservationCreateDTO.getEquipmentID());
+            oldStart=eslService.recentReservation(equipment);
             returnIntDTO.setData(reservationService.makeReservation(reservationCreateDTO));
+            if(!eslService.recentReservation(equipment).equals(oldStart))
+                eslService.eslUpdateWhenCancleReservation(equipment.getEquipmentID());
         }
         return returnIntDTO;
     }
@@ -119,7 +128,7 @@ public class ReservationController {
     }
 
     @CrossOrigin("*")
-    @PostMapping("/reservation/terminateReservation") //예약 - 운동기구 예약취소하기
+    @PostMapping("/reservation/terminateReservation") //예약 - 운동기구 예약종료하기
     @ResponseBody
     public ReturnBooleanDTO terminateReservation(@RequestBody ReservationCancleDTO reservationCancleDTO) {
         ReturnBooleanDTO returnBooleanDTO =new ReturnBooleanDTO();

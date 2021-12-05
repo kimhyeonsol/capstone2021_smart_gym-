@@ -114,11 +114,11 @@ public class ESLServiceImpl implements ESLService {
 
             csvString+= makeCsvStringAndEquipmentMatching(equipment, newEsl);//새로 매칭된 운동기구,원래 esl,새로운 esl
             writeCSV(csvString);
-//            FTPUploader("192.168.1.15", "cgESLUser", "cgESLPassword");
-//            File fileTest = new File("./src/main/resources/import_" + oldFile + ".csv");
-//            String fileName = fileTest.getName();
-//            uploadFile("./src/main/resources/import_" + oldFile + ".csv",fileName,"/Import/");
-//            disconnect();
+            FTPUploader("192.168.1.15", "cgESLUser", "cgESLPassword");
+            File fileTest = new File("./src/main/resources/import_" + oldFile + ".csv");
+            String fileName = fileTest.getName();
+            uploadFile("./src/main/resources/import_" + oldFile + ".csv",fileName,"/Import/");
+            disconnect();
             return 0;
         }catch (Exception e){
             return 3;
@@ -298,11 +298,11 @@ public class ESLServiceImpl implements ESLService {
         if(csvString.length()>initStringlength){
             System.out.println("**");
             writeCSV(csvString);
-//            FTPUploader("192.168.1.15", "cgESLUser", "cgESLPassword");
-//            File fileTest = new File("./src/main/resources/import_" + oldFile + ".csv");
-//            String fileName = fileTest.getName();
-//            uploadFile("./src/main/resources/import_" + oldFile + ".csv",fileName,"/Import/");
-//            disconnect();
+            FTPUploader("192.168.1.15", "cgESLUser", "cgESLPassword");
+            File fileTest = new File("./src/main/resources/import_" + oldFile + ".csv");
+            String fileName = fileTest.getName();
+            uploadFile("./src/main/resources/import_" + oldFile + ".csv",fileName,"/Import/");
+            disconnect();
         }
     }
 
@@ -375,11 +375,11 @@ public class ESLServiceImpl implements ESLService {
 
             csvString+= makeCsvStringWhenUpdateEquipment(findEquipment,esl, newEsl);//새로 매칭된 운동기구,원래 esl,새로운 esl
             writeCSV(csvString);
-//            FTPUploader("192.168.1.15", "cgESLUser", "cgESLPassword");
-//            File fileTest = new File("./src/main/resources/import_" + oldFile + ".csv");
-//            String fileName = fileTest.getName();
-//            uploadFile("./src/main/resources/import_" + oldFile + ".csv",fileName,"/Import/");
-//            disconnect();
+            FTPUploader("192.168.1.15", "cgESLUser", "cgESLPassword");
+            File fileTest = new File("./src/main/resources/import_" + oldFile + ".csv");
+            String fileName = fileTest.getName();
+            uploadFile("./src/main/resources/import_" + oldFile + ".csv",fileName,"/Import/");
+            disconnect();
 
         }catch (Exception e){
             return;
@@ -434,11 +434,11 @@ public class ESLServiceImpl implements ESLService {
 
             csvString+= makeCsvStringWhenCancleReservation(findEquipment,esl, newEsl);//새로 매칭된 운동기구,원래 esl,새로운 esl
             writeCSV(csvString);
-//            FTPUploader("192.168.1.15", "cgESLUser", "cgESLPassword");
-//            File fileTest = new File("./src/main/resources/import_" + oldFile + ".csv");
-//            String fileName = fileTest.getName();
-//            uploadFile("./src/main/resources/import_" + oldFile + ".csv",fileName,"/Import/");
-//            disconnect();
+            FTPUploader("192.168.1.15", "cgESLUser", "cgESLPassword");
+            File fileTest = new File("./src/main/resources/import_" + oldFile + ".csv");
+            String fileName = fileTest.getName();
+            uploadFile("./src/main/resources/import_" + oldFile + ".csv",fileName,"/Import/");
+            disconnect();
 
         }catch (Exception e){
             return;

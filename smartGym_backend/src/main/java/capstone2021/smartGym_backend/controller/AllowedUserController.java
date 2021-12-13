@@ -39,7 +39,7 @@ public class AllowedUserController {
     @CrossOrigin("*")
     @PostMapping("/allowedUser/readUserInfo") //가입승인- 회원정보 조회
     @ResponseBody
-    public ReturnAllowedUserInfoDTO allowedUserLogin(@RequestBody final AllowedUserReadUserInfoDTO allowedUserReadUserInfoDTO)  {
+    public ReturnAllowedUserInfoDTO allowedReadUserInfo(@RequestBody final AllowedUserReadUserInfoDTO allowedUserReadUserInfoDTO)  {
         ReturnAllowedUserInfoDTO returnAllowedUserInfoDTO =new ReturnAllowedUserInfoDTO();
         if(allowedUserReadUserInfoDTO.getUserID().equals("")||allowedUserReadUserInfoDTO==null){
             returnAllowedUserInfoDTO.setSuccess(false);
